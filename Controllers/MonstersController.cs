@@ -4,7 +4,7 @@ using Sapphire.Data;
 namespace Sapphire.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class MonstersController : ControllerBase
     {
         private readonly IConfiguration _configuration;
@@ -16,10 +16,18 @@ namespace Sapphire.Controllers
             
         }
 
-        [HttpGet]
+        [HttpGet(Name ="AllMonsters")]
+        [Route("GetAll")]
         public ActionResult GetAllMonsters() {
             var mons = _monstercont.T_monsters.ToList();
             return Ok(mons);
+        }
+
+        [HttpGet(Name ="SingleMonster")]
+        [Route("GetSingleMonster")]
+        public ActionResult GetSingleMonster([FromQuery(Name ="id")] Guid id) {
+            var mon = _monstercont.T_monsters.Find(id);
+            return Ok(mon);
         }
 
 
