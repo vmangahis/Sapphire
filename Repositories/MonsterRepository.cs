@@ -1,4 +1,4 @@
-﻿using Sapphire.DTO;
+﻿using Sapphire.DTO.Monster;
 using Sapphire.Interfaces;
 
 namespace Sapphire.Repositories
