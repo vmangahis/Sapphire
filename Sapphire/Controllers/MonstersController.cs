@@ -1,7 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Sapphire.Data;
 using Sapphire.DTO.Monster;
 using Sapphire.Mappers;
+using System;
+using System.Linq;
 
 namespace Sapphire.Controllers
 {
