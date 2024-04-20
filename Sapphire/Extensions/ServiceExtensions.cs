@@ -1,4 +1,7 @@
-﻿namespace Sapphire.Extensions
+﻿using Sapphire.Contracts;
+using Sapphire.Repository;
+
+namespace Sapphire.Extensions
 {
     public static class ServiceExtensions
     {
@@ -15,5 +18,7 @@
         public static void ConfigureIIS(this IServiceCollection serv) => serv.Configure<IISOptions>(opt => { 
         
         });
+
+        public static void ConfigureRepositoryManager(this IServiceCollection serv) => serv.AddScoped<IRepositoryManager, RepositoryManager>();
     }
 }

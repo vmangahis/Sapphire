@@ -2,31 +2,35 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using Sapphire.Data;
+using Sapphire.Repository;
 
 #nullable disable
 
 namespace Sapphire.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
-    partial class MonsterDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(RepositoryContext))]
+    [Migration("20240420121235_DatabaseCreation")]
+    partial class DatabaseCreation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.3")
+                .HasAnnotation("ProductVersion", "8.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Sapphire.Models.Hunters", b =>
+            modelBuilder.Entity("Saphhire.Entities.Models.Hunters", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("HunterId");
 
                     b.Property<string>("HunterName")
                         .IsRequired()
@@ -43,11 +47,12 @@ namespace Sapphire.Migrations
                     b.ToTable("T_hunters");
                 });
 
-            modelBuilder.Entity("Sapphire.Models.Monsters", b =>
+            modelBuilder.Entity("Saphhire.Entities.Models.Monsters", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("MonsterId");
 
                     b.Property<double>("BaseAttack")
                         .HasColumnType("double precision");
@@ -60,7 +65,8 @@ namespace Sapphire.Migrations
 
                     b.Property<string>("MonsterName")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(40)
+                        .HasColumnType("character varying(40)");
 
                     b.HasKey("Id");
 
