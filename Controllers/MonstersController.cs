@@ -11,16 +11,19 @@ namespace Sapphire.Controllers
     {
         private readonly IConfiguration _configuration;
         private readonly AppDbContext _monstercont;
-        public MonstersController(IConfiguration conf, AppDbContext monstercont)
+        private readonly ILogger<MonstersController> _logger;
+        public MonstersController(IConfiguration conf, AppDbContext monstercont, ILogger<MonstersController> logger)
         {
             _configuration = conf;
             _monstercont = monstercont;
-            
+            _logger = logger;
+            _logger.LogDebug(1, "Logger injected");
         }
 
         [HttpGet]
         [Route("GetAll")]
         public ActionResult GetAllMonsters() {
+            _logger.LogInformation("Hello, getting all monsters!");
             var mons = _monstercont.T_monsters.ToList();
             return Ok(mons);
         }
