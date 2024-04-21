@@ -24,6 +24,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Sapphire.LoggerService\Sapphire.LoggerService.csproj" />
     <ProjectReference Include="..\Sapphire.Repository\Sapphire.Repository.csproj" />
+    <ProjectReference Include="..\Sapphire.Service\Sapphire.Service.csproj" />
   </ItemGroup>
 
 </Project>

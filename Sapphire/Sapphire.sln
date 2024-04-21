@@ -9,9 +9,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sapphire.Contracts", "..\Sa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sapphire.LoggerService", "..\Sapphire.LoggerService\Sapphire.LoggerService.csproj", "{11AE6131-EB1A-4ED4-96F0-19B4F8FA2F9F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sapphire.Repository", "..\Sapphire.Repository\Sapphire.Repository.csproj", "{503D6332-57A0-49C8-AF7D-32BCF415447F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sapphire.Repository", "..\Sapphire.Repository\Sapphire.Repository.csproj", "{503D6332-57A0-49C8-AF7D-32BCF415447F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sapphire.Entities", "..\Sapphire.Entities\Sapphire.Entities.csproj", "{03CB7CE4-D30C-4315-B2A0-F2ED9A1334AF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sapphire.Service.Contracts", "..\Sapphire.Service.Contracts\Sapphire.Service.Contracts.csproj", "{5ED98C44-0B25-48FC-AB85-0B9143390BA0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sapphire.Service", "..\Sapphire.Service\Sapphire.Service.csproj", "{0EA29E3C-8A4E-435C-A9A9-246FD8E5C022}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +43,14 @@ Global
 		{03CB7CE4-D30C-4315-B2A0-F2ED9A1334AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{03CB7CE4-D30C-4315-B2A0-F2ED9A1334AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{03CB7CE4-D30C-4315-B2A0-F2ED9A1334AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5ED98C44-0B25-48FC-AB85-0B9143390BA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5ED98C44-0B25-48FC-AB85-0B9143390BA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5ED98C44-0B25-48FC-AB85-0B9143390BA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5ED98C44-0B25-48FC-AB85-0B9143390BA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EA29E3C-8A4E-435C-A9A9-246FD8E5C022}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EA29E3C-8A4E-435C-A9A9-246FD8E5C022}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EA29E3C-8A4E-435C-A9A9-246FD8E5C022}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EA29E3C-8A4E-435C-A9A9-246FD8E5C022}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
