@@ -15,5 +15,7 @@ namespace Sapphire.Repository
         {
 
         }
+
+        public IEnumerable<Monsters> GetAllMonsters(bool track) => GetAll(track).OrderBy(e => e.MonsterName); 
     }
 }

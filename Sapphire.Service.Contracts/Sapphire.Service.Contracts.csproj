@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Sapphire.Entities\Sapphire.Entities.csproj" />
+  </ItemGroup>
+
 </Project>

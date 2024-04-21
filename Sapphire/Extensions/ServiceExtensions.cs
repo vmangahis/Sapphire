@@ -2,6 +2,7 @@
 using Sapphire.Repository;
 using Sapphire.Service.Contracts;
 using Sapphire.Service;
+using Sapphire.LoggerService;
 using Microsoft.EntityFrameworkCore;
 
 namespace Sapphire.Extensions
@@ -21,6 +22,8 @@ namespace Sapphire.Extensions
         public static void ConfigureIIS(this IServiceCollection serv) => serv.Configure<IISOptions>(opt => { 
         
         });
+
+        public static void ConfigureLogger(this IServiceCollection serv) => serv.AddScoped<ILoggerManager, LoggerService.LoggerService>();
 
         public static void ConfigureRepositoryManager(this IServiceCollection serv) => serv.AddScoped<IRepositoryManager, RepositoryManager>();
         public static void ConfigureServiceManager(this IServiceCollection serv) => serv.AddScoped<IServiceManager, ServiceManager>();

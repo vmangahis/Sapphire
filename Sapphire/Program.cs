@@ -6,7 +6,7 @@ using Sapphire.Extensions;
 
 
 var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
-logger.Debug("init main");
+
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -20,6 +20,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.ConfigureCors();
 builder.Services.ConfigureIIS();
+builder.Services.ConfigureLogger();
 
 //Logger
 builder.Logging.ClearProviders();
