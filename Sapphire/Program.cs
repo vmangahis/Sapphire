@@ -10,17 +10,19 @@ var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurre
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
+builder.Services.ConfigureCors();
+builder.Services.ConfigureIIS();
 builder.Services.AddControllers().AddApplicationPart(typeof(Sapphire.Presentation.AssemblyReference).Assembly);
 builder.Services.ConfigureRepositoryManager();
 builder.Services.ConfigureServiceManager();
 builder.Services.ConfigureNpqSqlContext(builder.Configuration);
 
+builder.Services.ConfigureLogger();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.ConfigureCors();
-builder.Services.ConfigureIIS();
-builder.Services.ConfigureLogger();
+
 
 //Logger
 builder.Logging.ClearProviders();
@@ -39,6 +41,7 @@ else
 {
     app.UseHsts();
 }
+app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 
@@ -49,8 +52,6 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions
 
 
 app.UseCors("CorsPolicy");
-
-app.UseHttpsRedirection();
 
 app.UseAuthentication();
 

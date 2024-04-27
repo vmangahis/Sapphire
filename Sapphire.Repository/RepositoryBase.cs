@@ -13,10 +13,10 @@ namespace Sapphire.Contracts
         protected RepositoryContext repositoryContext;
 
         public RepositoryBase(RepositoryContext repContext) => this.repositoryContext = repContext;
-        public void Create(T entity) => repositoryContext.Add(entity);
+        public void Create(T entity) => repositoryContext.Set<T>().Add(entity);
 
-        public void Delete(T entity) => repositoryContext.Remove(entity);
-        public void Update(T entity) => repositoryContext.Update(entity);
+        public void Delete(T entity) => repositoryContext.Set<T>().Remove(entity);
+        public void Update(T entity) => repositoryContext.Set<T>().Update(entity);
 
         public IQueryable<T> GetAll(bool trackChange) => !trackChange ? repositoryContext.Set<T>().AsNoTracking() : repositoryContext.Set<T>();
 

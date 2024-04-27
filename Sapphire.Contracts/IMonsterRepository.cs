@@ -9,6 +9,6 @@ namespace Sapphire.Contracts
 {
     public interface IMonsterRepository
     {
-        IEnumerable<Monsters> GetAllMonsters(bool track);
+        public IEnumerable<Monsters> GetAllMonsters(bool track);
     }
 }

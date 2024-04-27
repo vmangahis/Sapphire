@@ -18,6 +18,7 @@ namespace Sapphire.Service
         {
             try {
                 var mons = _repomanager.Monster.GetAllMonsters(track);
+                _logger.LogInformation("Logged Get All monsters");
                 return mons;
             } 
             

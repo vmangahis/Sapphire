@@ -1,4 +1,5 @@
 ﻿using Sapphire.Contracts;
+using Sapphire.Entities.Models;
 using Sapphire.Service.Contracts;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,21 @@ namespace Sapphire.Service
         public HunterService(IRepositoryManager repomanager, ILoggerManager logger) { 
             _repomanager = repomanager;
             _logger = logger;        
+        }
+
+        public IEnumerable<Hunters> GetAllHunters(bool track) {
+            try
+            {
+                var hn = _repomanager.Hunter.GetAllHunters(track);
+                _logger.LogInformation("Got all hunters");
+                return hn;
+            }
+            catch(Exception e) {
+                _logger.LogError("Something wrong with method Get All Hunters");
+                Console.WriteLine("Error something");
+                throw;
+            }
+
         }
     }
 }

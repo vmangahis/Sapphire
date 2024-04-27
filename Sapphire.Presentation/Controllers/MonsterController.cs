@@ -17,7 +17,7 @@ namespace Sapphire.Presentation.Controllers
         public MonsterController(IServiceManager servman) => _servmanager = servman;
 
         [HttpGet]
-        public ActionResult GetMonster()
+        public ActionResult GetAllMonsters()
         {
             try
             {

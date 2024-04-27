@@ -11,5 +11,9 @@ namespace Sapphire.Repository
     public class HunterRepository : RepositoryBase<Hunters>, IHunterRepository
     {
         public HunterRepository(RepositoryContext repContext) : base(repContext) { }
+
+        public IEnumerable<Hunters> GetAllHunters(bool track) {
+            return GetAll(track).OrderBy(x => x.HunterName).ToList();
+        }
     }
 }

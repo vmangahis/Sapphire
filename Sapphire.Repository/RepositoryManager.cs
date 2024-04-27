@@ -17,7 +17,6 @@ namespace Sapphire.Repository
             _repoContext = repocont;
             _monsrepo = new Lazy<IMonsterRepository>(() => new MonsterRepository(repocont));
             _huntrepo = new Lazy<IHunterRepository>(() => new HunterRepository(repocont));
-        
         }
  
         public IMonsterRepository Monster => _monsrepo.Value;

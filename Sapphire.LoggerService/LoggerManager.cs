@@ -3,7 +3,7 @@ using Sapphire.Contracts;
 
 namespace Sapphire.LoggerService
 {
-    public class LoggerService : ILoggerManager
+    public class LoggerManager : ILoggerManager
     {
         private static ILogger logger = LogManager.GetCurrentClassLogger();
         public void LogDebug(string msg) => logger.Debug(msg);

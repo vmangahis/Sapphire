@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Sapphire.Repository;
 namespace Sapphire.ContextFactory
@@ -19,3 +20,4 @@ namespace Sapphire.ContextFactory
         }
     }
 }
+// page 54
