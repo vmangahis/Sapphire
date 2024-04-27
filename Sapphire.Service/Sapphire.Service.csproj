@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Sapphire.Contracts\Sapphire.Contracts.csproj" />
     <ProjectReference Include="..\Sapphire.Service.Contracts\Sapphire.Service.Contracts.csproj" />
   </ItemGroup>

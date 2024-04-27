@@ -1,4 +1,5 @@
-﻿using Sapphire.Contracts;
+﻿using AutoMapper;
+using Sapphire.Contracts;
 using Sapphire.Entities.Models;
 using Sapphire.Service.Contracts;
 using Sapphire.Shared.DTO;
@@ -14,23 +15,26 @@ namespace Sapphire.Service
     {
         private readonly IRepositoryManager _repomanager;
         private readonly ILoggerManager _logger;
+        private readonly IMapper _mapper;
 
-        public HunterService(IRepositoryManager repomanager, ILoggerManager logger) { 
+        public HunterService(IRepositoryManager repomanager, ILoggerManager logger, IMapper mapper) { 
             _repomanager = repomanager;
-            _logger = logger;        
+            _logger = logger;  
+            _mapper = mapper;
+
         }
 
         public IEnumerable<HunterDTO> GetAllHunters(bool track) {
             try
             {
                 var hn = _repomanager.Hunter.GetAllHunters(track);
-                var hnDto = hn.Select(h => new HunterDTO(h.Id, h.HunterName, h.Rank));
+                var hnDto = _mapper.Map<IEnumerable<HunterDTO>>(hn);
                 _logger.LogInformation("Got all hunters");
                 return hnDto;
             }
             catch(Exception e) {
-                _logger.LogError("Something wrong with method Get All Hunters");
-                Console.WriteLine("Error something");
+                _logger.LogError($"Something wrong with method Get All Hunters - {e}");
+                Console.WriteLine($"Error something {e}");
                 throw;
             }
 

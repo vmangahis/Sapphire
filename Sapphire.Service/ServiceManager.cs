@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography.X509Certificates;
+using AutoMapper;
 
 namespace Sapphire.Service
 {
@@ -13,9 +14,10 @@ namespace Sapphire.Service
     {
         private readonly Lazy<IHunterService> _hunterService;
         private readonly Lazy<IMonsterService> _monsterService;
-        public ServiceManager(IRepositoryManager repositorymanager, ILoggerManager loggermanager) {
-            _monsterService = new Lazy<IMonsterService>(() => new MonsterService(repositorymanager, loggermanager));
-            _hunterService = new Lazy<IHunterService>(() => new HunterService(repositorymanager, loggermanager));
+        public ServiceManager(IRepositoryManager repositorymanager, ILoggerManager loggermanager, IMapper map) {
+            _monsterService = new Lazy<IMonsterService>(() => new MonsterService(repositorymanager, loggermanager, map));
+            _hunterService = new Lazy<IHunterService>(() => new HunterService(repositorymanager, loggermanager, map));
+
         }
         public IHunterService HunterService => _hunterService.Value;
         public IMonsterService MonsterService => _monsterService.Value;
