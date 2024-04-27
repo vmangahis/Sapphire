@@ -1,6 +1,7 @@
 ﻿using Sapphire.Contracts;
 using Sapphire.Entities.Models;
 using Sapphire.Service.Contracts;
+using Sapphire.Shared.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,12 +20,13 @@ namespace Sapphire.Service
             _logger = logger;        
         }
 
-        public IEnumerable<Hunters> GetAllHunters(bool track) {
+        public IEnumerable<HunterDTO> GetAllHunters(bool track) {
             try
             {
                 var hn = _repomanager.Hunter.GetAllHunters(track);
+                var hnDto = hn.Select(h => new HunterDTO(h.Id, h.HunterName, h.Rank));
                 _logger.LogInformation("Got all hunters");
-                return hn;
+                return hnDto;
             }
             catch(Exception e) {
                 _logger.LogError("Something wrong with method Get All Hunters");

@@ -1,6 +1,7 @@
 ﻿using Sapphire.Contracts;
 using Sapphire.Service.Contracts;
 using Sapphire.Entities.Models;
+using Sapphire.Shared.DTO;
 
 namespace Sapphire.Service
 {
@@ -14,12 +15,17 @@ namespace Sapphire.Service
             _logger = logger;
         }
 
-        public IEnumerable<Monsters> GetAllMonsters(bool track)
+        public IEnumerable<MonsterDTO> GetAllMonsters(bool track)
         {
             try {
                 var mons = _repomanager.Monster.GetAllMonsters(track);
+                var monDto = mons.Select(monsters => {
+                    return new MonsterDTO(monsters.Id, monsters.MonsterName);
+                })
+                .ToList();
+
                 _logger.LogInformation("Logged Get All monsters");
-                return mons;
+                return monDto;
             } 
             
             catch(Exception ex) {

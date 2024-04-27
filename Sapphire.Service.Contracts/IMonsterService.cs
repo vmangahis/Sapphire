@@ -1,8 +1,8 @@
-﻿using Sapphire.Entities.Models;
+﻿using Sapphire.Shared.DTO;
 namespace Sapphire.Service.Contracts
 {
     public interface IMonsterService 
     {
-        IEnumerable<Monsters> GetAllMonsters(bool track);
+        IEnumerable<MonsterDTO> GetAllMonsters(bool track);
     }
 }

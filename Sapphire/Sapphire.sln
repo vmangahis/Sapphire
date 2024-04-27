@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sapphire.Service.Contracts"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sapphire.Service", "..\Sapphire.Service\Sapphire.Service.csproj", "{0EA29E3C-8A4E-435C-A9A9-246FD8E5C022}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sapphire.Presentation", "..\Sapphire.Presentation\Sapphire.Presentation.csproj", "{1A6E0999-F2F0-4F63-B3CB-053FC449890F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sapphire.Presentation", "..\Sapphire.Presentation\Sapphire.Presentation.csproj", "{1A6E0999-F2F0-4F63-B3CB-053FC449890F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sapphire.Shared", "..\Sapphire.Shared\Sapphire.Shared.csproj", "{9C38900D-12E1-4152-9C18-91E401A18CCB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{1A6E0999-F2F0-4F63-B3CB-053FC449890F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A6E0999-F2F0-4F63-B3CB-053FC449890F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A6E0999-F2F0-4F63-B3CB-053FC449890F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C38900D-12E1-4152-9C18-91E401A18CCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C38900D-12E1-4152-9C18-91E401A18CCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C38900D-12E1-4152-9C18-91E401A18CCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C38900D-12E1-4152-9C18-91E401A18CCB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

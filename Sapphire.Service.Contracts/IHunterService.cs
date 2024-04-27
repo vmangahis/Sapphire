@@ -1,4 +1,4 @@
-﻿using Sapphire.Entities.Models;
+﻿using Sapphire.Shared.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +9,6 @@ namespace Sapphire.Service.Contracts
 {
     public interface IHunterService
     {
-        public IEnumerable<Hunters> GetAllHunters(bool track);
+        public IEnumerable<HunterDTO> GetAllHunters(bool track);
     }
 }
