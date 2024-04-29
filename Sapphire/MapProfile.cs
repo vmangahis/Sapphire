@@ -7,7 +7,8 @@ namespace Sapphire
     {
             public MapProfile() {
             CreateMap<Monsters, MonsterDTO>()
-                .ForMember(m => m.MonsterName, opt => opt.MapFrom(x => string.Join(" ", x.MonsterName, "TestConcat")));
+                .ForCtorParam("TestName",
+                opt => opt.MapFrom(x => string.Join(' ', x.MonsterName, "Wat")));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Sapphire.Entities.Models
         [MaxLength(40, ErrorMessage = "Max length is 40 characters")]
         public string MonsterName { get; set; } = "Dummy";
         public double HealthPool { get; set; } = 0.0;
-        public double BaseAttack { get; set; } = 0.0;
+        public double BaseAttack { get; set; } = 0.0; 
         public double BaseDefense { get; set; } = 0.0;
     }
 }

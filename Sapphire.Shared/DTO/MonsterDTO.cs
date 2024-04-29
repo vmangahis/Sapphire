@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace Sapphire.Shared.DTO
 {
-    public record MonsterDTO(Guid Id, string MonsterName);
+    public record MonsterDTO(Guid Id, string TestName);
 }

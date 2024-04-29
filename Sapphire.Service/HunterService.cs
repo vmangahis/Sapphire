@@ -22,6 +22,7 @@ namespace Sapphire.Service
             _logger = logger;  
             _mapper = mapper;
 
+
         }
 
         public IEnumerable<HunterDTO> GetAllHunters(bool track) {
