@@ -9,6 +9,8 @@ namespace Sapphire
             CreateMap<Monsters, MonsterDTO>()
                 .ForCtorParam("TestName",
                 opt => opt.MapFrom(x => string.Join(' ', x.MonsterName, "Wat")));
+
+            CreateMap<Hunters, HunterDTO>();
         }
     }
 }

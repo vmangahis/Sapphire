@@ -21,7 +21,7 @@ namespace Sapphire.Extensions
         
         });
 
-        public static void ConfigureLogger(this IServiceCollection serv) => serv.AddScoped<ILoggerManager, LoggerService.LoggerManager>();
+        public static void ConfigureLogger(this IServiceCollection serv) => serv.AddSingleton<ILoggerManager, LoggerService.LoggerManager>();
 
         public static void ConfigureRepositoryManager(this IServiceCollection serv) => serv.AddScoped<IRepositoryManager, RepositoryManager>();
         public static void ConfigureServiceManager(this IServiceCollection serv) => serv.AddScoped<IServiceManager, ServiceManager>();

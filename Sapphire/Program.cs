@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using NLog;
 using NLog.Web;
+using Sapphire.Contracts;
 using Sapphire.Extensions;
 
 
@@ -32,14 +33,10 @@ builder.Host.UseNLog();
 
 
 var app = builder.Build();
-
+var log = app.Services.GetRequiredService<ILoggerManager>();
+app.ConfigureException(log);
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseDeveloperExceptionPage();
-}
-else
-{
+if (app.Environment.IsProduction()) {
     app.UseHsts();
 }
 app.UseHttpsRedirection();
