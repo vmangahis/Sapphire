@@ -4,5 +4,6 @@ namespace Sapphire.Service.Contracts
     public interface IMonsterService 
     {
         IEnumerable<MonsterDTO> GetAllMonsters(bool track);
+        MonsterDTO GetMonster(Guid monId, bool track);
     }
 }

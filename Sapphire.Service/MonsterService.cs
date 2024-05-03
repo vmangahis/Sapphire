@@ -3,6 +3,7 @@ using Sapphire.Service.Contracts;
 using Sapphire.Entities.Models;
 using Sapphire.Shared.DTO;
 using AutoMapper;
+using Sapphire.Entities.Exceptions;
 
 namespace Sapphire.Service
 {
@@ -20,21 +21,21 @@ namespace Sapphire.Service
 
         public IEnumerable<MonsterDTO> GetAllMonsters(bool track)
         {
-            try {
+            
                 var mons = _repomanager.Monster.GetAllMonsters(track);
                 var monDto = _mapper.Map<IEnumerable<MonsterDTO>>(mons);
 
                 _logger.LogInformation("Logged Get All monsters");
-                return monDto;
-            } 
-            
-            catch(Exception ex) {
-                _logger.LogError($"Error in Monster - {ex}");
-                throw;
-            }
-        
+                return monDto;          
         }
 
-     
+        public MonsterDTO GetMonster(Guid monId, bool track)
+        {
+            var mon = _repomanager.Monster.GetMonster(monId, track);
+            if (mon == null)
+                throw new MonsterNotFoundException(monId);
+            var monDto = _mapper.Map<MonsterDTO>(mon);
+            return monDto;
+        }
     }
 }

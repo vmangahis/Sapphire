@@ -15,5 +15,7 @@ namespace Sapphire.Repository
         public IEnumerable<Hunters> GetAllHunters(bool track) {
             return GetAll(track).OrderBy(x => x.HunterName).ToList();
         }
+
+        public Hunters GetHunter(Guid huntId, bool track) => GetThroughCondition(x => x.Id.Equals(huntId), track).SingleOrDefault();
     }
 }

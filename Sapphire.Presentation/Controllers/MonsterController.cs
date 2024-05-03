@@ -19,16 +19,13 @@ namespace Sapphire.Presentation.Controllers
         [HttpGet]
         public ActionResult GetAllMonsters()
         {
-            try
-            {
-                var mon = _servmanager.MonsterService.GetAllMonsters(track: false);
-                return Ok(mon);
-            }
-
-            catch {
-                return StatusCode(500, "Server error");
-            }
-            
+            var mon = _servmanager.MonsterService.GetAllMonsters(track: false);
+            return Ok(mon);
+        }
+        [HttpGet("{monid:guid}")]
+        public ActionResult GetSingleMonster(Guid monid) {
+            var mon = _servmanager.MonsterService.GetMonster(monid, track: false);
+            return Ok(mon);
         }
     }
 }

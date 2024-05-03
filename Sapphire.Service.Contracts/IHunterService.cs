@@ -9,6 +9,7 @@ namespace Sapphire.Service.Contracts
 {
     public interface IHunterService
     {
-        public IEnumerable<HunterDTO> GetAllHunters(bool track);
+        IEnumerable<HunterDTO> GetAllHunters(bool track);
+        HunterDTO GetHunter(Guid huntId, bool track);
     }
 }

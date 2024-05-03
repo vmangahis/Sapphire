@@ -17,17 +17,16 @@ namespace Sapphire.Presentation.Controllers
         public HunterController(IServiceManager serv) { 
             _serv = serv;
         }
-
-        public ActionResult GetAllHunters() {
-            try
-            {
+        [HttpGet]
+        public ActionResult GetAllHunters() { 
                var hunters = _serv.HunterService.GetAllHunters(track: false);
                 return Ok(hunters);
-            }
-            catch (Exception ex) {
-                Console.WriteLine(ex);
-                throw;
-            }
+        }
+
+        [HttpGet("{hnid:guid}")]
+        public ActionResult GetSingularHunter(Guid hnid) {
+            var hunter = _serv.HunterService.GetHunter(hnid, track: false);
+            return Ok(hunter);
         }
     }
 }

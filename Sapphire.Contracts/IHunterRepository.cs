@@ -10,5 +10,6 @@ namespace Sapphire.Contracts
     public interface IHunterRepository
     {
         public IEnumerable<Hunters> GetAllHunters(bool track);
+        public Hunters GetHunter(Guid huntId, bool track);
     }
 }
