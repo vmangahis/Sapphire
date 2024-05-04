@@ -6,10 +6,7 @@ namespace Sapphire
     public class MapProfile : Profile
     {
             public MapProfile() {
-            CreateMap<Monsters, MonsterDTO>()
-                .ForCtorParam("TestName",
-                opt => opt.MapFrom(x => string.Join(' ', x.MonsterName, "Wat")));
-
+            CreateMap<Monsters, MonsterDTO>();
             CreateMap<Hunters, HunterDTO>();
         }
     }
