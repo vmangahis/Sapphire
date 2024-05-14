@@ -10,5 +10,6 @@ namespace Sapphire.Service.Contracts
     {
         IHunterService HunterService { get; }
         IMonsterService MonsterService { get; } 
+        IGuildService GuildService { get; }
     }
 }

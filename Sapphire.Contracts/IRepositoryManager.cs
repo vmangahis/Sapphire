@@ -8,6 +8,7 @@ namespace Sapphire.Contracts
 {
     public interface IRepositoryManager
     {
+        IGuildRepository Guild { get; }
         IMonsterRepository Monster { get; }
         IHunterRepository Hunter { get; }
         void Save();

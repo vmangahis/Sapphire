@@ -11,10 +11,12 @@ namespace Sapphire.Repository
         {
             modelBuilder.ApplyConfiguration(new HunterConfiguration());
             modelBuilder.ApplyConfiguration(new MonsterConfiguration());
+            modelBuilder.ApplyConfiguration(new GuildConfiguration());
         }
 
         public DbSet<Hunters>? T_hunters { get; set; }
         public DbSet<Monsters>? T_monsters { get; set; }
+        public DbSet<Guild>? T_guild { get; set; }
 
     }
 }

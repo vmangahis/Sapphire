@@ -14,12 +14,15 @@ namespace Sapphire.Service
     {
         private readonly Lazy<IHunterService> _hunterService;
         private readonly Lazy<IMonsterService> _monsterService;
+        private readonly Lazy<IGuildService> _guildService;
         public ServiceManager(IRepositoryManager repositorymanager, ILoggerManager loggermanager, IMapper map) {
             _monsterService = new Lazy<IMonsterService>(() => new MonsterService(repositorymanager, loggermanager, map));
             _hunterService = new Lazy<IHunterService>(() => new HunterService(repositorymanager, loggermanager, map));
+            _guildService = new Lazy<IGuildService>(() => new GuildService(repositorymanager, loggermanager, map));
 
         }
         public IHunterService HunterService => _hunterService.Value;
         public IMonsterService MonsterService => _monsterService.Value;
+        public IGuildService GuildService => _guildService.Value;
     }
 }
