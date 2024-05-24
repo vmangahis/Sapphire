@@ -24,7 +24,8 @@ namespace Sapphire.Service
         public IEnumerable<GuildDTO> GetAllGuild(bool track)
         {
             var guild = _repomanager.Guild.GetAllGuild(track : false);
-            return null; 
+            var guildList = _mapper.Map<IEnumerable<GuildDTO>>(guild);
+            return guildList; 
         }
 
         public GuildDTO GetSingleGuild(Guid gid, bool track)

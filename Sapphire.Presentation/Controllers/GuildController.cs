@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace Sapphire.Presentation.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class GuildController : ControllerBase
     {
         private readonly IServiceManager _serv;
@@ -15,8 +17,10 @@ namespace Sapphire.Presentation.Controllers
             _serv = serv;
         }
 
-        public ActionResult GetGuild() { 
-        
+        [HttpGet]
+        public ActionResult GetGuild() {
+            var gd = _serv.GuildService.GetAllGuild(track: false);
+            return Ok(gd);
         }
     }
 }
