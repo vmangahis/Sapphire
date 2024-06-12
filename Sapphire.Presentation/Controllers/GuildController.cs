@@ -13,7 +13,7 @@ namespace Sapphire.Presentation.Controllers
     public class GuildController : ControllerBase
     {
         private readonly IServiceManager _serv;
-        public GuildController(IServiceManager serv) { 
+        public GuildController(IServiceManager serv) {
             _serv = serv;
         }
 
@@ -21,6 +21,12 @@ namespace Sapphire.Presentation.Controllers
         public ActionResult GetGuild() {
             var gd = _serv.GuildService.GetAllGuild(track: false);
             return Ok(gd);
+        }
+        [HttpGet("{gid:guid}")]
+        public ActionResult GetSingleGuild(Guid gid) {
+            var gd = _serv.GuildService.GetSingleGuild(gid, track: false);
+            return Ok(gd);
+        
         }
     }
 }

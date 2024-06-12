@@ -43,5 +43,16 @@ namespace Sapphire.Service
             var hnDto = _mapper.Map<HunterDTO>(hn);
             return hnDto;
         }
+
+        public HunterDTO CreateHunter(HunterCreationDTO hunter)
+        {
+            var hn = _mapper.Map<Hunters>(hunter);
+            _repomanager.Hunter.CreateHunter(hn);
+            _repomanager.Save();
+
+            var retValue = _mapper.Map<HunterDTO>(hn);
+            return retValue;
+        }
+
     }
 }

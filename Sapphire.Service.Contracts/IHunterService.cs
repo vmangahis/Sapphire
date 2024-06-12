@@ -11,5 +11,6 @@ namespace Sapphire.Service.Contracts
     {
         IEnumerable<HunterDTO> GetAllHunters(bool track);
         HunterDTO GetHunter(Guid huntId, bool track);
+        HunterDTO CreateHunter(HunterCreationDTO hunter);
     }
 }

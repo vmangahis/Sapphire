@@ -30,7 +30,9 @@ namespace Sapphire.Service
 
         public GuildDTO GetSingleGuild(Guid gid, bool track)
         {
-            throw new NotImplementedException();
+            var guild = _repomanager.Guild.GetGuild(gid, track);
+            var gl = _mapper.Map<GuildDTO>(guild);
+            return gl;
         }
     }
 }

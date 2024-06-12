@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Sapphire.Service.Contracts;
+using Sapphire.Shared.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,10 +24,18 @@ namespace Sapphire.Presentation.Controllers
                 return Ok(hunters);
         }
 
-        [HttpGet("{hnid:guid}")]
+        [HttpGet("{hnid:guid}", Name="GetHunterById")]
         public ActionResult GetSingularHunter(Guid hnid) {
             var hunter = _serv.HunterService.GetHunter(hnid, track: false);
             return Ok(hunter);
+        }
+        [HttpPost]
+        public ActionResult AddHunter([FromBody]HunterCreationDTO hn) {
+            if (hn is null) {
+                return BadRequest("Invalid request.");
+            }
+            var hnObject = _serv.HunterService.CreateHunter(hn);
+            return CreatedAtRoute("GetHunterById", new { hnid = hnObject.Id }, hnObject);
         }
     }
 }
