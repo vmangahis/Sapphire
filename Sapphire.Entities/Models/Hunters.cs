@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Sapphire.Entities.Models
 {
+    [Table("T_hunters")]
     public class Hunters
     {
         [Column("HunterId")]
@@ -14,5 +15,8 @@ namespace Sapphire.Entities.Models
         public string HunterName { get; set; } = string.Empty;
         public int Rank { get; set; } = 1;
         public double ZennyAmount { get; set; } = 0.0;
+        [ForeignKey(nameof(Guild))]
+        public Guid? GuildId { get; set; }
+        public Guild? Guild { get; set; }
     }
 }
