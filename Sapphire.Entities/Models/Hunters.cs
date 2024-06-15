@@ -16,7 +16,7 @@ namespace Sapphire.Entities.Models
         public int Rank { get; set; } = 1;
         public double ZennyAmount { get; set; } = 0.0;
         [ForeignKey(nameof(Guild))]
-        public Guid? GuildId { get; set; }
+        public Guid? GuildId { get; set; } = Guid.Empty;
         public Guild? Guild { get; set; }
     }
 }
