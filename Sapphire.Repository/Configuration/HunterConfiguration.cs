@@ -26,6 +26,7 @@ namespace Sapphire.Repository.Configuration
                     HunterName = "DarkShard",
                     Rank = 1,
                     ZennyAmount = 5000.0
+                    
                 }
 
 

@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
 using Sapphire.Contracts;
 using Sapphire.Entities.ErrorModel;
-using Sapphire.Entities.Exceptions;
+using Sapphire.Entities.Exceptions.BadRequest;
+using Sapphire.Entities.Exceptions.NotFound;
 using System.Net;
 
 namespace Sapphire.Extensions
@@ -20,6 +21,7 @@ namespace Sapphire.Extensions
                         cont.Response.StatusCode = contFeat.Error switch
                         {
                             NotFoundException => StatusCodes.Status404NotFound,
+                            BadRequestException => StatusCodes.Status400BadRequest,
                             _ => StatusCodes.Status500InternalServerError
                         };
                         logmanager.LogError($"Something threw an error: {contFeat.Error}");

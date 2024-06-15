@@ -11,6 +11,7 @@ namespace Sapphire.Contracts
     {
         public IEnumerable<Hunters> GetAllHunters(bool track);
         public Hunters GetHunter(Guid huntId, bool track);
+        public Hunters GetHunterByName(string hunterName, bool track);
         public void CreateHunter(Hunters hunter);
     }
 }

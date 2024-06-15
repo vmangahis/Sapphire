@@ -4,6 +4,7 @@ using Sapphire.Entities.Models;
 using Sapphire.Shared.DTO;
 using AutoMapper;
 using Sapphire.Entities.Exceptions;
+using Sapphire.Entities.Exceptions.NotFound;
 
 namespace Sapphire.Service
 {

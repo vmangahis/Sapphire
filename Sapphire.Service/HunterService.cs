@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Sapphire.Contracts;
 using Sapphire.Entities.Exceptions;
+using Sapphire.Entities.Exceptions.BadRequest;
+using Sapphire.Entities.Exceptions.NotFound;
 using Sapphire.Entities.Models;
 using Sapphire.Service.Contracts;
 using Sapphire.Shared.DTO;
@@ -46,6 +48,10 @@ namespace Sapphire.Service
 
         public HunterDTO CreateHunter(HunterCreationDTO hunter)
         {
+            var existHunter = _repomanager.Hunter.GetHunterByName(hunter.HunterName, false);
+            if (existHunter != null) {
+                throw new HunterDuplicateException(hunter.HunterName);
+            }
             var hn = _mapper.Map<Hunters>(hunter);
             _repomanager.Hunter.CreateHunter(hn);
             _repomanager.Save();
