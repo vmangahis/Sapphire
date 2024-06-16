@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Sapphire.Presentation.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/guilds")]
     [ApiController]
     public class GuildController : ControllerBase
     {
@@ -28,5 +28,12 @@ namespace Sapphire.Presentation.Controllers
             return Ok(gd);
         
         }
+        //[HttpGet("{gid:guid}/members")]
+        //public ActionResult GetGuildMembers(Guid gid)
+        //{
+        //    var gd = _serv.GuildService.GetGuildMembers(gid, track: false);
+        //    return Ok(gd);
+        //}
+
     }
 }

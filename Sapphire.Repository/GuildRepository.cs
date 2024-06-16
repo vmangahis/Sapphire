@@ -20,5 +20,8 @@ namespace Sapphire.Repository
         {
             return GetThroughCondition(x => x.GuildId.Equals(guildId), track).FirstOrDefault();
         }
+        //public Guild GetGuildMembers(Guid guildId, bool track) { 
+            
+        //}
     }
 }

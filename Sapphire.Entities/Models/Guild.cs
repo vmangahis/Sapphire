@@ -16,5 +16,3 @@ namespace Sapphire.Entities.Models
         public ICollection<Hunters>? HunterMembers { get; set; }
     }
 }
-
-//page 105
