@@ -28,12 +28,12 @@ namespace Sapphire.Presentation.Controllers
             return Ok(gd);
         
         }
-        //[HttpGet("{gid:guid}/members")]
-        //public ActionResult GetGuildMembers(Guid gid)
-        //{
-        //    var gd = _serv.GuildService.GetGuildMembers(gid, track: false);
-        //    return Ok(gd);
-        //}
+        [HttpGet("{gid:guid}/members")]
+        public ActionResult GetGuildMembers(Guid gid)
+        {
+           var gd = _serv.GuildService.GetGuildMembers(gid, track: false);
+            return Ok(gd);
+        }
 
     }
 }

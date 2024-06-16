@@ -1,4 +1,5 @@
-﻿using Sapphire.Contracts;
+﻿using Microsoft.EntityFrameworkCore;
+using Sapphire.Contracts;
 using Sapphire.Entities.Models;
 using System;
 using System.Collections.Generic;
@@ -18,10 +19,10 @@ namespace Sapphire.Repository
 
         public Guild GetGuild(Guid guildId, bool track)
         {
-            return GetThroughCondition(x => x.GuildId.Equals(guildId), track).FirstOrDefault();
+            return GetThroughCondition(x => x.GuildId.Equals(guildId), track).Include(y => y.HunterMembers).FirstOrDefault();
         }
-        //public Guild GetGuildMembers(Guid guildId, bool track) { 
-            
-        //}
+        public Guild GetGuildMembers(Guid guildId, bool track) {
+            return GetThroughCondition(x => x.GuildId.Equals(guildId), track).Include(y => y.HunterMembers).FirstOrDefault();
+        }
     }
 }

@@ -35,9 +35,9 @@ namespace Sapphire.Service
             return gl;
         }
 
-        //public GuildDTO GetGuildMembers(Guid gid, bool track) {
-        //    throw new NotImplementedException();
-        //}
+        public GuildDTO GetGuildMembers(Guid gid, bool track) {
+            throw new NotImplementedException();
+        }
         
     }
 }
