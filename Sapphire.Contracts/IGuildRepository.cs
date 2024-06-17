@@ -11,6 +11,7 @@ namespace Sapphire.Contracts
     {
         IEnumerable<Guild> GetAllGuild(bool track);
         Guild GetGuild(Guid guildId, bool track);
+        Guild GetGuildByName(string GuildName, bool track);
         Guild GetGuildMembers(Guid guildId, bool track);
     }
 }

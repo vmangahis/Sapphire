@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace Sapphire.Shared.DTO
 {
-    public record HunterCreationDTO(string? GuildName, string HunterName);
+    public record HunterGuildCreationDTO(string GuildName, string HunterName);
 }

@@ -49,9 +49,17 @@ namespace Sapphire.Service
         public HunterDTO CreateHunter(HunterCreationDTO hunter)
         {
             var existHunter = _repomanager.Hunter.GetHunterByName(hunter.HunterName, false);
+            if (hunter.GuildName != null) { 
+                var existGuild = _repomanager.Guild.GetGuildByName(hunter.GuildName, false);
+                if (existGuild is null)
+                {
+                    throw new GuildNotFound(hunter.GuildName);
+                }
+            }
             if (existHunter != null) {
                 throw new HunterDuplicateException(hunter.HunterName);
             }
+            
             var hn = _mapper.Map<Hunters>(hunter);
             _repomanager.Hunter.CreateHunter(hn);
             _repomanager.Save();
