@@ -12,6 +12,6 @@ namespace Sapphire.Service.Contracts
     {
         IEnumerable<GuildDTO> GetAllGuild(bool track);
         GuildDTO GetSingleGuild(Guid gid, bool track);
-        GuildDTO GetGuildMembers(Guid gid, bool track);
+        GuildMembersDTO GetGuildMembers(Guid gid, bool track);
     }
 }

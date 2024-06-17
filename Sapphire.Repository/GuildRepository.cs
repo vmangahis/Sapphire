@@ -19,7 +19,7 @@ namespace Sapphire.Repository
 
         public Guild GetGuild(Guid guildId, bool track)
         {
-            return GetThroughCondition(x => x.GuildId.Equals(guildId), track).Include(y => y.HunterMembers).FirstOrDefault();
+            return GetThroughCondition(x => x.GuildId.Equals(guildId), track).FirstOrDefault();
         }
         public Guild GetGuildMembers(Guid guildId, bool track) {
             return GetThroughCondition(x => x.GuildId.Equals(guildId), track).Include(y => y.HunterMembers).FirstOrDefault();

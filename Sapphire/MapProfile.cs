@@ -9,9 +9,8 @@ namespace Sapphire
             CreateMap<Monsters, MonsterDTO>();
             CreateMap<Hunters, HunterDTO>();
             CreateMap<Guild, GuildDTO>();
+            CreateMap<Guild, GuildMembersDTO>();
             CreateMap<HunterCreationDTO, Hunters>();
         }
     }
 }
-
-//page 74

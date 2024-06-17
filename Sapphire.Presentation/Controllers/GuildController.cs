@@ -32,7 +32,7 @@ namespace Sapphire.Presentation.Controllers
         public ActionResult GetGuildMembers(Guid gid)
         {
            var gd = _serv.GuildService.GetGuildMembers(gid, track: false);
-            return Ok(gd);
+           return Ok(gd);
         }
 
     }
