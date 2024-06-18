@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Sapphire.Service.Contracts;
+using Sapphire.Shared.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,14 @@ namespace Sapphire.Presentation.Controllers
         public ActionResult GetGuild() {
             var gd = _serv.GuildService.GetAllGuild(track: false);
             return Ok(gd);
+        }
+        [HttpPost]
+        public ActionResult CreateGuild([FromBody] GuildCreationDTO gddto) {
+            if (gddto is null) {
+                return BadRequest("Invalid request");
+            }
+            var gc = _serv.GuildService.CreateGuild(gddto);
+            return Ok(gddto);
         }
         [HttpGet("{gid:guid}")]
         public ActionResult GetSingleGuild(Guid gid) {

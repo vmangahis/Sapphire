@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Sapphire.Contracts;
+using Sapphire.Entities.Models;
 using Sapphire.Service.Contracts;
 using Sapphire.Shared.DTO;
 using System;
@@ -40,6 +41,15 @@ namespace Sapphire.Service
             var guildMembers = _mapper.Map<GuildMembersDTO>(guild);
             return guildMembers;
         }
-        
+
+        public GuildDTO CreateGuild(GuildCreationDTO gdto)
+        {
+            var gd = _mapper.Map<Guild>(gdto);
+            _repomanager.Guild.CreateGuild(gd);
+            _repomanager.Save();
+
+            var gdResult = _mapper.Map<GuildDTO>(gd);
+            return gdResult;
+        }
     }
 }
