@@ -12,5 +12,3 @@ namespace Sapphire.Entities.Models
         public string LocaleName { get; set; } = "dummy";
     }
 }
-
-// 68
