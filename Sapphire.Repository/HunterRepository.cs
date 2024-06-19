@@ -19,5 +19,6 @@ namespace Sapphire.Repository
         public Hunters GetHunter(Guid huntId, bool track) => GetThroughCondition(x => x.Id.Equals(huntId), track).SingleOrDefault();
         public Hunters GetHunterByName(string HunterName, bool track) => GetThroughCondition(x => x.HunterName.Equals(HunterName), track).SingleOrDefault();
         public void CreateHunter(Hunters hunt) => Create(hunt);
+        public void DeleteHunter(Hunters hunt) => Delete(hunt);
     }
 }

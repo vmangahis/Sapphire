@@ -13,5 +13,6 @@ namespace Sapphire.Contracts
         public Hunters GetHunter(Guid huntId, bool track);
         public Hunters GetHunterByName(string hunterName, bool track);
         public void CreateHunter(Hunters hunter);
+        public void DeleteHunter(Hunters hunter);
     }
 }
