@@ -11,6 +11,7 @@ namespace Sapphire.Contracts
         IGuildRepository Guild { get; }
         IMonsterRepository Monster { get; }
         IHunterRepository Hunter { get; }
+        ILocaleRepository Locale { get; }
         void Save();
     }
 }
