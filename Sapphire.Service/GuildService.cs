@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Sapphire.Contracts;
+using Sapphire.Entities.Exceptions.BadRequest;
 using Sapphire.Entities.Models;
 using Sapphire.Service.Contracts;
 using Sapphire.Shared.DTO;
@@ -44,6 +45,10 @@ namespace Sapphire.Service
 
         public GuildDTO CreateGuild(GuildCreationDTO gdto)
         {
+            var existGuild = _repomanager.Guild.GetGuildByName(gdto.GuildName, false);
+            if (existGuild is not null) {
+                throw new GuildDuplicateException(gdto.GuildName);
+            }
             var gd = _mapper.Map<Guild>(gdto);
             _repomanager.Guild.CreateGuild(gd);
             _repomanager.Save();
