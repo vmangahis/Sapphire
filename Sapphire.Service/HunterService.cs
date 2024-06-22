@@ -24,8 +24,6 @@ namespace Sapphire.Service
             _repomanager = repomanager;
             _logger = logger;  
             _mapper = mapper;
-
-
         }
 
         public IEnumerable<HunterDTO> GetAllHunters(bool track) {
@@ -40,7 +38,7 @@ namespace Sapphire.Service
         {
             var hn = _repomanager.Hunter.GetHunter(huntId, track);
             if (hn is null) {
-                throw new HunterNotFoundException(huntId);
+                throw new HunterNotFoundException(huntId.ToString());
             }
             var hnDto = _mapper.Map<HunterDTO>(hn);
             return hnDto;
@@ -49,23 +47,25 @@ namespace Sapphire.Service
         public HunterDTO CreateHunter(HunterCreationDTO hunter)
         {
             var existHunter = _repomanager.Hunter.GetHunterByName(hunter.HunterName, false);
-            if (hunter.GuildName != null) { 
-                var existGuild = _repomanager.Guild.GetGuildByName(hunter.GuildName, false);
-                if (existGuild is null)
-                {
-                    throw new GuildNotFound(hunter.GuildName);
-                }
-            }
             if (existHunter != null) {
                 throw new HunterDuplicateException(hunter.HunterName);
             }
-            
             var hn = _mapper.Map<Hunters>(hunter);
             _repomanager.Hunter.CreateHunter(hn);
             _repomanager.Save();
 
             var retValue = _mapper.Map<HunterDTO>(hn);
             return retValue;
+        }
+        public HunterDTO GetHunterByName(string HunterName, bool track) {
+            var hunter = _repomanager.Hunter.GetHunterByName(HunterName, false);
+            if (hunter == null) {
+                throw new HunterNotFoundException(HunterName);
+            }
+            var mapHunter = _mapper.Map<HunterDTO>(hunter);
+            return mapHunter;
+
+            
         }
 
     }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Sapphire.Contracts;
 using Sapphire.Entities.Exceptions.BadRequest;
+using Sapphire.Entities.Exceptions.NotFound;
 using Sapphire.Entities.Models;
 using Sapphire.Service.Contracts;
 using Sapphire.Shared.DTO;
@@ -48,6 +49,23 @@ namespace Sapphire.Service
             var existGuild = _repomanager.Guild.GetGuildByName(gdto.GuildName, false);
             if (existGuild is not null) {
                 throw new GuildDuplicateException(gdto.GuildName);
+            }
+            if (gdto.HunterMembers is not null) { 
+                  var hunter_members = gdto.HunterMembers.ToList();
+                hunter_members.ForEach(e =>
+                {
+                    
+                    var hunter = _repomanager.Hunter.GetHunterByName(e.HunterName, false);
+                    if (hunter is null) {
+                        throw new HunterNotFoundException(e.HunterName);
+                    }
+                   
+                    if (hunter.GuildId is not null || hunter.GuildId != Guid.Empty) {
+                        throw new HunterAlreadyJoinedGuildException(e.HunterName);
+                    }
+
+                });
+            
             }
             var gd = _mapper.Map<Guild>(gdto);
             _repomanager.Guild.CreateGuild(gd);

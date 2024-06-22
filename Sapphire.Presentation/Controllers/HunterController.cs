@@ -31,9 +31,6 @@ namespace Sapphire.Presentation.Controllers
         }
         [HttpPost]
         public ActionResult AddHunter([FromBody]HunterCreationDTO hn) {
-            if (hn is null) {
-                return BadRequest("Invalid request.");
-            }
             var hnObject = _serv.HunterService.CreateHunter(hn);
             return CreatedAtRoute("GetHunterById", new { hnid = hnObject.Id }, hnObject);
         }

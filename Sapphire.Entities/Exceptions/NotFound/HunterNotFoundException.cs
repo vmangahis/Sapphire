@@ -8,6 +8,6 @@ namespace Sapphire.Entities.Exceptions.NotFound
 {
     public sealed class HunterNotFoundException : NotFoundException
     {
-        public HunterNotFoundException(Guid hnguid) : base($"Hunter with ID: {hnguid} is not found") { }
+        public HunterNotFoundException(string nm) : base($"Hunter \'{nm}\' does not exist.") { }
     }
 }
