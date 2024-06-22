@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Sapphire.Presentation.Controllers
 {
-    [Route("api/guilds")]
+    [Route("api/guilds/")]
     [ApiController]
     public class GuildController : ControllerBase
     {
@@ -25,9 +25,7 @@ namespace Sapphire.Presentation.Controllers
         }
         [HttpPost]
         public ActionResult CreateGuild([FromBody] GuildCreationDTO gddto) {
-            if (gddto is null) {
-                return BadRequest("Invalid request");
-            }
+  
             var gc = _serv.GuildService.CreateGuild(gddto);
             return Ok(gddto);
         }
