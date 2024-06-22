@@ -7,6 +7,7 @@ using Sapphire.Service.Contracts;
 using Sapphire.Shared.DTO;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -50,23 +51,7 @@ namespace Sapphire.Service
             if (existGuild is not null) {
                 throw new GuildDuplicateException(gdto.GuildName);
             }
-            if (gdto.HunterMembers is not null) { 
-                  var hunter_members = gdto.HunterMembers.ToList();
-                hunter_members.ForEach(e =>
-                {
-                    
-                    var hunter = _repomanager.Hunter.GetHunterByName(e.HunterName, false);
-                    if (hunter is null) {
-                        throw new HunterNotFoundException(e.HunterName);
-                    }
-                   
-                    if (hunter.GuildId is not null || hunter.GuildId != Guid.Empty) {
-                        throw new HunterAlreadyJoinedGuildException(e.HunterName);
-                    }
-
-                });
             
-            }
             var gd = _mapper.Map<Guild>(gdto);
             _repomanager.Guild.CreateGuild(gd);
             _repomanager.Save();
