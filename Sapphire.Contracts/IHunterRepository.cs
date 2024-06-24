@@ -9,11 +9,11 @@ namespace Sapphire.Contracts
 {
     public interface IHunterRepository
     {
-        public IEnumerable<Hunters> GetAllHunters(bool track);
-        public Hunters GetHunter(Guid huntId, bool track);
-        public Hunters GetHunterByName(string hunterName, bool track);
-        public void CreateHunter(Hunters hunter);
-        public void DeleteHunter(Hunters hunter);
-        public void UpdateHunter(Hunters hunter);
+         IEnumerable<Hunters> GetAllHunters(bool track);
+         Hunters GetHunter(Guid huntId, bool track);
+         Hunters GetHunterByName(string hunterName, bool track);
+         void CreateHunter(Hunters hunter);
+         void DeleteHunter(Hunters hunter);
+         void UpdateHunter(Hunters hunter);
     }
 }

@@ -9,6 +9,6 @@ namespace Sapphire.Contracts
 {
     public interface ILocaleRepository
     {
-        public IEnumerable<Locale> GetAllHuntingLocale(bool track);
+         IEnumerable<Locale> GetAllHuntingLocale(bool track);
     }
 }

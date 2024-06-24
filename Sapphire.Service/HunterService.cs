@@ -64,7 +64,9 @@ namespace Sapphire.Service
             }
             var mapHunter = _mapper.Map<HunterDTO>(hunter);
             return mapHunter;
-
+            
+        }
+        public void DeleteHunter(Guid hunterId) { 
             
         }
 
