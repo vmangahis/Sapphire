@@ -34,10 +34,10 @@ namespace Sapphire.Presentation.Controllers
             var hnObject = _serv.HunterService.CreateHunter(hn);
             return CreatedAtRoute("GetHunterById", new { hnid = hnObject.Id }, hnObject);
         }
-        [HttpDelete("{huntername:string}")]
+        [HttpDelete("{huntername}")]
         public ActionResult DeleteHunter(string huntername) {
-            // implement
-            throw new NotImplementedException();
+            _serv.HunterService.DeleteHunter(huntername);
+            return NoContent();
         }
     }
 }

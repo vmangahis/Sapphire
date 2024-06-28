@@ -66,8 +66,15 @@ namespace Sapphire.Service
             return mapHunter;
             
         }
-        public void DeleteHunter(Guid hunterId) { 
-            
+        public void DeleteHunter(string huntername) {
+            var hunter = _repomanager.Hunter.GetHunterByName(huntername, false);
+            if (hunter == null)
+            {
+                throw new HunterNotFoundException(huntername);
+            }
+            var mappedHunter = _mapper.Map<Hunters>(hunter);
+            _repomanager.Hunter.DeleteHunter(mappedHunter);
+            _repomanager.Save(); 
         }
 
     }
