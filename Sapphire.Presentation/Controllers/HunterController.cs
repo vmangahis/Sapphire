@@ -39,5 +39,10 @@ namespace Sapphire.Presentation.Controllers
             _serv.HunterService.DeleteHunter(huntername);
             return NoContent();
         }
+        [HttpPut("{huntername}")]
+        public ActionResult UpdateHunter(string huntername,HunterUpdateDTO hud) {
+            _serv.HunterService.UpdateHunter(huntername, hud);
+            return NoContent();
+        }
     }
 }
