@@ -76,11 +76,14 @@ namespace Sapphire.Service
             _repomanager.Hunter.DeleteHunter(mappedHunter);
             _repomanager.Save(); 
         }
-        public void UpdateHunter(string CurrentHunterName,HunterUpdateDTO hud) {
-            var hunter = _repomanager.Hunter.GetHunterByName(CurrentHunterName, false);
+        public void UpdateHunter(string CurrentHunterName,HunterUpdateDTO hud, bool TrackChanges) {
+            var hunter = _repomanager.Hunter.GetHunterByName(CurrentHunterName, TrackChanges);
             if (hunter == null) {
                 throw new HunterNotFoundException(CurrentHunterName);
             }
+            _mapper.Map(hud, hunter);
+            _repomanager.Save();
+
         }
 
     }

@@ -16,6 +16,6 @@ namespace Sapphire.Service.Contracts
         // should be username upon further implementations
         HunterDTO GetHunterByName(string hunterName, bool track);    
         void DeleteHunter(string huntername);
-        void UpdateHunter(string CurrentHunterName, HunterUpdateDTO hud);
+        void UpdateHunter(string CurrentHunterName, HunterUpdateDTO hud, bool TrackChanges);
     }
 }

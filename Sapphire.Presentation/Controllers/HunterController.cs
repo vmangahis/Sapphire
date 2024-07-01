@@ -41,7 +41,7 @@ namespace Sapphire.Presentation.Controllers
         }
         [HttpPut("{huntername}")]
         public ActionResult UpdateHunter(string huntername,HunterUpdateDTO hud) {
-            _serv.HunterService.UpdateHunter(huntername, hud);
+            _serv.HunterService.UpdateHunter(huntername, hud, TrackChanges:true);
             return NoContent();
         }
     }
