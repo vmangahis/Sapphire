@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace Sapphire.Shared.DTO
 {
-    public record HunterUpdateDTO(string HunterName);
+    public record HunterUpdateDTO(string HunterName, int? Rank);
 }
