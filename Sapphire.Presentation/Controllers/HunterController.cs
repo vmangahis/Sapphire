@@ -25,7 +25,7 @@ namespace Sapphire.Presentation.Controllers
         }
 
         [HttpGet("{hnid:guid}", Name="GetHunterById")]
-        public ActionResult GetSingularHunter(Guid hnid) {
+        public ActionResult GetSingleHunter(Guid hnid) {
             var hunter = _serv.HunterService.GetHunter(hnid, track: false);
             return Ok(hunter);
         }

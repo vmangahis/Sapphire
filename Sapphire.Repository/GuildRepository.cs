@@ -18,7 +18,7 @@ namespace Sapphire.Repository
         public IEnumerable<Guild> GetAllGuild(bool track) => GetAll(track).OrderBy(x => x.GuildName).ToList();
         
 
-        public Guild GetGuild(Guid guildId, bool track) => GetThroughCondition(x => x.GuildId.Equals(guildId), track).FirstOrDefault();
+        public Guild GetGuild(Guid guildId, bool track) => GetThroughCondition(x => x.GuildId.Equals(guildId), track).Include(e => e.HunterMembers).FirstOrDefault();
 
         public Guild GetGuildByName(string gname, bool track) => GetThroughCondition(x => x.GuildName.Equals(gname), track).FirstOrDefault();
         public Guild GetGuildMembers(Guid guildId, bool track) => GetThroughCondition(x => x.GuildId.Equals(guildId), track).Include(y => y.HunterMembers).FirstOrDefault();
