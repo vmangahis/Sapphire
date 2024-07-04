@@ -41,6 +41,11 @@ namespace Sapphire.Presentation.Controllers
            var gd = _serv.GuildService.GetGuildMembers(gid, track: false);
            return Ok(gd);
         }
+        [HttpPut]
+        public ActionResult UpdateGuild(GuildCreationDTO gdto) {
+            return Ok(gdto);
+        
+        }
 
     }
 }
