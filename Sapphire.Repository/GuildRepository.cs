@@ -24,5 +24,6 @@ namespace Sapphire.Repository
         public Guild GetGuildMembers(Guid guildId, bool track) => GetThroughCondition(x => x.GuildId.Equals(guildId), track).Include(y => y.HunterMembers).FirstOrDefault();
 
         public void CreateGuild(Guild gd) => Create(gd);
+        public void UpdateGuild(Guild gd) => Update(gd);
     }
 }
