@@ -14,5 +14,6 @@ namespace Sapphire.Contracts
         Guild GetGuildByName(string GuildName, bool track);
         Guild GetGuildMembers(Guid guildId, bool track);
         void CreateGuild(Guild gd);
+        void UpdateGuild(Guild gd);
     }
 }
