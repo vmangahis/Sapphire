@@ -59,5 +59,10 @@ namespace Sapphire.Service
             var gdResult = _mapper.Map<GuildDTO>(gd);
             return gdResult;
         }
+
+        public void UpdateGuild(string CurrentGuildName, GuildUpdateDTO gud, bool track)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
