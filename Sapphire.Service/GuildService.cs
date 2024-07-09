@@ -62,7 +62,10 @@ namespace Sapphire.Service
 
         public void UpdateGuild(string CurrentGuildName, GuildUpdateDTO gud, bool track)
         {
-            throw new NotImplementedException();
+            var gd = _repomanager.Guild.GetGuildByName(CurrentGuildName, track);
+            if (gd is null) {
+                throw new GuildNotFound(CurrentGuildName);
+            }
         }
     }
 }
