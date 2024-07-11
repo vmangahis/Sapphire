@@ -22,7 +22,7 @@ builder.Services.ConfigureNpqSqlContext(builder.Configuration);
 builder.Services.AddAutoMapper(typeof(Program));
 //builder.Services.AddControllers(config => { 
 //    config.RespectBrowserAcceptHeader = true;
-//    config.ReturnHttpNotAcceptable = true;
+//   config.ReturnHttpNotAcceptable = true;
 //}).AddXmlDataContractSerializerFormatters();
 
 

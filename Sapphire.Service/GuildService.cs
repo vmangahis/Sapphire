@@ -62,10 +62,17 @@ namespace Sapphire.Service
 
         public void UpdateGuild(string CurrentGuildName, GuildUpdateDTO gud, bool track)
         {
+            var newGuildName = gud.GuildName;
             var gd = _repomanager.Guild.GetGuildByName(CurrentGuildName, track);
+            var guildExist = _repomanager.Guild.GetGuildByName(newGuildName, false);
             if (gd is null) {
                 throw new GuildNotFound(CurrentGuildName);
             }
+            if (guildExist is not null) {
+                throw new GuildDuplicateException(newGuildName);
+            }
+            _mapper.Map(gud, gd);
+            _repomanager.Save();
         }
     }
 }
