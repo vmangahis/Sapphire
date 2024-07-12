@@ -41,9 +41,14 @@ namespace Sapphire.Presentation.Controllers
            var gd = _serv.GuildService.GetGuildMembers(gid, track: false);
            return Ok(gd);
         }
-        [HttpPut("{guildname}/update")]
-        public ActionResult UpdateGuild(string guildname, GuildUpdateDTO gdto) {
-            _serv.GuildService.UpdateGuild(guildname, gdto,track: true);
+        [HttpPut("{GuildName}/update")]
+        public ActionResult UpdateGuild(string GuildName, GuildUpdateDTO gdto) {
+            _serv.GuildService.UpdateGuild(GuildName, gdto,track: true);
+            return NoContent();
+        }
+        [HttpDelete("{GuildName}/delete")]
+        public ActionResult DeleteGuild(string GuildName) {
+            _serv.GuildService.DeleteGuild(GuildName, track: false);
             return NoContent();
         }
 

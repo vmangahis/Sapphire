@@ -25,5 +25,6 @@ namespace Sapphire.Repository
 
         public void CreateGuild(Guild gd) => Create(gd);
         public void UpdateGuild(Guild gd) => Update(gd);
+        public void DeleteGuild(Guild gd) => Delete(gd);
     }
 }

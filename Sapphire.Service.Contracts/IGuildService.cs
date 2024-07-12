@@ -15,7 +15,6 @@ namespace Sapphire.Service.Contracts
         GuildMembersDTO GetGuildMembers(Guid gid, bool track);
         GuildDTO CreateGuild(GuildCreationDTO gdto);
         void UpdateGuild(string CurrentGuildName, GuildUpdateDTO gud, bool track);
-        //For implementation of deletion of guild to remove members from Guild
-        //void DeleteGuild(string CurrentGuildName);
+        void DeleteGuild(string GuildName, bool track);
     }
 }

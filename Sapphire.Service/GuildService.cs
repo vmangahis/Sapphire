@@ -74,5 +74,16 @@ namespace Sapphire.Service
             _mapper.Map(gud, gd);
             _repomanager.Save();
         }
+        public void DeleteGuild(string GuildName, bool track)
+        {
+            var guild = _repomanager.Guild.GetGuildByName(GuildName, track);
+            if (guild is null)
+                throw new GuildNotFound(GuildName);
+            
+            var mappedGuild = _mapper.Map<Guild>(guild);
+            _repomanager.Guild.DeleteGuild(mappedGuild);
+            _repomanager.Save();
+        }
+        
     }
 }
