@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.Mvc;
 using Sapphire.Service.Contracts;
 using Sapphire.Shared.DTO;
 using System;
@@ -42,6 +43,20 @@ namespace Sapphire.Presentation.Controllers
         [HttpPut("{huntername}")]
         public ActionResult UpdateHunter(string huntername,HunterUpdateDTO hud) {
             _serv.HunterService.UpdateHunter(huntername, hud, TrackChanges:true);
+            return NoContent();
+        }
+
+        // review how this works
+        [HttpPatch("{HunterName}")]
+        public ActionResult PartialUpdateHunter(string HunterName,[FromBody] JsonPatchDocument<HunterUpdateDTO> patchHunter) {
+            if (patchHunter is null) {
+                return BadRequest("Patch request body is null");
+            }
+            var res = _serv.HunterService.GetHunterPatch(HunterName, TrackChanges: true);
+
+            patchHunter.ApplyTo(res.hud);
+            _serv.HunterService.SaveHunterChangesPatch(res.hud, res.hunt);
+
             return NoContent();
         }
     }

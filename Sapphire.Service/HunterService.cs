@@ -86,5 +86,21 @@ namespace Sapphire.Service
 
         }
 
+        public (HunterUpdateDTO hud, Hunters hunt) GetHunterPatch(string CurrentHunterName, bool TrackChanges)
+        {
+            var hunter = _repomanager.Hunter.GetHunterByName(CurrentHunterName, TrackChanges);
+            if (hunter == null)
+            {
+                throw new HunterNotFoundException(CurrentHunterName);
+            }
+            var hunterPatch = _mapper.Map<HunterUpdateDTO>(hunter);
+            return (hunterPatch, hunter);
+        }
+
+        public void SaveHunterChangesPatch(HunterUpdateDTO hud, Hunters hunt)
+        {
+            _mapper.Map(hud, hunt);
+            _repomanager.Save();
+        }
     }
 }

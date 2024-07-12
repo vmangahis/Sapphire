@@ -14,7 +14,7 @@ namespace Sapphire.Repository
         public GuildRepository(RepositoryContext cont) : base(cont) {  }
 
         
-
+        
         public IEnumerable<Guild> GetAllGuild(bool track) => GetAll(track).OrderBy(x => x.GuildName).Include(x => x.HunterMembers).ToList();
         
 

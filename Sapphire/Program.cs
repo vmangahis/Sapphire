@@ -6,9 +6,19 @@ using NLog;
 using NLog.Web;
 using Sapphire.Contracts;
 using Sapphire.Extensions;
+using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.Extensions.Options;
 
 
 var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
+
+NewtonsoftJsonPatchInputFormatter GetJsonPatchInputFormatter() => new ServiceCollection().AddLogging().
+    AddMvc().
+    AddNewtonsoftJson().
+    Services.
+    BuildServiceProvider().GetRequiredService<IOptions<MvcOptions>>().Value.InputFormatters
+    .OfType<NewtonsoftJsonPatchInputFormatter>().First();
+    
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,10 +30,11 @@ builder.Services.ConfigureRepositoryManager();
 builder.Services.ConfigureServiceManager();
 builder.Services.ConfigureNpqSqlContext(builder.Configuration);
 builder.Services.AddAutoMapper(typeof(Program));
-//builder.Services.AddControllers(config => { 
-//    config.RespectBrowserAcceptHeader = true;
-//   config.ReturnHttpNotAcceptable = true;
-//}).AddXmlDataContractSerializerFormatters();
+builder.Services.AddControllers(config => {
+    config.RespectBrowserAcceptHeader = true;
+    config.ReturnHttpNotAcceptable = true;
+    config.InputFormatters.Insert(0,GetJsonPatchInputFormatter());
+}).AddXmlDataContractSerializerFormatters();
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

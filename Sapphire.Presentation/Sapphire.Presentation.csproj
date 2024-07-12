@@ -11,6 +11,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="8.0.7" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <ProjectReference Include="..\Sapphire.Service.Contracts\Sapphire.Service.Contracts.csproj" />
 	</ItemGroup>
 

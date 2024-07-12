@@ -1,4 +1,5 @@
-﻿using Sapphire.Shared.DTO;
+﻿using Sapphire.Entities.Models;
+using Sapphire.Shared.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,5 +18,7 @@ namespace Sapphire.Service.Contracts
         HunterDTO GetHunterByName(string hunterName, bool track);    
         void DeleteHunter(string huntername);
         void UpdateHunter(string CurrentHunterName, HunterUpdateDTO hud, bool TrackChanges);
+        (HunterUpdateDTO hud, Hunters hunt) GetHunterPatch(string CurrentHunterName, bool TrackChanges);
+        void SaveHunterChangesPatch(HunterUpdateDTO hud, Hunters hunt);
     }
 }

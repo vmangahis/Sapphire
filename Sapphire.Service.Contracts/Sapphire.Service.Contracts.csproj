@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Sapphire.Entities\Sapphire.Entities.csproj" />
     <ProjectReference Include="..\Sapphire.Shared\Sapphire.Shared.csproj" />
   </ItemGroup>
 

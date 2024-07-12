@@ -14,7 +14,7 @@ namespace Sapphire
             CreateMap<HunterCreationDTO, Hunters>();
             CreateMap<GuildCreationDTO, Guild>();
             CreateMap<GuildUpdateDTO, Guild>();
-            CreateMap<HunterUpdateDTO, Hunters>();
+            CreateMap<HunterUpdateDTO, Hunters>().ReverseMap();
         }
     }
 }
