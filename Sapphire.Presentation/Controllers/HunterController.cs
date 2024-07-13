@@ -48,11 +48,13 @@ namespace Sapphire.Presentation.Controllers
         }
         [HttpPut("{huntername}")]
         public ActionResult UpdateHunter(string huntername,HunterUpdateDTO hud) {
+            if (!ModelState.IsValid)
+                return UnprocessableEntity(ModelState);
+
             _serv.HunterService.UpdateHunter(huntername, hud, TrackChanges:true);
             return NoContent();
         }
 
-        // review how this works
         [HttpPatch("{HunterName}")]
         public ActionResult PartialUpdateHunter(string HunterName,[FromBody] JsonPatchDocument<HunterUpdateDTO> patchHunter) {
             if (patchHunter is null) {
@@ -60,7 +62,11 @@ namespace Sapphire.Presentation.Controllers
             }
             var res = _serv.HunterService.GetHunterPatch(HunterName, TrackChanges: true);
 
-            patchHunter.ApplyTo(res.hud);
+            patchHunter.ApplyTo(res.hud, ModelState);
+
+            if (!ModelState.IsValid)
+                return UnprocessableEntity(ModelState);
+
             _serv.HunterService.SaveHunterChangesPatch(res.hud, res.hunt);
 
             return NoContent();

@@ -26,7 +26,9 @@ namespace Sapphire.Presentation.Controllers
         }
         [HttpPost]
         public ActionResult CreateGuild([FromBody] GuildCreationDTO gddto) {
-  
+            if (!ModelState.IsValid) { 
+                return UnprocessableEntity(ModelState);
+            }
             var gc = _serv.GuildService.CreateGuild(gddto);
             return Ok(gddto);
         }
@@ -44,6 +46,9 @@ namespace Sapphire.Presentation.Controllers
         }
         [HttpPut("{GuildName}/update")]
         public ActionResult UpdateGuild(string GuildName, GuildUpdateDTO gdto) {
+            if(!ModelState.IsValid)
+                return UnprocessableEntity(ModelState);
+
             _serv.GuildService.UpdateGuild(GuildName, gdto,track: true);
             return NoContent();
         }
@@ -53,7 +58,11 @@ namespace Sapphire.Presentation.Controllers
                 return BadRequest("Guild PATCH requestb body is null");
             }
             var partialUpdateGuild = _serv.GuildService.PartialUpdateGuild(GuildName, track: true);
-            jsonPatchGuild.ApplyTo(partialUpdateGuild.gdto);
+            jsonPatchGuild.ApplyTo(partialUpdateGuild.gdto, ModelState);
+
+            if (!ModelState.IsValid)
+                return UnprocessableEntity(ModelState);
+
             _serv.GuildService.SaveGuildPatch(partialUpdateGuild.gdto, partialUpdateGuild.guild);
             return NoContent();
         }
