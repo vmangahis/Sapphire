@@ -84,6 +84,21 @@ namespace Sapphire.Service
             _repomanager.Guild.DeleteGuild(mappedGuild);
             _repomanager.Save();
         }
-        
+
+        public (GuildUpdateDTO gdto, Guild guild) PartialUpdateGuild(string GuildName, bool track)
+        {
+            var guild = _repomanager.Guild.GetGuildByName(GuildName, track);
+            if(guild is null)
+                throw new GuildNotFound(GuildName);
+
+            var mappedGuild = _mapper.Map<GuildUpdateDTO>(guild);
+            return (mappedGuild, guild);
+        }
+
+        public void SaveGuildPatch(GuildUpdateDTO gdto, Guild gd)
+        {
+            _mapper.Map(gdto, gd);
+            _repomanager.Save();
+        }
     }
 }
