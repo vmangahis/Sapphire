@@ -32,7 +32,13 @@ namespace Sapphire.Presentation.Controllers
         }
         [HttpPost]
         public ActionResult AddHunter([FromBody]HunterCreationDTO hn) {
+            if (!ModelState.IsValid)
+            {
+                return UnprocessableEntity(ModelState);
+            }
             var hnObject = _serv.HunterService.CreateHunter(hn);
+
+            
             return CreatedAtRoute("GetHunterById", new { hnid = hnObject.Id }, hnObject);
         }
         [HttpDelete("{huntername}")]

@@ -36,6 +36,10 @@ builder.Services.AddControllers(config => {
     config.InputFormatters.Insert(0,GetJsonPatchInputFormatter());
 }).AddXmlDataContractSerializerFormatters();
 
+builder.Services.Configure<ApiBehaviorOptions>(opt => {
+    opt.SuppressModelStateInvalidFilter = true;
+});
+
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
