@@ -12,8 +12,8 @@ using Sapphire.Repository;
 namespace Sapphire.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20240621081802_CreateLocaleTable")]
-    partial class CreateLocaleTable
+    [Migration("20240715050519_CreateLocale")]
+    partial class CreateLocale
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -42,7 +42,7 @@ namespace Sapphire.Migrations
                     b.HasData(
                         new
                         {
-                            GuildId = new Guid("0b52360b-c190-4d8a-b415-18d409adff30"),
+                            GuildId = new Guid("4f2c1d18-c4e0-44a5-bd7b-3edd63c06bf3"),
                             GuildName = "The Sapphire"
                         });
                 });
@@ -76,16 +76,14 @@ namespace Sapphire.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("00a5fcb6-c94f-4bfb-b5c8-148953bcff28"),
-                            GuildId = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Id = new Guid("0d6779e4-00db-4835-bafa-362e0c348a56"),
                             HunterName = "Shard",
                             Rank = 1,
                             ZennyAmount = 5000.0
                         },
                         new
                         {
-                            Id = new Guid("cd6e2fe1-b4ee-4b8c-9231-a5dcb4c4a718"),
-                            GuildId = new Guid("00000000-0000-0000-0000-000000000000"),
+                            Id = new Guid("ddbf7a94-e2bf-4edd-b66f-6fe2dc514ede"),
                             HunterName = "DarkShard",
                             Rank = 1,
                             ZennyAmount = 5000.0
@@ -109,7 +107,7 @@ namespace Sapphire.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("f7ccb500-9813-46b3-af64-18dc119160e7"),
+                            Id = new Guid("77657f78-0c9f-4c1f-95d8-f3393d627760"),
                             LocaleName = "Dummy Locale"
                         });
                 });
@@ -142,7 +140,7 @@ namespace Sapphire.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("f04912b8-48e5-4125-bea2-b5fb224b29c8"),
+                            Id = new Guid("cedaeb3e-929c-4787-a90f-95dde056a850"),
                             BaseAttack = 1.0,
                             BaseDefense = 1.0,
                             HealthPool = 10000.0,
@@ -150,7 +148,7 @@ namespace Sapphire.Migrations
                         },
                         new
                         {
-                            Id = new Guid("b30d4afb-ed1a-483f-8a5a-6c07662f8918"),
+                            Id = new Guid("3cce0d3c-521e-493b-8ecf-9154e4a168b7"),
                             BaseAttack = 1.0,
                             BaseDefense = 1.0,
                             HealthPool = 10000.0,
@@ -158,7 +156,7 @@ namespace Sapphire.Migrations
                         },
                         new
                         {
-                            Id = new Guid("61d0ca02-7470-4f58-833a-2aa721adb87d"),
+                            Id = new Guid("e43b2524-b820-4a6a-9569-f5816b04163d"),
                             BaseAttack = 1.0,
                             BaseDefense = 1.0,
                             HealthPool = 5000.0,
