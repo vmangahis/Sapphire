@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Sapphire.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateLocaleTable : Migration
+    public partial class CreateLocale : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -62,30 +62,30 @@ namespace Sapphire.Migrations
             migrationBuilder.InsertData(
                 table: "T_guild",
                 columns: new[] { "GuildId", "GuildName" },
-                values: new object[] { new Guid("0b52360b-c190-4d8a-b415-18d409adff30"), "The Sapphire" });
+                values: new object[] { new Guid("4f2c1d18-c4e0-44a5-bd7b-3edd63c06bf3"), "The Sapphire" });
 
             migrationBuilder.InsertData(
                 table: "T_hunters",
                 columns: new[] { "HunterId", "GuildId", "HunterName", "Rank", "ZennyAmount" },
                 values: new object[,]
                 {
-                    { new Guid("00a5fcb6-c94f-4bfb-b5c8-148953bcff28"), new Guid("00000000-0000-0000-0000-000000000000"), "Shard", 1, 5000.0 },
-                    { new Guid("cd6e2fe1-b4ee-4b8c-9231-a5dcb4c4a718"), new Guid("00000000-0000-0000-0000-000000000000"), "DarkShard", 1, 5000.0 }
+                    { new Guid("0d6779e4-00db-4835-bafa-362e0c348a56"), null, "Shard", 1, 5000.0 },
+                    { new Guid("ddbf7a94-e2bf-4edd-b66f-6fe2dc514ede"), null, "DarkShard", 1, 5000.0 }
                 });
 
             migrationBuilder.InsertData(
                 table: "T_locale",
                 columns: new[] { "Id", "LocaleName" },
-                values: new object[] { new Guid("f7ccb500-9813-46b3-af64-18dc119160e7"), "Dummy Locale" });
+                values: new object[] { new Guid("77657f78-0c9f-4c1f-95d8-f3393d627760"), "Dummy Locale" });
 
             migrationBuilder.InsertData(
                 table: "T_monsters",
                 columns: new[] { "MonsterId", "BaseAttack", "BaseDefense", "HealthPool", "MonsterName" },
                 values: new object[,]
                 {
-                    { new Guid("61d0ca02-7470-4f58-833a-2aa721adb87d"), 1.0, 1.0, 5000.0, "Yian Garuga" },
-                    { new Guid("b30d4afb-ed1a-483f-8a5a-6c07662f8918"), 1.0, 1.0, 10000.0, "Rathalos" },
-                    { new Guid("f04912b8-48e5-4125-bea2-b5fb224b29c8"), 1.0, 1.0, 10000.0, "Rathian" }
+                    { new Guid("3cce0d3c-521e-493b-8ecf-9154e4a168b7"), 1.0, 1.0, 10000.0, "Rathalos" },
+                    { new Guid("cedaeb3e-929c-4787-a90f-95dde056a850"), 1.0, 1.0, 10000.0, "Rathian" },
+                    { new Guid("e43b2524-b820-4a6a-9569-f5816b04163d"), 1.0, 1.0, 5000.0, "Yian Garuga" }
                 });
 
             migrationBuilder.AddForeignKey(
@@ -110,32 +110,32 @@ namespace Sapphire.Migrations
             migrationBuilder.DeleteData(
                 table: "T_guild",
                 keyColumn: "GuildId",
-                keyValue: new Guid("0b52360b-c190-4d8a-b415-18d409adff30"));
+                keyValue: new Guid("4f2c1d18-c4e0-44a5-bd7b-3edd63c06bf3"));
 
             migrationBuilder.DeleteData(
                 table: "T_hunters",
                 keyColumn: "HunterId",
-                keyValue: new Guid("00a5fcb6-c94f-4bfb-b5c8-148953bcff28"));
+                keyValue: new Guid("0d6779e4-00db-4835-bafa-362e0c348a56"));
 
             migrationBuilder.DeleteData(
                 table: "T_hunters",
                 keyColumn: "HunterId",
-                keyValue: new Guid("cd6e2fe1-b4ee-4b8c-9231-a5dcb4c4a718"));
+                keyValue: new Guid("ddbf7a94-e2bf-4edd-b66f-6fe2dc514ede"));
 
             migrationBuilder.DeleteData(
                 table: "T_monsters",
                 keyColumn: "MonsterId",
-                keyValue: new Guid("61d0ca02-7470-4f58-833a-2aa721adb87d"));
+                keyValue: new Guid("3cce0d3c-521e-493b-8ecf-9154e4a168b7"));
 
             migrationBuilder.DeleteData(
                 table: "T_monsters",
                 keyColumn: "MonsterId",
-                keyValue: new Guid("b30d4afb-ed1a-483f-8a5a-6c07662f8918"));
+                keyValue: new Guid("cedaeb3e-929c-4787-a90f-95dde056a850"));
 
             migrationBuilder.DeleteData(
                 table: "T_monsters",
                 keyColumn: "MonsterId",
-                keyValue: new Guid("f04912b8-48e5-4125-bea2-b5fb224b29c8"));
+                keyValue: new Guid("e43b2524-b820-4a6a-9569-f5816b04163d"));
 
             migrationBuilder.InsertData(
                 table: "T_guild",
