@@ -13,10 +13,9 @@ namespace Sapphire.Service.Contracts
         IEnumerable<HunterDTO> GetAllHunters(bool track);
         HunterDTO GetHunter(Guid huntId, bool track);
         HunterDTO CreateHunter(HunterCreationDTO hunter);
-
-        // should be username upon further implementations
-        HunterDTO GetHunterByName(string hunterName, bool track);    
-        void DeleteHunter(string huntername);
+        HunterDTO GetHunterByName(string HunterName, bool track);    
+        void DeleteHunter(string HunterName);
+        void CheckDuplicateHunter(string HunterName, bool Track);
         void UpdateHunter(string CurrentHunterName, HunterUpdateDTO hud, bool TrackChanges);
         (HunterUpdateDTO hud, Hunters hunt) GetHunterPatch(string CurrentHunterName, bool TrackChanges);
         void SaveHunterChangesPatch(HunterUpdateDTO hud, Hunters hunt);

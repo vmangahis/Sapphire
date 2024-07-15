@@ -66,11 +66,11 @@ namespace Sapphire.Service
             return mapHunter;
             
         }
-        public void DeleteHunter(string huntername) {
-            var hunter = _repomanager.Hunter.GetHunterByName(huntername, false);
+        public void DeleteHunter(string HunterName) {
+            var hunter = _repomanager.Hunter.GetHunterByName(HunterName, false);
             if (hunter == null)
             {
-                throw new HunterNotFoundException(huntername);
+                throw new HunterNotFoundException(HunterName);
             }
             var mappedHunter = _mapper.Map<Hunters>(hunter);
             _repomanager.Hunter.DeleteHunter(mappedHunter);
@@ -78,9 +78,13 @@ namespace Sapphire.Service
         }
         public void UpdateHunter(string CurrentHunterName,HunterUpdateDTO hud, bool TrackChanges) {
             var hunter = _repomanager.Hunter.GetHunterByName(CurrentHunterName, TrackChanges);
-            if (hunter == null) {
+            var newHunterNameExist = _repomanager.Hunter.GetHunterByName(hud.HunterName, TrackChanges);
+            if (hunter is null) 
                 throw new HunterNotFoundException(CurrentHunterName);
-            }
+            
+            if (newHunterNameExist is not null)
+                throw new HunterDuplicateException(hud.HunterName);
+
             _mapper.Map(hud, hunter);
             _repomanager.Save();
 
@@ -101,6 +105,15 @@ namespace Sapphire.Service
         {
             _mapper.Map(hud, hunt);
             _repomanager.Save();
+        }
+
+        public void CheckDuplicateHunter(string HunterName, bool Track)
+        {
+            var hunterExist = _repomanager.Hunter.GetHunterByName(HunterName, Track);
+            if (hunterExist is not null)
+                throw new HunterDuplicateException(HunterName);
+
+            return;
         }
     }
 }

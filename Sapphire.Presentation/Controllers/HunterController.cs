@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Sapphire.Entities.Exceptions.NotFound;
 using Sapphire.Service.Contracts;
 using Sapphire.Shared.DTO;
 using System;
