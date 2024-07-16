@@ -94,9 +94,13 @@ namespace Sapphire.Service
         {
             var hunter = _repomanager.Hunter.GetHunterByName(CurrentHunterName, TrackChanges);
             var newHunterExist = _repomanager.Hunter.GetHunterByName(NewHunterName, TrackChanges);
-            if (String.IsNullOrWhiteSpace(NewHunterName)) {
+
+            if (String.IsNullOrWhiteSpace(NewHunterName)) 
                 throw new HunterNameBlankException();
-            }
+            
+            if (newHunterExist is not null) 
+                throw new HunterDuplicateException(NewHunterName);
+            
             if (hunter == null)
                 throw new HunterNotFoundException(CurrentHunterName);
 
