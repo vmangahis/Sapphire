@@ -6,6 +6,7 @@ using Sapphire.Shared.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -61,8 +62,8 @@ namespace Sapphire.Presentation.Controllers
             if (patchHunter is null) {
                 return BadRequest("Patch request body is null");
             }
-            var newHunterNameObject = patchHunter.Operations.Where(e => e.path.Equals("/HunterName")).First();
-            var newHunterName = newHunterNameObject.value.ToString();
+            var newHunterNameObject = patchHunter.Operations.Where(e => e.path.Equals("/HunterName")).First() ;
+            string newHunterName = newHunterNameObject.value.ToString() ?? string.Empty;
 
             var res = _serv.HunterService.GetHunterPatch(HunterName, newHunterName, TrackChanges: true);
 
