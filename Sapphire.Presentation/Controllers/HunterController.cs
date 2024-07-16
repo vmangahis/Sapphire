@@ -61,7 +61,10 @@ namespace Sapphire.Presentation.Controllers
             if (patchHunter is null) {
                 return BadRequest("Patch request body is null");
             }
-            var res = _serv.HunterService.GetHunterPatch(HunterName, TrackChanges: true);
+            var newHunterNameObject = patchHunter.Operations.Where(e => e.path.Equals("/HunterName")).First();
+            var newHunterName = newHunterNameObject.value.ToString();
+
+            var res = _serv.HunterService.GetHunterPatch(HunterName, newHunterName, TrackChanges: true);
 
             patchHunter.ApplyTo(res.hud, ModelState);
 

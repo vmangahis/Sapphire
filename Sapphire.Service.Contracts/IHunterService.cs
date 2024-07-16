@@ -17,7 +17,7 @@ namespace Sapphire.Service.Contracts
         void DeleteHunter(string HunterName);
         void CheckDuplicateHunter(string HunterName, bool Track);
         void UpdateHunter(string CurrentHunterName, HunterUpdateDTO hud, bool TrackChanges);
-        (HunterUpdateDTO hud, Hunters hunt) GetHunterPatch(string CurrentHunterName, bool TrackChanges);
+        (HunterUpdateDTO hud, Hunters hunt) GetHunterPatch(string CurrentHunterName, string NewHunterName, bool TrackChanges);
         void SaveHunterChangesPatch(HunterUpdateDTO hud, Hunters hunt);
     }
 }

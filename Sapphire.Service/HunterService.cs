@@ -90,13 +90,13 @@ namespace Sapphire.Service
 
         }
 
-        public (HunterUpdateDTO hud, Hunters hunt) GetHunterPatch(string CurrentHunterName, bool TrackChanges)
+        public (HunterUpdateDTO hud, Hunters hunt) GetHunterPatch(string CurrentHunterName, string NewHunterName, bool TrackChanges)
         {
             var hunter = _repomanager.Hunter.GetHunterByName(CurrentHunterName, TrackChanges);
+            var newHunterExist = _repomanager.Hunter.GetHunterByName(NewHunterName, TrackChanges);
             if (hunter == null)
-            {
                 throw new HunterNotFoundException(CurrentHunterName);
-            }
+
             var hunterPatch = _mapper.Map<HunterUpdateDTO>(hunter);
             return (hunterPatch, hunter);
         }
@@ -107,7 +107,7 @@ namespace Sapphire.Service
             _repomanager.Save();
         }
 
-        public void CheckDuplicateHunter(string HunterName, bool Track)
+        public void CheckDuplicateHunter(string HunterName,bool Track)
         {
             var hunterExist = _repomanager.Hunter.GetHunterByName(HunterName, Track);
             if (hunterExist is not null)
