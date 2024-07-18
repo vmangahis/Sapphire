@@ -48,9 +48,9 @@ namespace Sapphire.Service
         public GuildDTO CreateGuild(GuildCreationDTO gdto)
         {
             var existGuild = _repomanager.Guild.GetGuildByName(gdto.GuildName, false);
-            if (existGuild is not null) {
+            if (existGuild is not null) 
                 throw new GuildDuplicateException(gdto.GuildName);
-            }
+            
             
             var gd = _mapper.Map<Guild>(gdto);
             _repomanager.Guild.CreateGuild(gd);
@@ -64,13 +64,10 @@ namespace Sapphire.Service
         {
             var newGuildName = gud.GuildName;
             var gd = _repomanager.Guild.GetGuildByName(CurrentGuildName, track);
-            var guildExist = _repomanager.Guild.GetGuildByName(newGuildName, false);
-            if (gd is null) {
+            if (gd is null) 
                 throw new GuildNotFound(CurrentGuildName);
-            }
-            if (guildExist is not null) {
-                throw new GuildDuplicateException(newGuildName);
-            }
+            
+
             _mapper.Map(gud, gd);
             _repomanager.Save();
         }
@@ -103,9 +100,9 @@ namespace Sapphire.Service
 
         public void CheckDuplicateGuild(string NewGuildName, bool track)
         {
-            if (string.IsNullOrWhiteSpace(NewGuildName)) {
+            if (string.IsNullOrWhiteSpace(NewGuildName)) 
                 throw new GuildNameBlankException();
-            }
+            
             var guild = _repomanager.Guild.GetGuildByName(NewGuildName, track);
             if (guild is not null)
                 throw new GuildDuplicateException(NewGuildName);

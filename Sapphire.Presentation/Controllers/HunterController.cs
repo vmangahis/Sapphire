@@ -53,6 +53,8 @@ namespace Sapphire.Presentation.Controllers
             if (!ModelState.IsValid)
                 return UnprocessableEntity(ModelState);
 
+            _serv.HunterService.CheckDuplicateHunter(hud.HunterName, Track: false);
+
             _serv.HunterService.UpdateHunter(huntername, hud, TrackChanges:true);
             return NoContent();
         }

@@ -46,8 +46,11 @@ namespace Sapphire.Presentation.Controllers
         }
         [HttpPut("{GuildName}/update")]
         public ActionResult UpdateGuild(string GuildName, GuildUpdateDTO gdto) {
+
             if(!ModelState.IsValid)
                 return UnprocessableEntity(ModelState);
+
+            _serv.GuildService.CheckDuplicateGuild(gdto.GuildName, track: false);
 
             _serv.GuildService.UpdateGuild(GuildName, gdto,track: true);
             return NoContent();

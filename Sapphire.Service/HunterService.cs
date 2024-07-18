@@ -37,9 +37,9 @@ namespace Sapphire.Service
         public HunterDTO GetHunter(Guid huntId, bool track)
         {
             var hn = _repomanager.Hunter.GetHunter(huntId, track);
-            if (hn is null) {
+            if (hn is null) 
                 throw new HunterNotFoundException(huntId.ToString());
-            }
+            
             var hnDto = _mapper.Map<HunterDTO>(hn);
             return hnDto;
         }
@@ -47,9 +47,9 @@ namespace Sapphire.Service
         public HunterDTO CreateHunter(HunterCreationDTO hunter)
         {
             var existHunter = _repomanager.Hunter.GetHunterByName(hunter.HunterName, false);
-            if (existHunter != null) {
+            if (existHunter != null) 
                 throw new HunterDuplicateException(hunter.HunterName);
-            }
+            
             var hn = _mapper.Map<Hunters>(hunter);
             _repomanager.Hunter.CreateHunter(hn);
             _repomanager.Save();
@@ -59,9 +59,9 @@ namespace Sapphire.Service
         }
         public HunterDTO GetHunterByName(string HunterName, bool track) {
             var hunter = _repomanager.Hunter.GetHunterByName(HunterName, false);
-            if (hunter == null) {
+            if (hunter == null) 
                 throw new HunterNotFoundException(HunterName);
-            }
+            
             var mapHunter = _mapper.Map<HunterDTO>(hunter);
             return mapHunter;
             
@@ -69,22 +69,17 @@ namespace Sapphire.Service
         public void DeleteHunter(string HunterName) {
             var hunter = _repomanager.Hunter.GetHunterByName(HunterName, false);
             if (hunter == null)
-            {
                 throw new HunterNotFoundException(HunterName);
-            }
+            
             var mappedHunter = _mapper.Map<Hunters>(hunter);
             _repomanager.Hunter.DeleteHunter(mappedHunter);
             _repomanager.Save(); 
         }
         public void UpdateHunter(string CurrentHunterName,HunterUpdateDTO hud, bool TrackChanges) {
             var hunter = _repomanager.Hunter.GetHunterByName(CurrentHunterName, TrackChanges);
-            var newHunterNameExist = _repomanager.Hunter.GetHunterByName(hud.HunterName, TrackChanges);
             if (hunter is null) 
                 throw new HunterNotFoundException(CurrentHunterName);
             
-            if (newHunterNameExist is not null)
-                throw new HunterDuplicateException(hud.HunterName);
-
             _mapper.Map(hud, hunter);
             _repomanager.Save();
 
