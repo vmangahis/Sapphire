@@ -55,13 +55,16 @@ namespace Sapphire.Presentation.Controllers
         [HttpPatch("{GuildName}/patch")]
         public ActionResult PartialUpdateGuild(string GuildName, [FromBody] JsonPatchDocument<GuildUpdateDTO> jsonPatchGuild) {
             if (jsonPatchGuild is null) {
-                return BadRequest("Guild PATCH requestb body is null");
+                return BadRequest("Guild PATCH request body is null");
             }
             var partialUpdateGuild = _serv.GuildService.PartialUpdateGuild(GuildName, track: true);
+            
             jsonPatchGuild.ApplyTo(partialUpdateGuild.gdto, ModelState);
 
             if (!ModelState.IsValid)
                 return UnprocessableEntity(ModelState);
+
+
 
             _serv.GuildService.SaveGuildPatch(partialUpdateGuild.gdto, partialUpdateGuild.guild);
             return NoContent();
