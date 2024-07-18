@@ -100,5 +100,17 @@ namespace Sapphire.Service
             _mapper.Map(gdto, gd);
             _repomanager.Save();
         }
+
+        public void CheckDuplicateGuild(string NewGuildName, bool track)
+        {
+            if (string.IsNullOrWhiteSpace(NewGuildName)) {
+                throw new GuildNameBlankException();
+            }
+            var guild = _repomanager.Guild.GetGuildByName(NewGuildName, track);
+            if (guild is not null)
+                throw new GuildDuplicateException(NewGuildName);
+
+            return;
+        }
     }
 }

@@ -19,5 +19,6 @@ namespace Sapphire.Service.Contracts
         void SaveGuildPatch(GuildUpdateDTO gdto, Guild gd);
         void UpdateGuild(string CurrentGuildName, GuildUpdateDTO gud, bool track);
         void DeleteGuild(string GuildName, bool track);
+        void CheckDuplicateGuild(string NewGuildName, bool track);
     }
 }

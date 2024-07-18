@@ -64,7 +64,9 @@ namespace Sapphire.Presentation.Controllers
             if (!ModelState.IsValid)
                 return UnprocessableEntity(ModelState);
 
+            string newGuildName = partialUpdateGuild.gdto.GuildName;
 
+            _serv.GuildService.CheckDuplicateGuild(newGuildName, track: false);
 
             _serv.GuildService.SaveGuildPatch(partialUpdateGuild.gdto, partialUpdateGuild.guild);
             return NoContent();
