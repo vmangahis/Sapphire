@@ -92,11 +92,11 @@ namespace Sapphire.Service
 
         public (HunterUpdateDTO hud, Hunters hunt) GetHunterPatch(string CurrentHunterName, string NewHunterName, bool TrackChanges)
         {
+            if (String.IsNullOrWhiteSpace(NewHunterName))
+                throw new HunterNameBlankException();
+
             var hunter = _repomanager.Hunter.GetHunterByName(CurrentHunterName, TrackChanges);
             var newHunterExist = _repomanager.Hunter.GetHunterByName(NewHunterName, TrackChanges);
-
-            if (String.IsNullOrWhiteSpace(NewHunterName)) 
-                throw new HunterNameBlankException();
             
             if (newHunterExist is not null) 
                 throw new HunterDuplicateException(NewHunterName);
