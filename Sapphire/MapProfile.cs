@@ -8,8 +8,10 @@ namespace Sapphire
             public MapProfile() {
             CreateMap<Monsters, MonsterDTO>();
             CreateMap<Hunters, HunterDTO>();
+            CreateMap<Hunters, HunterMemberDTO>();
             CreateMap<Guild, GuildDTO>();
             CreateMap<Guild, GuildMembersDTO>();
+            CreateMap<Guild, GuildForHunterMemberDTO>();
             CreateMap<GuildMembersDTO, GuildDTO>();
             CreateMap<HunterCreationDTO, Hunters>();
             CreateMap<GuildCreationDTO, Guild>();

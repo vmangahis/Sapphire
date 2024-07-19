@@ -1,4 +1,5 @@
-﻿using Sapphire.Contracts;
+﻿using Microsoft.EntityFrameworkCore;
+using Sapphire.Contracts;
 using Sapphire.Entities.Models;
 using System;
 using System.Collections.Generic;
@@ -13,10 +14,10 @@ namespace Sapphire.Repository
         public HunterRepository(RepositoryContext repContext) : base(repContext) { }
 
         public IEnumerable<Hunters> GetAllHunters(bool track) {
-            return GetAll(track).OrderBy(x => x.HunterName).ToList();
+            return GetAll(track).OrderBy(x => x.HunterName).Include(e => e.Guild).ToList();
         }
 
-        public Hunters GetHunter(Guid huntId, bool track) => GetThroughCondition(x => x.Id.Equals(huntId), track).SingleOrDefault();
+        public Hunters GetHunter(Guid huntId, bool track) => GetThroughCondition(x => x.Id.Equals(huntId), track).Include(e => e.Guild).SingleOrDefault();
         public Hunters GetHunterByName(string HunterName, bool track) => GetThroughCondition(x => x.HunterName.Equals(HunterName), track).SingleOrDefault();
         public void CreateHunter(Hunters hunt) => Create(hunt);
         public void DeleteHunter(Hunters hunt) => Delete(hunt);
