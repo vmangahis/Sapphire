@@ -10,14 +10,14 @@ namespace Sapphire.Service.Contracts
 {
     public interface IHunterService
     {
-        IEnumerable<HunterDTO> GetAllHunters(bool track);
-        HunterDTO GetHunter(Guid huntId, bool track);
-        HunterDTO CreateHunter(HunterCreationDTO hunter);
-        HunterDTO GetHunterByName(string HunterName, bool track);    
-        void DeleteHunter(string HunterName);
-        void CheckDuplicateHunter(string HunterName, bool Track);
-        void UpdateHunter(string CurrentHunterName, HunterUpdateDTO hud, bool TrackChanges);
-        (HunterUpdateDTO hud, Hunters hunt) GetHunterPatch(string CurrentHunterName, bool TrackChanges);
-        void SaveHunterChangesPatch(HunterUpdateDTO hud, Hunters hunt);
+        Task<IEnumerable<HunterDTO>> GetAllHuntersAsync(bool track);
+        Task<HunterDTO> GetHunterAsync(Guid huntId, bool track);
+        Task<HunterDTO> CreateHunterAsync(HunterCreationDTO hunter);
+        Task<HunterDTO> GetHunterByNameAsync(string HunterName, bool track);    
+        Task<(HunterUpdateDTO hud, Hunters hunt)> GetHunterPatchAsync(string CurrentHunterName, bool TrackChanges);
+        Task SaveHunterChangesPatchAsync(HunterUpdateDTO hud, Hunters hunt);
+        Task DeleteHunterAsync(string HunterName);
+        Task CheckDuplicateHunterAsync(string HunterName, bool Track);
+        Task UpdateHunterAsync(string CurrentHunterName, HunterUpdateDTO hud, bool TrackChanges);
     }
 }

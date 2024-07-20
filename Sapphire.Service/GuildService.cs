@@ -25,66 +25,66 @@ namespace Sapphire.Service
             _mapper = mapper;
         }
 
-        public IEnumerable<GuildDTO> GetAllGuild(bool track)
+        public async Task<IEnumerable<GuildDTO>> GetAllGuildAsync(bool track)
         {
-            var guild = _repomanager.Guild.GetAllGuild(track : false);
+            var guild = await _repomanager.Guild.GetAllGuildAsync (track : false);
             var guildList = _mapper.Map<IEnumerable<GuildDTO>>(guild);
             return guildList; 
         }
 
-        public GuildDTO GetSingleGuild(Guid gid, bool track)
+        public async Task<GuildDTO> GetSingleGuildAsync(Guid gid, bool track)
         {
-            var guild = _repomanager.Guild.GetGuild(gid, track);
+            var guild = await _repomanager.Guild.GetGuildAsync(gid, track);
             var gl = _mapper.Map<GuildDTO>(guild);
             return gl;
         }
 
-        public GuildMembersDTO GetGuildMembers(Guid gid, bool track) {
-            var guild = _repomanager.Guild.GetGuildMembers(gid, track);
+        public async Task<GuildMembersDTO> GetGuildMembersAsync(Guid gid, bool track) {
+            var guild = await _repomanager.Guild.GetGuildMembersAsync(gid, track);
             var guildMembers = _mapper.Map<GuildMembersDTO>(guild);
             return guildMembers;
         }
 
-        public GuildDTO CreateGuild(GuildCreationDTO gdto)
+        public async Task<GuildDTO> CreateGuildAsync(GuildCreationDTO gdto)
         {
-            var existGuild = _repomanager.Guild.GetGuildByName(gdto.GuildName, false);
+            var existGuild = await _repomanager.Guild.GetGuildByNameAsync(gdto.GuildName, false);
             if (existGuild is not null) 
                 throw new GuildDuplicateException(gdto.GuildName);
             
             
             var gd = _mapper.Map<Guild>(gdto);
             _repomanager.Guild.CreateGuild(gd);
-            _repomanager.Save();
+            await _repomanager.SaveAsync();
 
             var gdResult = _mapper.Map<GuildDTO>(gd);
             return gdResult;
         }
 
-        public void UpdateGuild(string CurrentGuildName, GuildUpdateDTO gud, bool track)
+        public async Task UpdateGuildAsync(string CurrentGuildName, GuildUpdateDTO gud, bool track)
         {
             var newGuildName = gud.GuildName;
-            var gd = _repomanager.Guild.GetGuildByName(CurrentGuildName, track);
+            var gd = await _repomanager.Guild.GetGuildByNameAsync(CurrentGuildName, track);
             if (gd is null) 
                 throw new GuildNotFound(CurrentGuildName);
             
 
             _mapper.Map(gud, gd);
-            _repomanager.Save();
+            await _repomanager.SaveAsync();
         }
-        public void DeleteGuild(string GuildName, bool track)
+        public async Task DeleteGuildAsync(string GuildName, bool track)
         {
-            var guild = _repomanager.Guild.GetGuildByName(GuildName, track);
+            var guild = await _repomanager.Guild.GetGuildByNameAsync(GuildName, track);
             if (guild is null)
                 throw new GuildNotFound(GuildName);
             
             var mappedGuild = _mapper.Map<Guild>(guild);
             _repomanager.Guild.DeleteGuild(mappedGuild);
-            _repomanager.Save();
+            await _repomanager.SaveAsync();
         }
 
-        public (GuildUpdateDTO gdto, Guild guild) PartialUpdateGuild(string GuildName, bool track)
+        public async Task<(GuildUpdateDTO gdto, Guild guild)> PartialUpdateGuildAsync(string GuildName, bool track)
         {
-            var guild = _repomanager.Guild.GetGuildByName(GuildName, track);
+            var guild = await _repomanager.Guild.GetGuildByNameAsync(GuildName, track);
             if(guild is null)
                 throw new GuildNotFound(GuildName);
 
@@ -92,18 +92,18 @@ namespace Sapphire.Service
             return (mappedGuild, guild);
         }
 
-        public void SaveGuildPatch(GuildUpdateDTO gdto, Guild gd)
+        public async Task SaveGuildPatchAsync(GuildUpdateDTO gdto, Guild gd)
         {
             _mapper.Map(gdto, gd);
-            _repomanager.Save();
+            await _repomanager.SaveAsync();
         }
 
-        public void CheckDuplicateGuild(string NewGuildName, bool track)
+        public async Task CheckDuplicateGuildAsync(string NewGuildName, bool track)
         {
             if (string.IsNullOrWhiteSpace(NewGuildName)) 
                 throw new GuildNameBlankException();
             
-            var guild = _repomanager.Guild.GetGuildByName(NewGuildName, track);
+            var guild = await _repomanager.Guild.GetGuildByNameAsync(NewGuildName, track);
             if (guild is not null)
                 throw new GuildDuplicateException(NewGuildName);
 

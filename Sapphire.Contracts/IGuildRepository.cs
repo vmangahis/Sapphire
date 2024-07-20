@@ -9,10 +9,10 @@ namespace Sapphire.Contracts
 {
     public interface IGuildRepository
     {
-        IEnumerable<Guild> GetAllGuild(bool track);
-        Guild GetGuild(Guid guildId, bool track);
-        Guild GetGuildByName(string GuildName, bool track);
-        Guild GetGuildMembers(Guid guildId, bool track);
+        Task<IEnumerable<Guild>> GetAllGuildAsync(bool track);
+        Task<Guild> GetGuildAsync(Guid guildId, bool track);
+        Task<Guild> GetGuildByNameAsync(string GuildName, bool track);
+        Task<Guild> GetGuildMembersAsync(Guid guildId, bool track);
         void CreateGuild(Guild gd);
         void UpdateGuild(Guild gd);
         void DeleteGuild(Guild gd);

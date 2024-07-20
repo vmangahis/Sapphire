@@ -11,14 +11,14 @@ namespace Sapphire.Service.Contracts
 {
     public interface IGuildService
     {
-        IEnumerable<GuildDTO> GetAllGuild(bool track);
-        GuildDTO GetSingleGuild(Guid gid, bool track);
-        GuildMembersDTO GetGuildMembers(Guid gid, bool track);
-        GuildDTO CreateGuild(GuildCreationDTO gdto);
-        (GuildUpdateDTO gdto, Guild guild) PartialUpdateGuild(string GuildName, bool track);
-        void SaveGuildPatch(GuildUpdateDTO gdto, Guild gd);
-        void UpdateGuild(string CurrentGuildName, GuildUpdateDTO gud, bool track);
-        void DeleteGuild(string GuildName, bool track);
-        void CheckDuplicateGuild(string NewGuildName, bool track);
+        Task<IEnumerable<GuildDTO>> GetAllGuildAsync(bool track);
+        Task<GuildDTO> GetSingleGuildAsync(Guid gid, bool track);
+        Task<GuildMembersDTO> GetGuildMembersAsync(Guid gid, bool track);
+        Task<GuildDTO> CreateGuildAsync(GuildCreationDTO gdto);
+        Task<(GuildUpdateDTO gdto, Guild guild)> PartialUpdateGuildAsync(string GuildName, bool track);
+        Task SaveGuildPatchAsync(GuildUpdateDTO gdto, Guild gd);
+        Task UpdateGuildAsync(string CurrentGuildName, GuildUpdateDTO gud, bool track);
+        Task DeleteGuildAsync(string GuildName, bool track);
+        Task CheckDuplicateGuildAsync(string NewGuildName, bool track);
     }
 }

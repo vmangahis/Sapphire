@@ -27,7 +27,6 @@ namespace Sapphire.Repository
         public IHunterRepository Hunter => _huntrepo.Value;
         public IGuildRepository Guild => _guildrepo.Value;
         public ILocaleRepository Locale => _localrepo.Value;
-        public void Save() => _repoContext.SaveChanges();      
-        //pdf page 163
+        public async Task SaveAsync() => await _repoContext.SaveChangesAsync();      
     }
 }

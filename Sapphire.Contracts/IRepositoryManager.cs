@@ -12,6 +12,6 @@ namespace Sapphire.Contracts
         IMonsterRepository Monster { get; }
         IHunterRepository Hunter { get; }
         ILocaleRepository Locale { get; }
-        void Save();
+        Task SaveAsync();
     }
 }

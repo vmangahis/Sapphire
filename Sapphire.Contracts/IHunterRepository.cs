@@ -9,9 +9,9 @@ namespace Sapphire.Contracts
 {
     public interface IHunterRepository
     {
-         IEnumerable<Hunters> GetAllHunters(bool track);
-         Hunters GetHunter(Guid huntId, bool track);
-         Hunters GetHunterByName(string hunterName, bool track);
+         Task<IEnumerable<Hunters>> GetAllHuntersAsync(bool track);
+         Task<Hunters> GetHunterAsync(Guid huntId, bool track);
+         Task<Hunters> GetHunterByNameAsync(string hunterName, bool track);
          void CreateHunter(Hunters hunter);
          void DeleteHunter(Hunters hunter);
          void UpdateHunter(Hunters hunter);

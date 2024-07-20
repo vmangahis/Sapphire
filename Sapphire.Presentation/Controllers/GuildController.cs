@@ -20,48 +20,48 @@ namespace Sapphire.Presentation.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetGuild() {
-            var gd = _serv.GuildService.GetAllGuild(track: false);
+        public async Task<ActionResult> GetGuildAsync() {
+            var gd = await _serv.GuildService.GetAllGuildAsync(track: false);
             return Ok(gd);
         }
         [HttpPost]
-        public ActionResult CreateGuild([FromBody] GuildCreationDTO gddto) {
+        public async Task<ActionResult> CreateGuildAsync([FromBody] GuildCreationDTO gddto) {
             if (!ModelState.IsValid) { 
                 return UnprocessableEntity(ModelState);
             }
-            _serv.GuildService.CheckDuplicateGuild(gddto.GuildName, track: false);
-            var gc = _serv.GuildService.CreateGuild(gddto);
+            await _serv.GuildService.CheckDuplicateGuildAsync(gddto.GuildName, track: false);
+            var gc = _serv.GuildService.CreateGuildAsync(gddto);
             return Ok(gddto);
         }
         [HttpGet("{gid:guid}")]
-        public ActionResult GetSingleGuild(Guid gid) {
-            var gd = _serv.GuildService.GetSingleGuild(gid, track: false);
+        public async Task<ActionResult> GetSingleGuildAsync(Guid gid) {
+            var gd = await _serv.GuildService.GetSingleGuildAsync(gid, track: false);
             return Ok(gd);
         
         }
         [HttpGet("{gid:guid}/members")]
-        public ActionResult GetGuildMembers(Guid gid)
+        public async Task<ActionResult> GetGuildMembersAsync(Guid gid)
         {
-           var gd = _serv.GuildService.GetGuildMembers(gid, track: false);
+           var gd = await _serv.GuildService.GetGuildMembersAsync(gid, track: false);
            return Ok(gd);
         }
         [HttpPut("{GuildName}/update")]
-        public ActionResult UpdateGuild(string GuildName, GuildUpdateDTO gdto) {
+        public async Task<ActionResult> UpdateGuildAsync(string GuildName, GuildUpdateDTO gdto) {
 
             if(!ModelState.IsValid)
                 return UnprocessableEntity(ModelState);
 
-            _serv.GuildService.CheckDuplicateGuild(gdto.GuildName, track: false);
+            await _serv.GuildService.CheckDuplicateGuildAsync(gdto.GuildName, track: false);
 
-            _serv.GuildService.UpdateGuild(GuildName, gdto,track: true);
+            await _serv.GuildService.UpdateGuildAsync(GuildName, gdto,track: true);
             return NoContent();
         }
         [HttpPatch("{GuildName}/patch")]
-        public ActionResult PartialUpdateGuild(string GuildName, [FromBody] JsonPatchDocument<GuildUpdateDTO> jsonPatchGuild) {
+        public async Task<ActionResult> PartialUpdateGuildAsync(string GuildName, [FromBody] JsonPatchDocument<GuildUpdateDTO> jsonPatchGuild) {
             if (jsonPatchGuild is null) {
                 return BadRequest("Guild PATCH request body is null");
             }
-            var partialUpdateGuild = _serv.GuildService.PartialUpdateGuild(GuildName, track: true);
+            var partialUpdateGuild = await _serv.GuildService.PartialUpdateGuildAsync(GuildName, track: true);
             
             jsonPatchGuild.ApplyTo(partialUpdateGuild.gdto, ModelState);
 
@@ -70,14 +70,14 @@ namespace Sapphire.Presentation.Controllers
 
             string newGuildName = partialUpdateGuild.gdto.GuildName;
 
-            _serv.GuildService.CheckDuplicateGuild(newGuildName, track: false);
+            await _serv.GuildService.CheckDuplicateGuildAsync(newGuildName, track: false);
 
-            _serv.GuildService.SaveGuildPatch(partialUpdateGuild.gdto, partialUpdateGuild.guild);
+            await _serv.GuildService.SaveGuildPatchAsync(partialUpdateGuild.gdto, partialUpdateGuild.guild);
             return NoContent();
         }
         [HttpDelete("{GuildName}/delete")]
-        public ActionResult DeleteGuild(string GuildName) {
-            _serv.GuildService.DeleteGuild(GuildName, track: false);
+        public async Task<ActionResult> DeleteGuildAsync(string GuildName) {
+            await _serv.GuildService.DeleteGuildAsync(GuildName, track: false);
             return NoContent();
         }
         

@@ -15,13 +15,13 @@ namespace Sapphire.Repository
 
         
         
-        public IEnumerable<Guild> GetAllGuild(bool track) => GetAll(track).OrderBy(x => x.GuildName).Include(x => x.HunterMembers).ToList();
+        public async Task<IEnumerable<Guild>> GetAllGuildAsync(bool track) => await GetAll(track).OrderBy(x => x.GuildName).Include(x => x.HunterMembers).ToListAsync();
         
 
-        public Guild GetGuild(Guid guildId, bool track) => GetThroughCondition(x => x.GuildId.Equals(guildId), track).Include(e => e.HunterMembers).FirstOrDefault();
+        public async Task<Guild> GetGuildAsync(Guid guildId, bool track) => await GetThroughCondition(x => x.GuildId.Equals(guildId), track).Include(e => e.HunterMembers).FirstOrDefaultAsync();
 
-        public Guild GetGuildByName(string gname, bool track) => GetThroughCondition(x => x.GuildName.Equals(gname), track).FirstOrDefault();
-        public Guild GetGuildMembers(Guid guildId, bool track) => GetThroughCondition(x => x.GuildId.Equals(guildId), track).Include(y => y.HunterMembers).FirstOrDefault();
+        public async Task<Guild> GetGuildByNameAsync(string gname, bool track) => await GetThroughCondition(x => x.GuildName.Equals(gname), track).FirstOrDefaultAsync();
+        public async Task<Guild> GetGuildMembersAsync(Guid guildId, bool track) => await GetThroughCondition(x => x.GuildId.Equals(guildId), track).Include(y => y.HunterMembers).FirstOrDefaultAsync();
 
         public void CreateGuild(Guild gd) => Create(gd);
         public void UpdateGuild(Guild gd) => Update(gd);

@@ -13,12 +13,10 @@ namespace Sapphire.Repository
     {
         public HunterRepository(RepositoryContext repContext) : base(repContext) { }
 
-        public IEnumerable<Hunters> GetAllHunters(bool track) {
-            return GetAll(track).OrderBy(x => x.HunterName).Include(e => e.Guild).ToList();
-        }
+        public async Task<IEnumerable<Hunters>> GetAllHuntersAsync(bool track) => await GetAll(track).OrderBy(x => x.HunterName).Include(e => e.Guild).ToListAsync();
 
-        public Hunters GetHunter(Guid huntId, bool track) => GetThroughCondition(x => x.Id.Equals(huntId), track).Include(e => e.Guild).SingleOrDefault();
-        public Hunters GetHunterByName(string HunterName, bool track) => GetThroughCondition(x => x.HunterName.Equals(HunterName), track).SingleOrDefault();
+        public async Task<Hunters> GetHunterAsync(Guid huntId, bool track) => await GetThroughCondition(x => x.Id.Equals(huntId), track).Include(e => e.Guild).SingleOrDefaultAsync();
+        public async Task<Hunters> GetHunterByNameAsync(string HunterName, bool track) => await GetThroughCondition(x => x.HunterName.Equals(HunterName), track).SingleOrDefaultAsync();
         public void CreateHunter(Hunters hunt) => Create(hunt);
         public void DeleteHunter(Hunters hunt) => Delete(hunt);
         public void UpdateHunter(Hunters hunt) => Update(hunt);
