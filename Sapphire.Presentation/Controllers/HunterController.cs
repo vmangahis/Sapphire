@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Sapphire.Entities.Exceptions.NotFound;
 using Sapphire.Service.Contracts;
 using Sapphire.Shared.DTO;
@@ -35,9 +36,10 @@ namespace Sapphire.Presentation.Controllers
         [HttpPost]
         public ActionResult AddHunter([FromBody]HunterCreationDTO hn) {
             if (!ModelState.IsValid)
-            {
                 return UnprocessableEntity(ModelState);
-            }
+
+            _serv.HunterService.CheckDuplicateHunter(hn.HunterName, Track: false);
+
             var hnObject = _serv.HunterService.CreateHunter(hn);
 
             
@@ -61,9 +63,9 @@ namespace Sapphire.Presentation.Controllers
 
         [HttpPatch("{HunterName}")]
         public ActionResult PartialUpdateHunter(string HunterName,[FromBody] JsonPatchDocument<HunterUpdateDTO> patchHunter) {
-            if (patchHunter is null) {
+            if (patchHunter is null)
                 return BadRequest("Patch request body is null");
-            }
+            
 
             var res = _serv.HunterService.GetHunterPatch(HunterName, TrackChanges: true);
 
