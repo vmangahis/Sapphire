@@ -23,18 +23,18 @@ namespace Sapphire.Presentation.Controllers
             _serv = serv;
         }
         [HttpGet]
-        public async Task<ActionResult> GetAllHuntersAsync() { 
+        public async Task<ActionResult> GetAllHunters() { 
                var hunters = await _serv.HunterService.GetAllHuntersAsync(track: false);
                 return Ok(hunters);
         }
 
         [HttpGet("{hnid:guid}", Name="GetHunterById")]
-        public async Task<ActionResult> GetSingleHunterAsync(Guid hnid) {
+        public async Task<ActionResult> GetSingleHunter(Guid hnid) {
             var hunter = await _serv.HunterService.GetHunterAsync(hnid, track: false);
             return Ok(hunter);
         }
         [HttpPost]
-        public async Task<ActionResult> AddHunterAsync([FromBody]HunterCreationDTO hn) {
+        public async Task<ActionResult> AddHunter([FromBody]HunterCreationDTO hn) {
             if (!ModelState.IsValid)
                 return UnprocessableEntity(ModelState);
 
@@ -46,12 +46,12 @@ namespace Sapphire.Presentation.Controllers
             return CreatedAtRoute("GetHunterById", new { hnid = hnObject.Id }, hnObject);
         }
         [HttpDelete("{huntername}")]
-        public async Task<ActionResult> DeleteHunterAsync(string huntername) {
+        public async Task<ActionResult> DeleteHunter(string huntername) {
             await _serv.HunterService.DeleteHunterAsync(huntername);
             return NoContent();
         }
         [HttpPut("{huntername}")]
-        public async Task<ActionResult> UpdateHunterAsync(string huntername,HunterUpdateDTO hud) {
+        public async Task<ActionResult> UpdateHunter(string huntername,HunterUpdateDTO hud) {
             if (!ModelState.IsValid)
                 return UnprocessableEntity(ModelState);
 
@@ -62,7 +62,7 @@ namespace Sapphire.Presentation.Controllers
         }
 
         [HttpPatch("{HunterName}")]
-        public async Task<ActionResult> PartialUpdateHunterAsync(string HunterName,[FromBody] JsonPatchDocument<HunterUpdateDTO> patchHunter) {
+        public async Task<ActionResult> PartialUpdateHunter(string HunterName,[FromBody] JsonPatchDocument<HunterUpdateDTO> patchHunter) {
             if (patchHunter is null)
                 return BadRequest("Patch request body is null");
             

@@ -20,12 +20,12 @@ namespace Sapphire.Presentation.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetGuildAsync() {
+        public async Task<ActionResult> GetGuild() {
             var gd = await _serv.GuildService.GetAllGuildAsync(track: false);
             return Ok(gd);
         }
         [HttpPost]
-        public async Task<ActionResult> CreateGuildAsync([FromBody] GuildCreationDTO gddto) {
+        public async Task<ActionResult> CreateGuild([FromBody] GuildCreationDTO gddto) {
             if (!ModelState.IsValid) { 
                 return UnprocessableEntity(ModelState);
             }
@@ -34,19 +34,19 @@ namespace Sapphire.Presentation.Controllers
             return Ok(gddto);
         }
         [HttpGet("{gid:guid}")]
-        public async Task<ActionResult> GetSingleGuildAsync(Guid gid) {
+        public async Task<ActionResult> GetSingleGuild(Guid gid) {
             var gd = await _serv.GuildService.GetSingleGuildAsync(gid, track: false);
             return Ok(gd);
         
         }
         [HttpGet("{gid:guid}/members")]
-        public async Task<ActionResult> GetGuildMembersAsync(Guid gid)
+        public async Task<ActionResult> GetGuildMembers(Guid gid)
         {
            var gd = await _serv.GuildService.GetGuildMembersAsync(gid, track: false);
            return Ok(gd);
         }
         [HttpPut("{GuildName}/update")]
-        public async Task<ActionResult> UpdateGuildAsync(string GuildName, GuildUpdateDTO gdto) {
+        public async Task<ActionResult> UpdateGuild(string GuildName, GuildUpdateDTO gdto) {
 
             if(!ModelState.IsValid)
                 return UnprocessableEntity(ModelState);
@@ -57,7 +57,7 @@ namespace Sapphire.Presentation.Controllers
             return NoContent();
         }
         [HttpPatch("{GuildName}/patch")]
-        public async Task<ActionResult> PartialUpdateGuildAsync(string GuildName, [FromBody] JsonPatchDocument<GuildUpdateDTO> jsonPatchGuild) {
+        public async Task<ActionResult> PartialUpdateGuild(string GuildName, [FromBody] JsonPatchDocument<GuildUpdateDTO> jsonPatchGuild) {
             if (jsonPatchGuild is null) {
                 return BadRequest("Guild PATCH request body is null");
             }
@@ -76,7 +76,7 @@ namespace Sapphire.Presentation.Controllers
             return NoContent();
         }
         [HttpDelete("{GuildName}/delete")]
-        public async Task<ActionResult> DeleteGuildAsync(string GuildName) {
+        public async Task<ActionResult> DeleteGuild(string GuildName) {
             await _serv.GuildService.DeleteGuildAsync(GuildName, track: false);
             return NoContent();
         }
