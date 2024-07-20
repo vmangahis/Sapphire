@@ -29,6 +29,7 @@ namespace Sapphire.Presentation.Controllers
             if (!ModelState.IsValid) { 
                 return UnprocessableEntity(ModelState);
             }
+            _serv.GuildService.CheckDuplicateGuild(gddto.GuildName, track: false);
             var gc = _serv.GuildService.CreateGuild(gddto);
             return Ok(gddto);
         }
