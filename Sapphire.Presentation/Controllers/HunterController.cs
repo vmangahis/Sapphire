@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Sapphire.Entities.Exceptions.NotFound;
+using Sapphire.Presentation.ActionFilters;
 using Sapphire.Service.Contracts;
 using Sapphire.Shared.DTO;
 using System;
@@ -34,12 +35,9 @@ namespace Sapphire.Presentation.Controllers
             return Ok(hunter);
         }
         [HttpPost]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<ActionResult> AddHunter([FromBody]HunterCreationDTO hn) {
-            if (!ModelState.IsValid)
-                return UnprocessableEntity(ModelState);
-
             await _serv.HunterService.CheckDuplicateHunterAsync(hn.HunterName, Track: false);
-
             var hnObject = await _serv.HunterService.CreateHunterAsync(hn);
 
             
@@ -62,17 +60,12 @@ namespace Sapphire.Presentation.Controllers
         }
 
         [HttpPatch("{HunterName}")]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<ActionResult> PartialUpdateHunter(string HunterName,[FromBody] JsonPatchDocument<HunterUpdateDTO> patchHunter) {
-            if (patchHunter is null)
-                return BadRequest("Patch request body is null");
             
-
             var res = await _serv.HunterService.GetHunterPatchAsync(HunterName, TrackChanges: true);
 
             patchHunter.ApplyTo(res.hud, ModelState);
-
-            if (!ModelState.IsValid)
-                return UnprocessableEntity(ModelState);
 
             string newHunterName = res.hud.HunterName;
 

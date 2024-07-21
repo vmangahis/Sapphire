@@ -8,6 +8,7 @@ using Sapphire.Contracts;
 using Sapphire.Extensions;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Options;
+using Sapphire.Presentation.ActionFilters;
 
 
 var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
@@ -25,6 +26,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.ConfigureCors();
 builder.Services.ConfigureIIS();
+builder.Services.AddScoped<ValidationFilterAttribute>();
 builder.Services.AddControllers().AddApplicationPart(typeof(Sapphire.Presentation.AssemblyReference).Assembly);
 builder.Services.ConfigureRepositoryManager();
 builder.Services.ConfigureServiceManager();
@@ -53,7 +55,6 @@ builder.Logging.ClearProviders();
 builder.Host.UseNLog();
 
 
-
 var app = builder.Build();
 var log = app.Services.GetRequiredService<ILoggerManager>();
 app.ConfigureException(log);
@@ -62,21 +63,13 @@ if (app.Environment.IsProduction()) {
     app.UseHsts();
 }
 app.UseHttpsRedirection();
-
 app.UseStaticFiles();
-
 app.UseForwardedHeaders(new ForwardedHeadersOptions
 {
     ForwardedHeaders = ForwardedHeaders.All
 });
-
-
 app.UseCors("CorsPolicy");
-
 app.UseAuthentication();
-
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();
