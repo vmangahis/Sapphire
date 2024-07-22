@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Sapphire.Presentation.ActionFilters;
 using Sapphire.Service.Contracts;
 using Sapphire.Shared.DTO;
 using System;
@@ -25,6 +26,7 @@ namespace Sapphire.Presentation.Controllers
             return Ok(gd);
         }
         [HttpPost]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<ActionResult> CreateGuild([FromBody] GuildCreationDTO gddto) {
             if (!ModelState.IsValid) { 
                 return UnprocessableEntity(ModelState);
@@ -57,6 +59,7 @@ namespace Sapphire.Presentation.Controllers
             return NoContent();
         }
         [HttpPatch("{GuildName}/patch")]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<ActionResult> PartialUpdateGuild(string GuildName, [FromBody] JsonPatchDocument<GuildUpdateDTO> jsonPatchGuild) {
             if (jsonPatchGuild is null) {
                 return BadRequest("Guild PATCH request body is null");

@@ -45,7 +45,7 @@ namespace Sapphire.Presentation.Controllers
         }
         [HttpDelete("{huntername}")]
         public async Task<ActionResult> DeleteHunter(string huntername) {
-            await _serv.HunterService.DeleteHunterAsync(huntername);
+            await _serv.HunterService.DeleteHunterAsync(huntername, Track: false);
             return NoContent();
         }
         [HttpPut("{huntername}")]

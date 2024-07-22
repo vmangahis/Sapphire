@@ -36,9 +36,7 @@ namespace Sapphire.Service
 
         public async Task<HunterDTO> GetHunterAsync(Guid huntId, bool track)
         {
-            var hn = await _repomanager.Hunter.GetHunterAsync(huntId, track);
-            if (hn is null) 
-                throw new HunterNotFoundException(huntId.ToString());
+            var hn = await GetAndCheckIfHunterExistsById(huntId, track);
             
             var hnDto = _mapper.Map<HunterDTO>(hn);
             return hnDto;
@@ -58,28 +56,22 @@ namespace Sapphire.Service
             return retValue;
         }
         public async Task<HunterDTO> GetHunterByNameAsync(string HunterName, bool track) {
-            var hunter = await _repomanager.Hunter.GetHunterByNameAsync(HunterName, false);
-            if (hunter == null) 
-                throw new HunterNotFoundException(HunterName);
+            var hunter = await GetAndCheckIfHunterExistsByName(HunterName, track);
             
             var mapHunter = _mapper.Map<HunterDTO>(hunter);
             return mapHunter;
             
         }
-        public async Task DeleteHunterAsync(string HunterName) {
-            var hunter = await _repomanager.Hunter.GetHunterByNameAsync(HunterName, false);
-            if (hunter == null)
-                throw new HunterNotFoundException(HunterName);
-            
+        public async Task DeleteHunterAsync(string HunterName, bool Track) {
+            var hunter = await GetAndCheckIfHunterExistsByName(HunterName, Track);
+
             var mappedHunter = _mapper.Map<Hunters>(hunter);
             _repomanager.Hunter.DeleteHunter(mappedHunter);
             await _repomanager.SaveAsync(); 
         }
         public async Task UpdateHunterAsync(string CurrentHunterName,HunterUpdateDTO hud, bool TrackChanges) {
-            var hunter = await _repomanager.Hunter.GetHunterByNameAsync(CurrentHunterName, TrackChanges);
-            if (hunter is null) 
-                throw new HunterNotFoundException(CurrentHunterName);
-            
+            var hunter = await GetAndCheckIfHunterExistsByName(CurrentHunterName, TrackChanges);
+
             _mapper.Map(hud, hunter);
             await _repomanager.SaveAsync();
 
@@ -87,10 +79,7 @@ namespace Sapphire.Service
 
         public async Task<(HunterUpdateDTO hud, Hunters hunt)> GetHunterPatchAsync(string CurrentHunterName, bool TrackChanges)
         {
-            var hunter = await _repomanager.Hunter.GetHunterByNameAsync(CurrentHunterName, TrackChanges);
-            
-            if (hunter == null)
-                throw new HunterNotFoundException(CurrentHunterName);
+            var hunter = await GetAndCheckIfHunterExistsByName(CurrentHunterName, TrackChanges);
 
             var hunterPatch = _mapper.Map<HunterUpdateDTO>(hunter);
             return (hunterPatch, hunter);
@@ -112,6 +101,21 @@ namespace Sapphire.Service
                 throw new HunterDuplicateException(HunterName);
 
             return;
+        }
+        private async Task<Hunters> GetAndCheckIfHunterExistsByName(string HunterName, bool Track) {
+            var hunter = await _repomanager.Hunter.GetHunterByNameAsync(HunterName, Track);
+            if (hunter is null)
+                throw new HunterNotFoundException(HunterName);
+
+            return hunter;
+        }
+        private async Task<Hunters> GetAndCheckIfHunterExistsById(Guid HunterId, bool Track)
+        {
+            var hunter = await _repomanager.Hunter.GetHunterAsync(HunterId, Track);
+            if (hunter is null)
+                throw new HunterNotFoundException(hunter.HunterName);
+
+            return hunter;
         }
     }
 }
