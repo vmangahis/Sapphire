@@ -14,7 +14,7 @@ namespace Sapphire.Service.Contracts
         Task<IEnumerable<GuildDTO>> GetAllGuildAsync(bool track);
         Task<GuildDTO> GetSingleGuildAsync(Guid gid, bool track);
         Task<GuildMembersDTO> GetGuildMembersAsync(Guid gid, bool track);
-        Task<GuildDTO> CreateGuildAsync(GuildCreationDTO gdto);
+        Task<GuildDTO> CreateGuildAsync(GuildCreationDTO gdto, bool track);
         Task<(GuildUpdateDTO gdto, Guild guild)> PartialUpdateGuildAsync(string GuildName, bool track);
         Task SaveGuildPatchAsync(GuildUpdateDTO gdto, Guild gd);
         Task UpdateGuildAsync(string CurrentGuildName, GuildUpdateDTO gud, bool track);

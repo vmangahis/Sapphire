@@ -32,7 +32,7 @@ namespace Sapphire.Presentation.Controllers
                 return UnprocessableEntity(ModelState);
             }
             await _serv.GuildService.CheckDuplicateGuildAsync(gddto.GuildName, track: false);
-            var gc = _serv.GuildService.CreateGuildAsync(gddto);
+            var gc = _serv.GuildService.CreateGuildAsync(gddto, track: false);
             return Ok(gddto);
         }
         [HttpGet("{gid:guid}")]
