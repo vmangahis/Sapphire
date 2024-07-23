@@ -17,7 +17,7 @@ namespace Sapphire.Service.Contracts
         Task<(HunterUpdateDTO hud, Hunters hunt)> GetHunterPatchAsync(string CurrentHunterName, bool TrackChanges);
         Task SaveHunterChangesPatchAsync(HunterUpdateDTO hud, Hunters hunt);
         Task DeleteHunterAsync(string HunterName, bool Track);
-        Task CheckDuplicateHunterAsync(string HunterName, bool Track);
+        Task CheckDuplicateHunterAsync(string? HunterName, bool Track);
         Task UpdateHunterAsync(string CurrentHunterName, HunterUpdateDTO hud, bool TrackChanges);
     }
 }

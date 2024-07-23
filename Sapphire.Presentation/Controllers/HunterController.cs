@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.JsonPatch;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Sapphire.Entities.Exceptions.NotFound;
@@ -53,8 +54,6 @@ namespace Sapphire.Presentation.Controllers
             if (!ModelState.IsValid)
                 return UnprocessableEntity(ModelState);
 
-            await _serv.HunterService.CheckDuplicateHunterAsync(hud.HunterName, Track: false);
-
             await _serv.HunterService.UpdateHunterAsync(huntername, hud, TrackChanges:true);
             return NoContent();
         }
@@ -64,12 +63,13 @@ namespace Sapphire.Presentation.Controllers
         public async Task<ActionResult> PartialUpdateHunter(string HunterName,[FromBody] JsonPatchDocument<HunterUpdateDTO> patchHunter) {
             
             var res = await _serv.HunterService.GetHunterPatchAsync(HunterName, TrackChanges: true);
+            var nameValidation = patchHunter.Operations.Where(e => e.path.ToUpper().Equals("/HUNTERNAME"))
+                                                       .Where(e => e.op.ToUpper().Equals("REPLACE")).FirstOrDefault();
 
-            patchHunter.ApplyTo(res.hud, ModelState);
+            if(nameValidation is not null)
+                await _serv.HunterService.CheckDuplicateHunterAsync(nameValidation?.value.ToString(), Track: false);
 
-            string newHunterName = res.hud.HunterName;
-
-            await _serv.HunterService.CheckDuplicateHunterAsync(newHunterName, Track: false);
+            patchHunter.ApplyTo(res.hud, ModelState);            
 
             await _serv.HunterService.SaveHunterChangesPatchAsync(res.hud, res.hunt);
 

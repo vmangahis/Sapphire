@@ -72,6 +72,8 @@ namespace Sapphire.Service
         public async Task UpdateHunterAsync(string CurrentHunterName,HunterUpdateDTO hud, bool TrackChanges) {
             var hunter = await GetAndCheckIfHunterExistsByName(CurrentHunterName, TrackChanges);
 
+            await CheckDuplicateHunterAsync(hud.HunterName, TrackChanges);
+
             _mapper.Map(hud, hunter);
             await _repomanager.SaveAsync();
 
@@ -91,7 +93,7 @@ namespace Sapphire.Service
             await _repomanager.SaveAsync();
         }
 
-        public async Task CheckDuplicateHunterAsync(string HunterName,bool Track)
+        public async Task CheckDuplicateHunterAsync(string? HunterName,bool Track)
         {
             if (string.IsNullOrWhiteSpace(HunterName))
                 throw new HunterNameBlankException();
