@@ -91,7 +91,7 @@ namespace Sapphire.Service
             await _repomanager.SaveAsync();
         }
 
-        public async Task CheckDuplicateGuildAsync(string NewGuildName, bool track)
+        public async Task CheckDuplicateGuildAsync(string? NewGuildName, bool track)
         {
             if (string.IsNullOrWhiteSpace(NewGuildName)) 
                 throw new GuildNameBlankException();

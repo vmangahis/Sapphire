@@ -61,19 +61,21 @@ namespace Sapphire.Presentation.Controllers
         [HttpPatch("{GuildName}/patch")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<ActionResult> PartialUpdateGuild(string GuildName, [FromBody] JsonPatchDocument<GuildUpdateDTO> jsonPatchGuild) {
-            if (jsonPatchGuild is null) {
-                return BadRequest("Guild PATCH request body is null");
-            }
-            var partialUpdateGuild = await _serv.GuildService.PartialUpdateGuildAsync(GuildName, track: true);
             
+            var partialUpdateGuild = await _serv.GuildService.PartialUpdateGuildAsync(GuildName, track: true);
+            var guildNameValidation = jsonPatchGuild.Operations.Where(o => o.path.ToUpper().Equals("/GUILDNAME"))
+                                                               .Where(o => o.op.ToUpper().Equals("REPLACE")).FirstOrDefault();
+
+            if (guildNameValidation is not null)
+                await _serv.GuildService.CheckDuplicateGuildAsync(guildNameValidation.value.ToString(), track: false);
+
+
             jsonPatchGuild.ApplyTo(partialUpdateGuild.gdto, ModelState);
 
             if (!ModelState.IsValid)
                 return UnprocessableEntity(ModelState);
 
-            string newGuildName = partialUpdateGuild.gdto.GuildName;
 
-            await _serv.GuildService.CheckDuplicateGuildAsync(newGuildName, track: false);
 
             await _serv.GuildService.SaveGuildPatchAsync(partialUpdateGuild.gdto, partialUpdateGuild.guild);
             return NoContent();
