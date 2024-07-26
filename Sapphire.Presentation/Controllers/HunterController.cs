@@ -42,6 +42,12 @@ namespace Sapphire.Presentation.Controllers
             return Ok(HunterList);
 
         }
+        [HttpPost("multiple")]
+        public async Task<ActionResult> CreateMultipleHunters([FromBody] IEnumerable<HunterCreationDTO> HunterForCreation)
+        {
+            var res = await _serv.HunterService.CreateMultipleHuntersAsync(HunterForCreation);
+            return CreatedAtRoute("GetMultipleHunters", new { res.HunterNames }, res.HunterLists);
+        }
         [HttpPost]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<ActionResult> AddHunter([FromBody]HunterCreationDTO hn) {

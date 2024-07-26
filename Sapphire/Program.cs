@@ -52,7 +52,7 @@ builder.Services.AddSwaggerGen();
 
 
 var app = builder.Build();
-//app.ConfigureException();
+app.ConfigureException();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsProduction()) {
     app.UseHsts();
