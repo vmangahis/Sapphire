@@ -18,7 +18,7 @@ namespace Sapphire.Service
     {
         private readonly IRepositoryManager _repomanager;
         private readonly IMapper _mapper;
-        public GuildService(IRepositoryManager repo, ILoggerManager logger, IMapper mapper) {
+        public GuildService(IRepositoryManager repo, IMapper mapper) {
             _repomanager = repo;
             _mapper = mapper;
         }

@@ -19,7 +19,7 @@ namespace Sapphire.Service
         private readonly IRepositoryManager _repomanager;
         private readonly IMapper _mapper;
 
-        public HunterService(IRepositoryManager repomanager, ILoggerManager logger, IMapper mapper) { 
+        public HunterService(IRepositoryManager repomanager, IMapper mapper) { 
             _repomanager = repomanager;
             _mapper = mapper;
         }
@@ -112,9 +112,34 @@ namespace Sapphire.Service
         {
             var hunter = await _repomanager.Hunter.GetHunterAsync(HunterId, Track);
             if (hunter is null)
-                throw new HunterNotFoundException(hunter.HunterName);
+                throw new HunterNotFoundException(HunterId.ToString());
 
             return hunter;
+        }
+
+        public async Task<(IEnumerable<HunterDTO> HunterLists, string HunterNames)> CreateMultipleHuntersAsync(IEnumerable<HunterCreationDTO> HunterListCreation)
+        {
+            if (HunterListCreation is null)
+                throw new HunterListBadRequest();
+
+            // convert list of hunters to Hunter Entity to be saved
+            var mappedHunterList = _mapper.Map<IEnumerable<Hunters>>(HunterListCreation);
+            foreach (var hunter in mappedHunterList)
+                _repomanager.Hunter.CreateHunter(hunter);
+
+            await _repomanager.SaveAsync();
+
+            //convert back to DTO
+            var mappedHunterListDto = _mapper.Map<IEnumerable<HunterDTO>>(mappedHunterList);
+            var HunterName = string.Join(",", mappedHunterListDto.Select(x => x.HunterName));
+            return (HunterLists:  mappedHunterListDto, HunterNames: HunterName);
+        }
+
+        public async Task<IEnumerable<HunterDTO>> GetMultipleHuntersByNameAsync(IEnumerable<string> HunterNames, bool TrackChanges)
+        {
+            var hunterlist = await _repomanager.Hunter.GetMultipleHuntersByNameAsync(HunterNames, TrackChanges);
+            var mappedHunterList = _mapper.Map<IEnumerable<HunterDTO>>(hunterlist);
+            return mappedHunterList;
         }
     }
 }

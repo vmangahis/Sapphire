@@ -9,7 +9,7 @@ namespace Sapphire.Extensions
 {
     public static class ExceptionMiddlewareExtension
     {
-        public static void ConfigureException(this WebApplication app, ILoggerManager logmanager) {
+        public static void ConfigureException(this WebApplication app) {
             app.UseExceptionHandler(error => {
 
                 error.Run(async cont => {
@@ -24,7 +24,6 @@ namespace Sapphire.Extensions
                             BadRequestException => StatusCodes.Status400BadRequest,
                             _ => StatusCodes.Status500InternalServerError
                         };
-                        logmanager.LogError($"Something threw an error: {contFeat.Error}");
 
                         await cont.Response.WriteAsync(new ErrorDetails() { 
                             StatusCode = cont.Response.StatusCode,

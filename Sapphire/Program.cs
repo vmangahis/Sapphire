@@ -26,6 +26,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.ConfigureCors();
 builder.Services.ConfigureIIS();
 builder.Services.AddScoped<ValidationFilterAttribute>();
+builder.Services.ConfigureLogger();
 builder.Services.AddControllers().AddApplicationPart(typeof(Sapphire.Presentation.AssemblyReference).Assembly);
 builder.Services.ConfigureRepositoryManager();
 builder.Services.ConfigureServiceManager();
@@ -48,12 +49,10 @@ builder.Services.AddSwaggerGen();
 
 
 
-//Logger
-//builder.Services.ConfigureLogger();
-//builder.Logging.ClearProviders();
 
 
 var app = builder.Build();
+//app.ConfigureException();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsProduction()) {
     app.UseHsts();

@@ -8,12 +8,12 @@ using Sapphire.Entities.Exceptions.NotFound;
 
 namespace Sapphire.Service
 {
-    internal sealed class MonsterService : IMonsterService
+    public sealed class MonsterService : IMonsterService
     {
         private readonly IRepositoryManager _repomanager;
         private readonly IMapper _mapper;
 
-        public MonsterService(IRepositoryManager repomanager, ILoggerManager logger, IMapper map) { 
+        public MonsterService(IRepositoryManager repomanager, IMapper map) { 
             _repomanager = repomanager;
             _mapper = map;
         }

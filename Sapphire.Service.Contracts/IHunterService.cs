@@ -11,6 +11,8 @@ namespace Sapphire.Service.Contracts
     public interface IHunterService
     {
         Task<IEnumerable<HunterDTO>> GetAllHuntersAsync(bool track);
+        Task<(IEnumerable<HunterDTO> HunterLists, string HunterNames)> CreateMultipleHuntersAsync(IEnumerable<HunterCreationDTO> HunterListCreation);
+        Task<IEnumerable<HunterDTO>> GetMultipleHuntersByNameAsync(IEnumerable<string> HunterNames, bool TrackChanges);
         Task<HunterDTO> GetHunterAsync(Guid huntId, bool track);
         Task<HunterDTO> CreateHunterAsync(HunterCreationDTO hunter);
         Task<HunterDTO> GetHunterByNameAsync(string HunterName, bool track);    
