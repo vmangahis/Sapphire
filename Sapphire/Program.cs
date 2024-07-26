@@ -11,7 +11,6 @@ using Microsoft.Extensions.Options;
 using Sapphire.Presentation.ActionFilters;
 
 
-var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 
 NewtonsoftJsonPatchInputFormatter GetJsonPatchInputFormatter() => new ServiceCollection().AddLogging().
     AddMvc().
@@ -50,14 +49,11 @@ builder.Services.AddSwaggerGen();
 
 
 //Logger
-builder.Services.ConfigureLogger();
-builder.Logging.ClearProviders();
-builder.Host.UseNLog();
+//builder.Services.ConfigureLogger();
+//builder.Logging.ClearProviders();
 
 
 var app = builder.Build();
-var log = app.Services.GetRequiredService<ILoggerManager>();
-app.ConfigureException(log);
 // Configure the HTTP request pipeline.
 if (app.Environment.IsProduction()) {
     app.UseHsts();

@@ -17,12 +17,10 @@ namespace Sapphire.Service
     public sealed class HunterService : IHunterService
     {
         private readonly IRepositoryManager _repomanager;
-        private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
 
         public HunterService(IRepositoryManager repomanager, ILoggerManager logger, IMapper mapper) { 
             _repomanager = repomanager;
-            _logger = logger;  
             _mapper = mapper;
         }
 
@@ -30,7 +28,6 @@ namespace Sapphire.Service
             
                 var hn = await _repomanager.Hunter.GetAllHuntersAsync(track);
                 var hnDto = _mapper.Map<IEnumerable<HunterDTO>>(hn);
-                _logger.LogInformation("Got all hunters");
                 return hnDto;          
         }
 
