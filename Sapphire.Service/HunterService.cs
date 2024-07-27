@@ -122,6 +122,9 @@ namespace Sapphire.Service
             if (HunterListCreation is null)
                 throw new HunterListBadRequest();
 
+            foreach (var huntername in HunterListCreation)
+                await CheckDuplicateHunterAsync(huntername.HunterName, Track: false);
+
             // convert list of hunters to Hunter Entity to be saved
             var mappedHunterList = _mapper.Map<IEnumerable<Hunters>>(HunterListCreation);
             foreach (var hunter in mappedHunterList)
@@ -140,6 +143,14 @@ namespace Sapphire.Service
             var hunterlist = await _repomanager.Hunter.GetMultipleHuntersByNameAsync(HunterNames, TrackChanges);
             var mappedHunterList = _mapper.Map<IEnumerable<HunterDTO>>(hunterlist);
             return mappedHunterList;
+        }
+
+        public async Task DeleteHunterByIdAsync(Guid HunterId, bool Track)
+        {
+            var hunter = await _repomanager.Hunter.GetHunterAsync(HunterId, Track);
+            var huntermapped = _mapper.Map<Hunters>(hunter);
+            _repomanager.Hunter.DeleteHunter(huntermapped);
+            await _repomanager.SaveAsync();
         }
     }
 }

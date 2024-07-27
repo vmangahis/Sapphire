@@ -62,6 +62,12 @@ namespace Sapphire.Presentation.Controllers
             await _serv.HunterService.DeleteHunterAsync(huntername, Track: false);
             return NoContent();
         }
+        [HttpDelete("{hunterid:guid}")]
+        public async Task<ActionResult> DeleteHunterById(Guid hunterid)
+        {
+            await _serv.HunterService.DeleteHunterByIdAsync(hunterid, Track: false);
+            return NoContent();
+        }
         [HttpPut("{huntername}")]
         public async Task<ActionResult> UpdateHunter(string huntername,HunterUpdateDTO hud) {
             if (!ModelState.IsValid)
