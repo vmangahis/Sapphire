@@ -28,7 +28,7 @@ namespace Sapphire.Presentation.Controllers
         [HttpPost]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<ActionResult> CreateGuild([FromBody] GuildCreationDTO gddto) {
-            if (!ModelState.IsValid) { 
+            if (!ModelState.IsValid) {
                 return UnprocessableEntity(ModelState);
             }
             await _serv.GuildService.CheckDuplicateGuildAsync(gddto.GuildName, track: false);
@@ -39,29 +39,29 @@ namespace Sapphire.Presentation.Controllers
         public async Task<ActionResult> GetSingleGuild(Guid gid) {
             var gd = await _serv.GuildService.GetSingleGuildAsync(gid, track: false);
             return Ok(gd);
-        
+
         }
         [HttpGet("{gid:guid}/members")]
         public async Task<ActionResult> GetGuildMembers(Guid gid)
         {
-           var gd = await _serv.GuildService.GetGuildMembersAsync(gid, track: false);
-           return Ok(gd);
+            var gd = await _serv.GuildService.GetGuildMembersAsync(gid, track: false);
+            return Ok(gd);
         }
         [HttpPut("{GuildName}/update")]
         public async Task<ActionResult> UpdateGuild(string GuildName, GuildUpdateDTO gdto) {
 
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
                 return UnprocessableEntity(ModelState);
 
             await _serv.GuildService.CheckDuplicateGuildAsync(gdto.GuildName, track: false);
 
-            await _serv.GuildService.UpdateGuildAsync(GuildName, gdto,track: true);
+            await _serv.GuildService.UpdateGuildAsync(GuildName, gdto, track: true);
             return NoContent();
         }
         [HttpPatch("{GuildName}/patch")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<ActionResult> PartialUpdateGuild(string GuildName, [FromBody] JsonPatchDocument<GuildUpdateDTO> jsonPatchGuild) {
-            
+
             var partialUpdateGuild = await _serv.GuildService.PartialUpdateGuildAsync(GuildName, track: true);
             var guildNameValidation = jsonPatchGuild.Operations.Where(o => o.path.ToUpper().Equals("/GUILDNAME"))
                                                                .Where(o => o.op.ToUpper().Equals("REPLACE")).FirstOrDefault();
@@ -83,6 +83,11 @@ namespace Sapphire.Presentation.Controllers
         [HttpDelete("{GuildName}/delete")]
         public async Task<ActionResult> DeleteGuild(string GuildName) {
             await _serv.GuildService.DeleteGuildAsync(GuildName, track: false);
+            return NoContent();
+        }
+        [HttpDelete("{GuildId:guid}/delete")]
+        public async Task<ActionResult> DeleteGuildById(Guid GuildId)
+        {
             return NoContent();
         }
         
