@@ -82,6 +82,14 @@ namespace Sapphire.Service
             var mappedGuild = _mapper.Map<GuildUpdateDTO>(guild);
             return (mappedGuild, guild);
         }
+        public async Task DeleteGuildByIdAsync(Guid GuildId, bool track)
+        {
+            var guild = await CheckIfGuildExistsById(GuildId, track);
+
+            var mappedGuild = _mapper.Map<Guild>(guild);
+            _repomanager.Guild.DeleteGuild(mappedGuild);
+            await _repomanager.SaveAsync();
+        }
 
         public async Task SaveGuildPatchAsync(GuildUpdateDTO gdto, Guild gd)
         {

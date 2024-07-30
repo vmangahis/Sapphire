@@ -20,5 +20,6 @@ namespace Sapphire.Service.Contracts
         Task UpdateGuildAsync(string CurrentGuildName, GuildUpdateDTO gud, bool track);
         Task DeleteGuildAsync(string GuildName, bool track);
         Task CheckDuplicateGuildAsync(string NewGuildName, bool track);
+        Task DeleteGuildByIdAsync(Guid GuildId, bool track);
     }
 }
