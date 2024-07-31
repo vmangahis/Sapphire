@@ -88,6 +88,7 @@ namespace Sapphire.Presentation.Controllers
         [HttpDelete("{GuildId:guid}/delete")]
         public async Task<ActionResult> DeleteGuildById(Guid GuildId)
         {
+            await _serv.GuildService.DeleteGuildByIdAsync(GuildId, track: false);
             return NoContent();
         }
         
