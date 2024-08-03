@@ -24,9 +24,9 @@ namespace Sapphire.Service
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<HunterDTO>> GetAllHuntersAsync(bool track) {
+        public async Task<IEnumerable<HunterDTO>> GetAllHuntersAsync(bool track, HunterParameters HunterParams) {
             
-                var hn = await _repomanager.Hunter.GetAllHuntersAsync(track);
+                var hn = await _repomanager.Hunter.GetAllHuntersAsync(track, HunterParams);
                 var hnDto = _mapper.Map<IEnumerable<HunterDTO>>(hn);
                 return hnDto;          
         }

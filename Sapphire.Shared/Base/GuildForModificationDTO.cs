@@ -5,9 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sapphire.Shared.DTO
+namespace Sapphire.Shared.DTOBase
 {
-    public abstract record GuildForModificationDTO{
+    public abstract record GuildForModificationDTO
+    {
         [Required(ErrorMessage = "Please provide a guild name.")]
         [MaxLength(20, ErrorMessage = "Guild names can only be 20 characters")]
         public string GuildName { get; init; }

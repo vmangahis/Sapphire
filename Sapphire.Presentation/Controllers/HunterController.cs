@@ -25,8 +25,8 @@ namespace Sapphire.Presentation.Controllers
             _serv = serv;
         }
         [HttpGet]
-        public async Task<ActionResult> GetAllHunters() { 
-               var hunters = await _serv.HunterService.GetAllHuntersAsync(track: false);
+        public async Task<ActionResult> GetAllHunters([FromQuery] HunterParameters HunterParams) { 
+               var hunters = await _serv.HunterService.GetAllHuntersAsync(track: false, HunterParams);
                 return Ok(hunters);
         }
 

@@ -42,7 +42,7 @@ namespace Sapphire.Presentation.Controllers
 
         }
         [HttpGet("{gid:guid}/members")]
-        public async Task<ActionResult> GetGuildMembers(Guid gid, [FromQuery] GuildMemberParams GmParam)
+        public async Task<ActionResult> GetGuildMembers(Guid gid, [FromQuery] GuildMemberParameters GmParam)
         {
             var gd = await _serv.GuildService.GetGuildMembersAsync(gid, track: false);
             return Ok(gd);

@@ -7,5 +7,5 @@ using System.Threading.Tasks;
 
 namespace Sapphire.Shared.DTO
 {
-    public class GuildMemberParameters : RequestParameters { }
+    public class HunterParameters : RequestParameters { }
 }

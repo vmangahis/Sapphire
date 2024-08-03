@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Sapphire.Contracts\Sapphire.Contracts.csproj" />
     <ProjectReference Include="..\Sapphire.Entities\Sapphire.Entities.csproj" />
+    <ProjectReference Include="..\Sapphire.Shared\Sapphire.Shared.csproj" />
   </ItemGroup>
 
 </Project>
