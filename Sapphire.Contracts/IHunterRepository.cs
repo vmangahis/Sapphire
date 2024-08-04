@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 using Sapphire.Entities.Models;
 using Sapphire.Shared;
 using Sapphire.Shared.DTO;
+using Sapphire.Shared.RequestFeatures;
 
 namespace Sapphire.Contracts
 {
     public interface IHunterRepository
     {
-         Task<IEnumerable<Hunters>> GetAllHuntersAsync(bool track, HunterParameters HunterParams);
+         Task<PagedList<Hunters>> GetAllHuntersAsync(bool track, HunterParameters HunterParams);
          Task<Hunters> GetHunterAsync(Guid huntId, bool track);
          Task<Hunters> GetHunterByNameAsync(string hunterName, bool track);
         Task <IEnumerable<Hunters>> GetMultipleHuntersByNameAsync(IEnumerable<string> HunterNameList, bool TrackChanges);

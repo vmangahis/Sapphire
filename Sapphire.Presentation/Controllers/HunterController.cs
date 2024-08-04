@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Sapphire.Presentation.Controllers
@@ -26,8 +27,9 @@ namespace Sapphire.Presentation.Controllers
         }
         [HttpGet]
         public async Task<ActionResult> GetAllHunters([FromQuery] HunterParameters HunterParams) { 
-               var hunters = await _serv.HunterService.GetAllHuntersAsync(track: false, HunterParams);
-                return Ok(hunters);
+               var huntersPaged = await _serv.HunterService.GetAllHuntersAsync(track: false, HunterParams);
+            Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(huntersPaged.metadata));
+                return Ok(huntersPaged.Hunters);
         }
 
         [HttpGet("{hnid:guid}", Name="GetHunterById")]

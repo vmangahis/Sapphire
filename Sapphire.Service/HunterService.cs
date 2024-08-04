@@ -6,6 +6,7 @@ using Sapphire.Entities.Exceptions.NotFound;
 using Sapphire.Entities.Models;
 using Sapphire.Service.Contracts;
 using Sapphire.Shared.DTO;
+using Sapphire.Shared.RequestFeatures;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,11 +25,11 @@ namespace Sapphire.Service
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<HunterDTO>> GetAllHuntersAsync(bool track, HunterParameters HunterParams) {
+        public async Task<(IEnumerable<HunterDTO> Hunters, MetaData metadata)> GetAllHuntersAsync(bool track, HunterParameters HunterParams) {
             
                 var hn = await _repomanager.Hunter.GetAllHuntersAsync(track, HunterParams);
                 var hnDto = _mapper.Map<IEnumerable<HunterDTO>>(hn);
-                return hnDto;          
+                return (Hunters: hnDto, metadata: hn.MetaData);          
         }
 
         public async Task<HunterDTO> GetHunterAsync(Guid huntId, bool track)

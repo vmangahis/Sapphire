@@ -2,6 +2,7 @@
 using Sapphire.Contracts;
 using Sapphire.Entities.Models;
 using Sapphire.Shared.DTO;
+using Sapphire.Shared.RequestFeatures;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,12 +15,16 @@ namespace Sapphire.Repository
     {
         public HunterRepository(RepositoryContext repContext) : base(repContext) { }
 
-        public async Task<IEnumerable<Hunters>> GetAllHuntersAsync(bool track, HunterParameters HunterParams) => await GetAll(track)
+        public async Task<PagedList<Hunters>> GetAllHuntersAsync(bool track, HunterParameters HunterParams)
+        {
+            var hunters =  await GetAll(track)
             .OrderBy(x => x.HunterName)
             .Include(e => e.Guild)
-            .Skip((HunterParams.PageNumber - 1) * HunterParams.PageSize)
-            .Take(HunterParams.PageSize)
             .ToListAsync();
+
+            return PagedList<Hunters>
+                   .ToPagedList(hunters, HunterParams.PageNumber, HunterParams.PageSize);
+        }
 
         public async Task<Hunters> GetHunterAsync(Guid huntId, bool track) => await GetThroughCondition(x => x.Id.Equals(huntId), track).Include(e => e.Guild).SingleOrDefaultAsync();
         public async Task<Hunters> GetHunterByNameAsync(string HunterName, bool track) => await GetThroughCondition(x => x.HunterName.Equals(HunterName), track).SingleOrDefaultAsync();
