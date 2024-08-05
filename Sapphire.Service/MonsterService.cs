@@ -34,5 +34,14 @@ namespace Sapphire.Service
             var monDto = _mapper.Map<MonsterDTO>(mon);
             return monDto;
         }
+        public async Task<MonsterDTO> CreateMonster(MonsterCreationDTO monsterCreationDTO)
+        {
+            var moncreateDto = monsterCreationDTO;
+            var mappedMonster = _mapper.Map<Monsters>(monsterCreationDTO);
+             _repomanager.Monster.CreateMonster(mappedMonster);
+            await _repomanager.SaveAsync();
+            var monsterDto = _mapper.Map<MonsterDTO>(mappedMonster);
+            return monsterDto;
+        }
     }
 }

@@ -5,5 +5,6 @@ namespace Sapphire.Service.Contracts
     {
         IEnumerable<MonsterDTO> GetAllMonsters(bool track);
         MonsterDTO GetMonster(Guid monId, bool track);
+        Task<MonsterDTO> CreateMonster(MonsterCreationDTO MonsterCreateDTO);
     }
 }

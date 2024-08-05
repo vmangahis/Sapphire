@@ -11,13 +11,11 @@ namespace Sapphire.Repository
 {
     public class MonsterRepository : RepositoryBase<Monsters>, IMonsterRepository
     {
-        public MonsterRepository(RepositoryContext repContext) : base(repContext)
-        {
-
-        }
+        public MonsterRepository(RepositoryContext repContext) : base(repContext) { }
 
         public IEnumerable<Monsters> GetAllMonsters(bool track) => GetAll(track).OrderBy(e => e.MonsterName);
 
         public Monsters GetMonster(Guid monId, bool track) => GetThroughCondition(x => x.Id.Equals(monId), track).SingleOrDefault();
+        public void CreateMonster(Monsters mon) => Create(mon);
     }
 }

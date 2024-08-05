@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Sapphire.Entities.Models;
+using Sapphire.Shared.Base;
 using Sapphire.Shared.DTO;
 namespace Sapphire
 {
@@ -7,6 +8,8 @@ namespace Sapphire
     {
             public MapProfile() {
             CreateMap<Monsters, MonsterDTO>();
+            CreateMap<MonsterCreationDTO, Monsters>();
+            CreateMap<Monsters, MonsterForModificationDTO>();
             CreateMap<Hunters, HunterDTO>();
             CreateMap<Hunters, HunterMemberDTO>();
             CreateMap<Guild, GuildDTO>();

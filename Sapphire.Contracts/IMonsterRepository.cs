@@ -11,5 +11,6 @@ namespace Sapphire.Contracts
     {
          IEnumerable<Monsters> GetAllMonsters(bool track);
          Monsters GetMonster(Guid monId, bool track);
+        void CreateMonster(Monsters mon);
     }
 }
