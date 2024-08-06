@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Sapphire.Entities.Models;
 using Sapphire.Shared;
-using Sapphire.Shared.DTO;
+using Sapphire.Shared.Parameters;
 using Sapphire.Shared.RequestFeatures;
 
 namespace Sapphire.Contracts

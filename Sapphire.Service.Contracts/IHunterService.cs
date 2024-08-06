@@ -1,5 +1,6 @@
 ﻿using Sapphire.Entities.Models;
 using Sapphire.Shared.DTO;
+using Sapphire.Shared.Parameters;
 using Sapphire.Shared.RequestFeatures;
 using System;
 using System.Collections.Generic;

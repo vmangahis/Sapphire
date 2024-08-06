@@ -6,6 +6,7 @@ using Sapphire.Entities.Exceptions.NotFound;
 using Sapphire.Entities.Models;
 using Sapphire.Service.Contracts;
 using Sapphire.Shared.DTO;
+using Sapphire.Shared.Parameters;
 using Sapphire.Shared.RequestFeatures;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,9 @@ namespace Sapphire.Service
         }
 
         public async Task<(IEnumerable<HunterDTO> Hunters, MetaData metadata)> GetAllHuntersAsync(bool track, HunterParameters HunterParams) {
-            
+
+                if (!HunterParams.ValidRankParameters)
+                    throw new MaxHunterRankRequestException();
                 var hn = await _repomanager.Hunter.GetAllHuntersAsync(track, HunterParams);
                 var hnDto = _mapper.Map<IEnumerable<HunterDTO>>(hn);
                 return (Hunters: hnDto, metadata: hn.MetaData);          
