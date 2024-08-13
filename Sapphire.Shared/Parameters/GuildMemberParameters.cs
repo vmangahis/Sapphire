@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sapphire.Shared.DTO
+namespace Sapphire.Shared.Parameters
 {
     public class GuildMemberParameters : RequestParameters { }
 }

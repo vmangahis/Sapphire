@@ -3,10 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using Sapphire.Presentation.ActionFilters;
 using Sapphire.Service.Contracts;
 using Sapphire.Shared.DTO;
+using Sapphire.Shared.Parameters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Sapphire.Presentation.Controllers
@@ -21,9 +23,10 @@ namespace Sapphire.Presentation.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetGuild() {
-            var gd = await _serv.GuildService.GetAllGuildAsync(track: false);
-            return Ok(gd);
+        public async Task<ActionResult> GetGuild([FromQuery] GuildParameters GuildParams) {
+            var gd = await _serv.GuildService.GetAllGuildAsync(track: false, GuildParams);
+            Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(gd.metaData));
+            return Ok(gd.GuildList);
         }
         [HttpPost]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
@@ -31,8 +34,7 @@ namespace Sapphire.Presentation.Controllers
             if (!ModelState.IsValid) {
                 return UnprocessableEntity(ModelState);
             }
-            await _serv.GuildService.CheckDuplicateGuildAsync(gddto.GuildName, track: false);
-            var gc = _serv.GuildService.CreateGuildAsync(gddto, track: false);
+            var gc = await _serv.GuildService.CreateGuildAsync(gddto, track: false);
             return Ok(gddto);
         }
         [HttpGet("{gid:guid}")]

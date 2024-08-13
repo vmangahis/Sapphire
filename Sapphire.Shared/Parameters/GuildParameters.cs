@@ -7,5 +7,8 @@ using System.Threading.Tasks;
 
 namespace Sapphire.Shared.Parameters
 {
-    public class GuildParameters : RequestParameters { }
+    public class GuildParameters : RequestParameters
+    {
+        public bool InviteOnly { get; set; }
+    }
 }

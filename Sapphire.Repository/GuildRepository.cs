@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Sapphire.Contracts;
 using Sapphire.Entities.Models;
+using Sapphire.Shared.Parameters;
+using Sapphire.Shared.RequestFeatures;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +17,15 @@ namespace Sapphire.Repository
 
         
         
-        public async Task<IEnumerable<Guild>> GetAllGuildAsync(bool track) => await GetAll(track).OrderBy(x => x.GuildName).Include(x => x.HunterMembers).ToListAsync();
+        public async Task<PagedList<Guild>> GetAllGuildAsync(bool track, GuildParameters guildParams)
+        {
+            var guild = await GetThroughCondition((e => e.IsInviteOnly == guildParams.InviteOnly), track)
+                .OrderBy(x => x.GuildName)
+                .Include(x => x.HunterMembers)
+                .ToListAsync();
+            return PagedList<Guild>.ToPagedList(guild, guildParams.PageNumber, guildParams.PageSize);
+        }
+            
         
 
         public async Task<Guild> GetGuildAsync(Guid guildId, bool track) => await GetThroughCondition(x => x.GuildId.Equals(guildId), track).Include(e => e.HunterMembers).FirstOrDefaultAsync();
