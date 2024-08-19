@@ -11,7 +11,10 @@ namespace Sapphire.Shared.Parameters
     {
         public uint MaxRank { get; set; } = int.MaxValue;
         public uint MinRank { get; set; }
+        public string? SearchTerm { get; set; }
+
         public bool ValidRankParameters => MaxRank > MinRank;
 
+        
     }
 }

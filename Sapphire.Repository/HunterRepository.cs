@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Sapphire.Contracts;
 using Sapphire.Entities.Models;
+using Sapphire.Repository.Extensions;
 using Sapphire.Shared.Parameters;
 using Sapphire.Shared.RequestFeatures;
 using System;
@@ -18,6 +19,8 @@ namespace Sapphire.Repository
         public async Task<PagedList<Hunters>> GetAllHuntersAsync(bool track, HunterParameters HunterParams)
         {
             var hunters =  await GetThroughCondition(e => (e.Rank >= HunterParams.MinRank && e.Rank < HunterParams.MaxRank),track)
+            .FilterHuntersRanks(HunterParams.MinRank, HunterParams.MaxRank)
+            .Search(HunterParams.SearchTerm)
             .OrderBy(x => x.HunterName)
             .Include(e => e.Guild)
             .ToListAsync();
