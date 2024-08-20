@@ -27,6 +27,14 @@ namespace Sapphire.Repository.Configuration
                     Rank = 1,
                     ZennyAmount = 5000.0
                     
+                },
+                new Hunters { 
+                
+                    Id =  new Guid(Guid.NewGuid().ToString()),
+                    HunterName = "Astera",
+                    Rank = 50,
+                    ZennyAmount = 9000.0
+
                 }
 
 
