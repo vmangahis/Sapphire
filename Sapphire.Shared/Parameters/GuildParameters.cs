@@ -9,6 +9,10 @@ namespace Sapphire.Shared.Parameters
 {
     public class GuildParameters : RequestParameters
     {
+        public GuildParameters() {
+            OrderBy = "guildname";
+        }
         public bool InviteOnly { get; set; }
+
     }
 }

@@ -9,6 +9,9 @@ namespace Sapphire.Shared.Parameters
 {
     public class HunterParameters : RequestParameters
     {
+        public HunterParameters() {
+            OrderBy = "huntername";
+        }
         public uint MaxRank { get; set; } = int.MaxValue;
         public uint MinRank { get; set; }
         public string? SearchTerm { get; set; }
