@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 
 namespace Sapphire.Repository.Extensions
@@ -23,6 +24,41 @@ namespace Sapphire.Repository.Extensions
             string lowerCaseSearchTerm = SearchTerm.ToLower();
 
             return hunters.Where(e => e.HunterName.ToLower().Contains(lowerCaseSearchTerm));
+
+        }
+        public static IQueryable<Hunters> Sort(this IQueryable<Hunters> hunters, string orderBy)
+        {
+            if (string.IsNullOrWhiteSpace(orderBy))
+            {
+                return hunters.OrderBy(e => e.HunterName);
+            }
+            var hunterType = typeof(Hunters);
+            var orderByParameter = orderBy.Trim().Split(",");
+            var propertyInfo = hunterType.GetProperties(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance);
+
+            var orderByBuilder = new StringBuilder();
+
+            foreach (var order in orderByParameter)
+            {
+                if (string.IsNullOrWhiteSpace(order))
+                    continue;
+
+                var propertyFromQueryName = order.Split(" ")[0];
+                var objectProp = propertyInfo.FirstOrDefault(p => p.Name.Equals(propertyFromQueryName, StringComparison.InvariantCultureIgnoreCase));
+
+                if (objectProp is null)
+                    continue;
+
+                var direction = order.EndsWith(" desc") ? "descending" : "ascending";
+
+                orderByBuilder.Append($"{objectProp.Name.ToString()} {direction}, ");
+            }
+            var query = orderByBuilder.ToString().TrimEnd(',', ' ');
+
+            if (string.IsNullOrWhiteSpace(query))
+                return hunters.OrderBy(e => e.HunterName);
+            
+            return hunters.OrderBy(query);
 
         }
     }
