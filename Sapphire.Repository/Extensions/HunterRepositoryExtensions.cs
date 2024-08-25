@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
+using Sapphire.Repository.Extensions.Utility;
 
 namespace Sapphire.Repository.Extensions
 {
@@ -33,38 +34,8 @@ namespace Sapphire.Repository.Extensions
                 return hunters.OrderBy(e => e.HunterName);
             }
 
-            //Get the entity Hunters
-            var hunterType = typeof(Hunters);
-
-            //Split the string of the parameter by their ","
-            var orderByParameter = orderBy.Trim().Split(",");
-
-            var propertyInfo = hunterType.GetProperties(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance);
-
-            // String to be used to build the query through append
-            var orderByBuilder = new StringBuilder();
-
-
-            //iterate through the split string
-            foreach (var order in orderByParameter)
-            {
-                if (string.IsNullOrWhiteSpace(order))
-                    continue;
-
-               //get the property name ("rank desc" would be evaluated to "rank")
-                var propertyFromQueryName = order.Split(" ")[0];
-
-                //get the property with the name of propertyFromQueryname
-                var objectProp = propertyInfo.FirstOrDefault(p => p.Name.Equals(propertyFromQueryName, StringComparison.InvariantCultureIgnoreCase));
-
-                if (objectProp is null)
-                    continue;
-
-                var direction = order.EndsWith(" desc") ? "descending" : "ascending";
-
-                orderByBuilder.Append($"{objectProp.Name.ToString()} {direction}, ");
-            }
-            var query = orderByBuilder.ToString().TrimEnd(',', ' ');
+            var orderString = OrderByQueryBuilder.CreateOrderByQuery<Hunters>(orderBy);
+           
 
             if (string.IsNullOrWhiteSpace(query))
                 return hunters.OrderBy(e => e.HunterName);
