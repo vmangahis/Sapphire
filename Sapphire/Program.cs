@@ -25,6 +25,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.ConfigureCors();
 builder.Services.ConfigureIIS();
+builder.Services.ConfigureJSONInputPatchFormatter();
 builder.Services.AddScoped<ValidationFilterAttribute>();
 builder.Services.ConfigureLogger();
 builder.Services.AddControllers().AddApplicationPart(typeof(Sapphire.Presentation.AssemblyReference).Assembly);

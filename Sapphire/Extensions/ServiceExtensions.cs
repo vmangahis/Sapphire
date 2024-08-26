@@ -4,6 +4,9 @@ using Sapphire.Service.Contracts;
 using Sapphire.Service;
 using Sapphire.LoggerService;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace Sapphire.Extensions
 {
@@ -26,5 +29,8 @@ namespace Sapphire.Extensions
         public static void ConfigureRepositoryManager(this IServiceCollection serv) => serv.AddScoped<IRepositoryManager, RepositoryManager>();
         public static void ConfigureServiceManager(this IServiceCollection serv) => serv.AddScoped<IServiceManager, ServiceManager>();
         public static void ConfigureNpqSqlContext(this IServiceCollection serv, IConfiguration conf) => serv.AddDbContext<RepositoryContext>(opt => opt.UseNpgsql(conf.GetConnectionString("DevConnString")));
+
+        public static void ConfigureJSONInputPatchFormatter(this IServiceCollection serv) => serv.AddLogging().AddMvc().AddNewtonsoftJson().Services.BuildServiceProvider().GetRequiredService<IOptions<MvcOptions>>().Value.InputFormatters
+          .OfType<NewtonsoftJsonPatchInputFormatter>().First();
     }
 }

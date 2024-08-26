@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.JsonPatch;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Sapphire.Presentation.ActionFilters;
 using Sapphire.Service.Contracts;
@@ -25,7 +26,7 @@ namespace Sapphire.Presentation.Controllers
         [HttpGet]
         public async Task<ActionResult> GetGuild([FromQuery] GuildParameters GuildParams) {
             var gd = await _serv.GuildService.GetAllGuildAsync(track: false, GuildParams);
-            Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(gd.metaData));
+            Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(gd.metaData));
             return Ok(gd.GuildList);
         }
         [HttpPost]

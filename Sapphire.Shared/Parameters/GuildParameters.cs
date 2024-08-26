@@ -12,6 +12,7 @@ namespace Sapphire.Shared.Parameters
         public GuildParameters() {
             OrderBy = "guildname";
         }
+        public string? SearchTerm { get; set; }
         public bool InviteOnly { get; set; }
 
     }

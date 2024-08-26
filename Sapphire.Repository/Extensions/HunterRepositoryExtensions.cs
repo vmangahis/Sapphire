@@ -6,6 +6,7 @@ using System.Text;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using Sapphire.Repository.Extensions.Utility;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Sapphire.Repository.Extensions
 {
@@ -37,10 +38,10 @@ namespace Sapphire.Repository.Extensions
             var orderString = OrderByQueryBuilder.CreateOrderByQuery<Hunters>(orderBy);
            
 
-            if (string.IsNullOrWhiteSpace(query))
+            if (string.IsNullOrWhiteSpace(orderString))
                 return hunters.OrderBy(e => e.HunterName);
             
-            return hunters.OrderBy(query);
+            return hunters.OrderBy(orderString);
 
         }
     }

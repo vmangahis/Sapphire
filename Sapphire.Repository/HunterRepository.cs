@@ -20,8 +20,8 @@ namespace Sapphire.Repository
         {
             var hunters =  await GetThroughCondition(e => (e.Rank >= HunterParams.MinRank && e.Rank < HunterParams.MaxRank),track)
             .FilterHuntersRanks(HunterParams.MinRank, HunterParams.MaxRank)
-            .Search(HunterParams.SearchTerm)
-            .Sort(HunterParams.OrderBy)
+            .Search(HunterParams.SearchTerm ?? "")
+            .Sort(HunterParams.OrderBy ?? "")
             .Include(e => e.Guild)
             .ToListAsync();
 

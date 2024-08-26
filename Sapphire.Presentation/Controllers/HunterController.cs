@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -29,7 +30,7 @@ namespace Sapphire.Presentation.Controllers
         [HttpGet]
         public async Task<ActionResult> GetAllHunters([FromQuery] HunterParameters HunterParams) { 
                var huntersPaged = await _serv.HunterService.GetAllHuntersAsync(track: false, HunterParams);
-            Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(huntersPaged.metadata));
+            Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(huntersPaged.metadata));
                 return Ok(huntersPaged.Hunters);
         }
 
