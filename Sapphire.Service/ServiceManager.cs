@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography.X509Certificates;
 using AutoMapper;
+using Sapphire.Shared.DTO;
 
 namespace Sapphire.Service
 {
@@ -15,9 +16,9 @@ namespace Sapphire.Service
         private readonly Lazy<IHunterService> _hunterService;
         private readonly Lazy<IMonsterService> _monsterService;
         private readonly Lazy<IGuildService> _guildService;
-        public ServiceManager(IRepositoryManager repositorymanager, IMapper map) {
+        public ServiceManager(IRepositoryManager repositorymanager, IMapper map, IDataShaper<HunterDTO> dataShaper) {
             _monsterService = new Lazy<IMonsterService>(() => new MonsterService(repositorymanager, map));
-            _hunterService = new Lazy<IHunterService>(() => new HunterService(repositorymanager, map));
+            _hunterService = new Lazy<IHunterService>(() => new HunterService(repositorymanager, map, dataShaper));
             _guildService = new Lazy<IGuildService>(() => new GuildService(repositorymanager, map));
 
         }

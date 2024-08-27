@@ -11,7 +11,7 @@ namespace Sapphire.Shared.DTOBase
     {
         [Required(ErrorMessage = "Please provide a guild name.")]
         [MaxLength(20, ErrorMessage = "Guild names can only be 20 characters")]
-        public string GuildName { get; init; }
+        public string? GuildName { get; init; }
 
     }
 }

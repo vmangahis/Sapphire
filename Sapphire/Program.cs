@@ -9,23 +9,20 @@ using Sapphire.Extensions;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Options;
 using Sapphire.Presentation.ActionFilters;
+using Sapphire.Shared.DTO;
+using Sapphire.Service;
 
 
 
-NewtonsoftJsonPatchInputFormatter GetJsonPatchInputFormatter() => new ServiceCollection().AddLogging().
-    AddMvc().
-    AddNewtonsoftJson().
-    Services.
-    BuildServiceProvider().GetRequiredService<IOptions<MvcOptions>>().Value.InputFormatters
-    .OfType<NewtonsoftJsonPatchInputFormatter>().First();
-    
+
 
 
 var builder = WebApplication.CreateBuilder(args);
+var newtonSoft = builder.Services.ConfigureJSONInputPatchFormatter();
 // Add services to the container.
 builder.Services.ConfigureCors();
+builder.Services.AddScoped<IDataShaper<HunterDTO>, DataShaper<HunterDTO>>();
 builder.Services.ConfigureIIS();
-builder.Services.ConfigureJSONInputPatchFormatter();
 builder.Services.AddScoped<ValidationFilterAttribute>();
 builder.Services.ConfigureLogger();
 builder.Services.AddControllers().AddApplicationPart(typeof(Sapphire.Presentation.AssemblyReference).Assembly);
@@ -36,7 +33,7 @@ builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddControllers(config => {
     config.RespectBrowserAcceptHeader = true;
     config.ReturnHttpNotAcceptable = true;
-    config.InputFormatters.Insert(0,GetJsonPatchInputFormatter());
+    config.InputFormatters.Insert(0, newtonSoft);
 }).AddXmlDataContractSerializerFormatters();
 
 builder.Services.Configure<ApiBehaviorOptions>(opt => {

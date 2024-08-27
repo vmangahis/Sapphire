@@ -9,7 +9,6 @@ namespace Sapphire.Shared.RequestFeatures
     public abstract class RequestParameters
     {
         const int MaxPageSize = 10;
-
         public int PageNumber { get; set; } = 1;
         private int _pageSize = 5;
         public string? OrderBy { get; set; }
@@ -25,5 +24,6 @@ namespace Sapphire.Shared.RequestFeatures
                 _pageSize = value > MaxPageSize ? MaxPageSize : value;
             }
         }
+        public string? Field { get; set; }
     }
 }

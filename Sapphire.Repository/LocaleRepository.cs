@@ -12,7 +12,7 @@ namespace Sapphire.Repository
     {
         public LocaleRepository(RepositoryContext cont) : base(cont) { }
         public IEnumerable<Locale> GetAllHuntingLocale(bool track) {
-            return null;
+            return Enumerable.Empty<Locale>();
         }
 
     }

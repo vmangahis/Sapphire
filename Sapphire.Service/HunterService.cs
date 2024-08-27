@@ -10,6 +10,7 @@ using Sapphire.Shared.Parameters;
 using Sapphire.Shared.RequestFeatures;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,19 +21,22 @@ namespace Sapphire.Service
     {
         private readonly IRepositoryManager _repomanager;
         private readonly IMapper _mapper;
+        private readonly IDataShaper<HunterDTO> _dataShaper;
 
-        public HunterService(IRepositoryManager repomanager, IMapper mapper) { 
+        public HunterService(IRepositoryManager repomanager, IMapper mapper, IDataShaper<HunterDTO> dataShaper) { 
             _repomanager = repomanager;
             _mapper = mapper;
+            _dataShaper = dataShaper;   
         }
 
-        public async Task<(IEnumerable<HunterDTO> Hunters, MetaData metadata)> GetAllHuntersAsync(bool track, HunterParameters HunterParams) {
+        public async Task<(IEnumerable<ExpandoObject> Hunters, MetaData metadata)> GetAllHuntersAsync(bool track, HunterParameters HunterParams) {
 
                 if (!HunterParams.ValidRankParameters)
                     throw new MaxHunterRankRequestException();
                 var hn = await _repomanager.Hunter.GetAllHuntersAsync(track, HunterParams);
                 var hnDto = _mapper.Map<IEnumerable<HunterDTO>>(hn);
-                return (Hunters: hnDto, metadata: hn.MetaData);          
+            var shapedHunters = _dataShaper.ShapeData(hnDto, HunterParams.Field);
+                return (Hunters: shapedHunters, metadata: hn.MetaData);          
         }
 
         public async Task<HunterDTO> GetHunterAsync(Guid huntId, bool track)

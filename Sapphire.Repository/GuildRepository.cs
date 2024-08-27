@@ -21,8 +21,8 @@ namespace Sapphire.Repository
         public async Task<PagedList<Guild>> GetAllGuildAsync(bool track, GuildParameters guildParams)
         {
             var guild = await GetThroughCondition((e => e.IsInviteOnly == guildParams.InviteOnly), track)
-                .FilterGuildNames(guildParams.SearchTerm)
-                .Sort(guildParams.OrderBy)
+                .FilterGuildNames(guildParams.SearchTerm ?? "")
+                .Sort(guildParams.OrderBy ?? "")
                 .Include(x => x.HunterMembers)
                 .ToListAsync();
             return PagedList<Guild>.ToPagedList(guild, guildParams.PageNumber, guildParams.PageSize);
