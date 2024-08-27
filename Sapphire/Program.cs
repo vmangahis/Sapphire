@@ -22,7 +22,7 @@ var newtonSoft = builder.Services.ConfigureJSONInputPatchFormatter();
 // Add services to the container.
 builder.Services.ConfigureCors();
 builder.Services.AddScoped<IDataShaper<HunterDTO>, DataShaper<HunterDTO>>();
-builder.Services.AddScoped<IDataShaper<HunterDTO>, DataShaper<HunterDTO>>();
+builder.Services.AddScoped<IDataShaper<GuildDTO>, DataShaper<GuildDTO>>();
 builder.Services.ConfigureIIS();
 builder.Services.AddScoped<ValidationFilterAttribute>();
 builder.Services.ConfigureLogger();
@@ -42,7 +42,6 @@ builder.Services.Configure<ApiBehaviorOptions>(opt => {
 });
 
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
