@@ -22,7 +22,6 @@ var newtonSoft = builder.Services.ConfigureJSONInputPatchFormatter();
 // Add services to the container.
 builder.Services.ConfigureCors();
 builder.Services.AddScoped<IDataShaper<HunterDTO>, DataShaper<HunterDTO>>();
-builder.Services.AddScoped<IDataShaper<GuildDTO>, DataShaper<GuildDTO>>();
 builder.Services.ConfigureIIS();
 builder.Services.AddScoped<ValidationFilterAttribute>();
 builder.Services.ConfigureLogger();
