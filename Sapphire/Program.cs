@@ -19,7 +19,6 @@ using Sapphire.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 var newtonSoft = builder.Services.ConfigureJSONInputPatchFormatter();
-// Add services to the container.
 builder.Services.ConfigureCors();
 builder.Services.AddScoped<IDataShaper<HunterDTO>, DataShaper<HunterDTO>>();
 builder.Services.ConfigureIIS();

@@ -35,7 +35,7 @@ namespace Sapphire.Service
                     throw new MaxHunterRankRequestException();
                 var hn = await _repomanager.Hunter.GetAllHuntersAsync(track, HunterParams);
                 var hnDto = _mapper.Map<IEnumerable<HunterDTO>>(hn);
-            var shapedHunters = _dataShaper.ShapeData(hnDto, HunterParams.Field);
+                var shapedHunters = _dataShaper.ShapeData(hnDto, HunterParams.Field);
                 return (Hunters: shapedHunters, metadata: hn.MetaData);          
         }
 

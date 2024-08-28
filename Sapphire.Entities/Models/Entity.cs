@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sapphire.Shared.DTO
+namespace Sapphire.Entities.Models
 {
-    public record GuildForHunterMemberDTO { 
-        public string? GuildName { get; init; }
+    internal class Entity
+    {
+        
     }
 }
