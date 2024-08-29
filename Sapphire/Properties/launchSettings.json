@@ -3,7 +3,6 @@
     "http": {
       "commandName": "Project",
       "launchUrl": "swagger",
-      "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
@@ -13,7 +12,6 @@
     "https": {
       "commandName": "Project",
       "launchUrl": "swagger",
-      "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

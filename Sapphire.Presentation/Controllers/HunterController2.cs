@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 namespace Sapphire.Presentation.Controllers
 {
     [ApiVersion(2.0)]
-    [Route("api/[controller]")]
+    [Route("api/hunter")]
     [ApiController]
     public class HunterController2 : ControllerBase
     {

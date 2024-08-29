@@ -35,15 +35,10 @@ builder.Services.AddControllers(config =>
     config.ReturnHttpNotAcceptable = true;
     config.InputFormatters.Insert(0, newtonSoft);
 });
-
 builder.Services.Configure<ApiBehaviorOptions>(opt => {
     opt.SuppressModelStateInvalidFilter = true;
 });
-
-
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.ConfigureAPIVersioning();
+//builder.Services.ConfigureAPIVersioning();
 
 
 
@@ -55,8 +50,7 @@ app.ConfigureException();
 if (app.Environment.IsProduction()) {
     app.UseHsts();
 }
-app.UseSwagger();
-app.UseSwaggerUI();
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseForwardedHeaders(new ForwardedHeadersOptions
