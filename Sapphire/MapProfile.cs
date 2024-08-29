@@ -15,6 +15,7 @@ namespace Sapphire
             CreateMap<Guild, GuildDTO>();
             CreateMap<Guild, GuildMembersDTO>();
             CreateMap<Guild, GuildForHunterMemberDTO>();
+            CreateMap<GuildForHunterMemberDTO, Guild>();
             CreateMap<GuildMembersDTO, GuildDTO>();
             CreateMap<HunterCreationDTO, Hunters>();
             CreateMap<GuildCreationDTO, Guild>();

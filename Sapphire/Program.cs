@@ -29,11 +29,12 @@ builder.Services.ConfigureRepositoryManager();
 builder.Services.ConfigureServiceManager();
 builder.Services.ConfigureNpqSqlContext(builder.Configuration);
 builder.Services.AddAutoMapper(typeof(Program));
-builder.Services.AddControllers(config => {
+builder.Services.AddControllers(config =>
+{
     config.RespectBrowserAcceptHeader = true;
     config.ReturnHttpNotAcceptable = true;
     config.InputFormatters.Insert(0, newtonSoft);
-}).AddXmlDataContractSerializerFormatters();
+});
 
 builder.Services.Configure<ApiBehaviorOptions>(opt => {
     opt.SuppressModelStateInvalidFilter = true;
@@ -42,6 +43,7 @@ builder.Services.Configure<ApiBehaviorOptions>(opt => {
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.ConfigureAPIVersioning();
 
 
 
@@ -53,6 +55,8 @@ app.ConfigureException();
 if (app.Environment.IsProduction()) {
     app.UseHsts();
 }
+app.UseSwagger();
+app.UseSwaggerUI();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseForwardedHeaders(new ForwardedHeadersOptions

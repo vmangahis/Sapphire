@@ -12,7 +12,7 @@ namespace Sapphire.Entities.Models
     {
         [Column("GuildId")]
         public Guid GuildId { get; set; }
-        public string? GuildName { get; set; }
+        public string GuildName { get; set; } = "Test";
         public bool IsInviteOnly { get; set; }
         public ICollection<Hunters>? HunterMembers { get; set; }
 

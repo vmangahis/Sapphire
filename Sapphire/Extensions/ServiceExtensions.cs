@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Asp.Versioning;
 
 namespace Sapphire.Extensions
 {
@@ -20,8 +21,8 @@ namespace Sapphire.Extensions
                 .AllowAnyHeader());
             });
 
-        public static void ConfigureIIS(this IServiceCollection serv) => serv.Configure<IISOptions>(opt => { 
-        
+        public static void ConfigureIIS(this IServiceCollection serv) => serv.Configure<IISOptions>(opt => {
+
         });
 
         public static void ConfigureLogger(this IServiceCollection serv) => serv.AddSingleton<ILoggerManager, LoggerService.LoggerManager>();
@@ -32,5 +33,15 @@ namespace Sapphire.Extensions
 
         public static NewtonsoftJsonPatchInputFormatter ConfigureJSONInputPatchFormatter(this IServiceCollection serv) => serv.AddLogging().AddMvc().AddNewtonsoftJson().Services.BuildServiceProvider().GetRequiredService<IOptions<MvcOptions>>().Value.InputFormatters
           .OfType<NewtonsoftJsonPatchInputFormatter>().First();
+
+        public static void ConfigureAPIVersioning(this IServiceCollection serv)
+        {
+            serv.AddApiVersioning(opt =>
+            {
+                opt.ReportApiVersions = true;
+                
+            }).AddMvc();
+        }
+        
     }
 }

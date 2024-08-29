@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sapphire.Entities.Models;
+using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace Sapphire.Contracts
 {
     public interface IDataShaper<T>
     {
-        IEnumerable<ExpandoObject> ShapeData(IEnumerable<T> entity, string fieldsString);
-        ExpandoObject ShapeData(T entity, string fieldsString);
+        IEnumerable<Entity> ShapeData(IEnumerable<T> entity, string fieldsString);
+        Entity ShapeData(T entity, string fieldsString);
     }
 }

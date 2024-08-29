@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -29,7 +30,7 @@ namespace Sapphire.Service
             _dataShaper = dataShaper;   
         }
 
-        public async Task<(IEnumerable<ExpandoObject> Hunters, MetaData metadata)> GetAllHuntersAsync(bool track, HunterParameters HunterParams) {
+        public async Task<(IEnumerable<Entity> Hunters, MetaData metadata)> GetAllHuntersAsync(bool track, HunterParameters HunterParams) {
 
                 if (!HunterParams.ValidRankParameters)
                     throw new MaxHunterRankRequestException();
