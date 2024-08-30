@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Asp.Versioning;
+using Marvin.Cache.Headers;
 
 namespace Sapphire.Extensions
 {
@@ -44,6 +45,21 @@ namespace Sapphire.Extensions
                 
             }).AddMvc();
         }
-        
+
+        public static void ConfigureResponseCache(this IServiceCollection serv) => serv.AddResponseCaching();
+        public static void ConfigureHttpCacheHeaders(this IServiceCollection serv) => serv.AddHttpCacheHeaders(
+            expopt => {
+                expopt.MaxAge = 30;
+                expopt.CacheLocation = CacheLocation.Private;
+            },
+            valopt => {
+                valopt.MustRevalidate = true;
+            });
+
+
+
+
+
+
     }
 }

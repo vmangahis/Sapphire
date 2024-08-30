@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using Marvin.Cache.Headers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.JsonPatch;
@@ -22,29 +23,31 @@ namespace Sapphire.Presentation.Controllers
     [ApiVersion(2.0)]
     [Route("api/hunter")]
     [ApiController]
-    public class HunterController2 : ControllerBase
+    public class HunterController : ControllerBase
     {
         private readonly IServiceManager _serv;
 
-        public HunterController2(IServiceManager serv) { 
+        public HunterController(IServiceManager serv) { 
             _serv = serv;
         }
         [HttpGet]
         public async Task<ActionResult> GetAllHunters([FromQuery] HunterParameters HunterParams) { 
-            var huntersPaged = await _serv.HunterService.GetAllHuntersAsync(track: false, HunterParams);
-            Console.WriteLine("v2");
-            return Ok();
+            var huntersPaged = await _serv.HunterService.GetAllHuntersAsync(trackChanges: false, HunterParams);
+            Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(huntersPaged.metadata));
+            return Ok(huntersPaged.Hunters);
         }
 
         [HttpGet("{hnid:guid}", Name="GetHunterById")]
+        [HttpCacheExpiration(CacheLocation = CacheLocation.Public, MaxAge = 60)]
+        [HttpCacheValidation(MustRevalidate = false)]
         public async Task<ActionResult> GetSingleHunter(Guid hnid) {
-            var hunter = await _serv.HunterService.GetHunterAsync(hnid, track: false);
+            var hunter = await _serv.HunterService.GetHunterAsync(hnid, trackChanges: false);
             return Ok(hunter);
         }
         [HttpGet("multiple/{HunterNames}", Name = "GetMultipleHunters")]
         public async Task<ActionResult> GetMultipleHunters(IEnumerable<string>HunterNames)
         {
-            var HunterList = await _serv.HunterService.GetMultipleHuntersByNameAsync(HunterNames, TrackChanges: false);
+            var HunterList = await _serv.HunterService.GetMultipleHuntersByNameAsync(HunterNames, trackChanges: false);
             return Ok(HunterList);
 
         }
@@ -57,7 +60,7 @@ namespace Sapphire.Presentation.Controllers
         [HttpPost]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<ActionResult> AddHunter([FromBody]HunterCreationDTO hn) {
-            await _serv.HunterService.CheckDuplicateHunterAsync(hn.HunterName, Track: false);
+            await _serv.HunterService.CheckDuplicateHunterAsync(hn.HunterName, trackChanges: false);
             var hnObject = await _serv.HunterService.CreateHunterAsync(hn);
 
             
@@ -65,13 +68,13 @@ namespace Sapphire.Presentation.Controllers
         }
         [HttpDelete("{huntername}")]
         public async Task<ActionResult> DeleteHunter(string huntername) {
-            await _serv.HunterService.DeleteHunterAsync(huntername, Track: false);
+            await _serv.HunterService.DeleteHunterAsync(huntername, trackChanges: false);
             return NoContent();
         }
         [HttpDelete("{hunterid:guid}")]
         public async Task<ActionResult> DeleteHunterById(Guid hunterid)
         {
-            await _serv.HunterService.DeleteHunterByIdAsync(hunterid, Track: false);
+            await _serv.HunterService.DeleteHunterByIdAsync(hunterid, trackChanges: false);
             return NoContent();
         }
         [HttpPut("{huntername}")]
@@ -79,7 +82,16 @@ namespace Sapphire.Presentation.Controllers
             if (!ModelState.IsValid)
                 return UnprocessableEntity(ModelState);
 
-            await _serv.HunterService.UpdateHunterAsync(huntername, hud, TrackChanges:true);
+            await _serv.HunterService.UpdateHunterAsync(huntername, hud, trackChanges: true);
+            return NoContent();
+        }
+        [HttpPut("{hunterId:guid}")]
+        public async Task<ActionResult> UpdateHunterById(Guid hunterId, HunterUpdateDTO hud)
+        {
+            if(!ModelState.IsValid)
+                return UnprocessableEntity(ModelState);
+
+            await _serv.HunterService.UpdateHunterByIdAsync(hunterId, hud, trackChanges: true);
             return NoContent();
         }
 
@@ -87,12 +99,12 @@ namespace Sapphire.Presentation.Controllers
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<ActionResult> PartialUpdateHunter(string HunterName,[FromBody] JsonPatchDocument<HunterUpdateDTO> patchHunter) {
             
-            var res = await _serv.HunterService.GetHunterPatchAsync(HunterName, TrackChanges: true);
+            var res = await _serv.HunterService.GetHunterPatchAsync(HunterName, trackChanges: true);
             var nameValidation = patchHunter.Operations.Where(e => e.path.ToUpper().Equals("/HUNTERNAME"))
                                                        .Where(e => e.op.ToUpper().Equals("REPLACE")).FirstOrDefault();
 
             if(nameValidation is not null)
-                await _serv.HunterService.CheckDuplicateHunterAsync(nameValidation?.value.ToString(), Track: false);
+                await _serv.HunterService.CheckDuplicateHunterAsync(nameValidation?.value.ToString(), trackChanges: false);
 
             patchHunter.ApplyTo(res.hud, ModelState);            
 

@@ -11,6 +11,6 @@ namespace Sapphire.Shared.DTOBase
     {
         [Required(ErrorMessage = "Please provide a hunter name.")]
         [MaxLength(20, ErrorMessage = "Max length for Hunter Name is 20.")]
-        public string? HunterName { get; init; }
+        public string? HunterName { get; set; }
     }
 }

@@ -13,17 +13,18 @@ namespace Sapphire.Service.Contracts
 {
     public interface IHunterService
     {
-        Task<(IEnumerable<Entity> Hunters, MetaData metadata)> GetAllHuntersAsync(bool track, HunterParameters HunterParams);
+        Task<(IEnumerable<Entity> Hunters, MetaData metadata)> GetAllHuntersAsync(bool trackChanges, HunterParameters HunterParams);
         Task<(IEnumerable<HunterDTO> HunterLists, string HunterNames)> CreateMultipleHuntersAsync(IEnumerable<HunterCreationDTO> HunterListCreation);
-        Task<IEnumerable<HunterDTO>> GetMultipleHuntersByNameAsync(IEnumerable<string> HunterNames, bool TrackChanges);
-        Task<HunterDTO> GetHunterAsync(Guid huntId, bool track);
+        Task<IEnumerable<HunterDTO>> GetMultipleHuntersByNameAsync(IEnumerable<string> HunterNames, bool trackChanges);
+        Task<HunterDTO> GetHunterAsync(Guid huntId, bool trackChanges);
         Task<HunterDTO> CreateHunterAsync(HunterCreationDTO hunter);
-        Task<HunterDTO> GetHunterByNameAsync(string HunterName, bool track);    
-        Task<(HunterUpdateDTO hud, Hunters hunt)> GetHunterPatchAsync(string CurrentHunterName, bool TrackChanges);
+        Task<HunterDTO> GetHunterByNameAsync(string HunterName, bool trackChanges);    
+        Task<(HunterUpdateDTO hud, Hunters hunt)> GetHunterPatchAsync(string CurrentHunterName, bool trackChanges);
         Task SaveHunterChangesPatchAsync(HunterUpdateDTO hud, Hunters hunt);
-        Task DeleteHunterAsync(string HunterName, bool Track);
-        Task DeleteHunterByIdAsync(Guid HunterId, bool Track);
-        Task CheckDuplicateHunterAsync(string? HunterName, bool Track);
-        Task UpdateHunterAsync(string CurrentHunterName, HunterUpdateDTO hud, bool TrackChanges);
+        Task DeleteHunterAsync(string HunterName, bool trackChanges);
+        Task DeleteHunterByIdAsync(Guid HunterId, bool trackChanges);
+        Task CheckDuplicateHunterAsync(string? HunterName, bool trackChanges);
+        Task UpdateHunterAsync(string CurrentHunterName, HunterUpdateDTO hud, bool trackChanges);
+        Task UpdateHunterByIdAsync(Guid hunterId, HunterUpdateDTO hud, bool trackChanges);
     }
 }

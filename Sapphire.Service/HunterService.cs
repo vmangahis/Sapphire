@@ -99,16 +99,16 @@ namespace Sapphire.Service
             await _repomanager.SaveAsync();
         }
 
-        public async Task CheckDuplicateHunterAsync(string? HunterName,bool Track)
+        public async Task CheckDuplicateHunterAsync(string? HunterName,bool trackChanges)
         {
             if (string.IsNullOrWhiteSpace(HunterName))
                 throw new HunterNameBlankException();
 
-            var hunterExist = await _repomanager.Hunter.GetHunterByNameAsync(HunterName, Track);
-            if (hunterExist is not null)
+            var hunterExist = await _repomanager.Hunter.GetHunterByNameAsync(HunterName, trackChanges);
+            if (hunterExist is null || HunterName.Equals(hunterExist.HunterName))
+                return;
+            else
                 throw new HunterDuplicateException(HunterName);
-
-            return;
         }
         private async Task<Hunters> GetAndCheckIfHunterExistsByName(string HunterName, bool Track) {
             var hunter = await _repomanager.Hunter.GetHunterByNameAsync(HunterName, Track);
@@ -132,7 +132,7 @@ namespace Sapphire.Service
                 throw new HunterListBadRequest();
 
             foreach (var huntername in HunterListCreation)
-                await CheckDuplicateHunterAsync(huntername.HunterName, Track: false);
+                await CheckDuplicateHunterAsync(huntername.HunterName, trackChanges: false);
 
             // convert list of hunters to Hunter Entity to be saved
             var mappedHunterList = _mapper.Map<IEnumerable<Hunters>>(HunterListCreation);
@@ -159,6 +159,15 @@ namespace Sapphire.Service
             var hunter = await _repomanager.Hunter.GetHunterAsync(HunterId, Track);
             var huntermapped = _mapper.Map<Hunters>(hunter);
             _repomanager.Hunter.DeleteHunter(huntermapped);
+            await _repomanager.SaveAsync();
+        }
+        public async Task UpdateHunterByIdAsync(Guid hunterId, HunterUpdateDTO hud, bool trackChanges)
+        {
+            var hunter = await GetAndCheckIfHunterExistsById(hunterId, trackChanges);
+
+            await CheckDuplicateHunterAsync(hud.HunterName, trackChanges);
+
+            _mapper.Map(hud, hunter);
             await _repomanager.SaveAsync();
         }
     }
