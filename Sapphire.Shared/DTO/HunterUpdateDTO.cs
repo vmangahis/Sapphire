@@ -9,6 +9,6 @@ using Sapphire.Shared.DTOBase;
 namespace Sapphire.Shared.DTO
 {
     public record HunterUpdateDTO : HunterForModificationDTO { 
-        public int? Rank {  get; set; }
+        public int? Rank {  get; init; }
     }
 }

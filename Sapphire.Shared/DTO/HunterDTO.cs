@@ -11,10 +11,9 @@ namespace Sapphire.Shared.DTO
 {
     public record HunterDTO
     {
-        public Guid Id { get; set; } = Guid.Empty;
-        public string HunterName { get; set;}
-        public int Rank { get; set; }
-        [XmlElement(IsNullable = true)]
-        public GuildForHunterMemberDTO Guild { get; set; }
+        public Guid Id { get; init; }
+        public string HunterName { get; init;}
+        public int Rank { get; init; }
+        public GuildForHunterMemberDTO Guild { get; init; }
     }
 }

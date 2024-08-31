@@ -11,6 +11,7 @@ using Microsoft.Extensions.Options;
 using Sapphire.Presentation.ActionFilters;
 using Sapphire.Shared.DTO;
 using Sapphire.Service;
+using AspNetCoreRateLimit;
 
 var builder = WebApplication.CreateBuilder(args);
 var newtonSoft = builder.Services.ConfigureJSONInputPatchFormatter();
@@ -23,8 +24,12 @@ builder.Services.AddControllers().AddApplicationPart(typeof(Sapphire.Presentatio
 builder.Services.ConfigureRepositoryManager();
 builder.Services.ConfigureServiceManager();
 builder.Services.ConfigureResponseCache();
+builder.Services.ConfigureRateLimiting();
+builder.Services.AddHttpContextAccessor();
 builder.Services.ConfigureHttpCacheHeaders();
+builder.Services.AddMemoryCache();
 builder.Services.ConfigureNpqSqlContext(builder.Configuration);
+builder.Services.ConfigureJWT(builder.Configuration);
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddControllers(config =>
 {
@@ -39,6 +44,9 @@ builder.Services.AddControllers(config =>
 builder.Services.Configure<ApiBehaviorOptions>(opt => {
     opt.SuppressModelStateInvalidFilter = true;
 });
+builder.Services.AddAuthentication();
+builder.Services.ConfigureIdentity();
+
 
 
 //App build
@@ -56,6 +64,7 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions
 {
     ForwardedHeaders = ForwardedHeaders.All
 });
+app.UseIpRateLimiting();
 app.UseCors("CorsPolicy");
 app.UseResponseCaching();
 app.UseHttpCacheHeaders();

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Sapphire.Repository;
@@ -11,9 +12,11 @@ using Sapphire.Repository;
 namespace Sapphire.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    partial class RepositoryContextModelSnapshot : ModelSnapshot
+    [Migration("20240830064913_CreatingIdentityTable")]
+    partial class CreatingIdentityTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,20 +49,6 @@ namespace Sapphire.Migrations
                         .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "3e5d0d46-fe9e-4ee7-b186-cd1b0de7f8a9",
-                            Name = "Administrator",
-                            NormalizedName = "ADMINISTRATOR"
-                        },
-                        new
-                        {
-                            Id = "61f2e27e-6291-4f64-af52-a596fde67503",
-                            Name = "Hub Manager",
-                            NormalizedName = "HUB MANAGER"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -189,7 +178,7 @@ namespace Sapphire.Migrations
                     b.HasData(
                         new
                         {
-                            GuildId = new Guid("2f03b219-1e4e-40a6-9c39-4f23b3a38e77"),
+                            GuildId = new Guid("1ade5397-26bd-4e9c-9a7e-40b8473ac198"),
                             GuildName = "The Sapphire",
                             IsInviteOnly = false
                         });
@@ -224,21 +213,21 @@ namespace Sapphire.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("98fd9371-f113-4524-913b-b6202d4b5b5f"),
+                            Id = new Guid("823c9f43-3095-49c1-8c57-0c1cd5cfd912"),
                             HunterName = "Shard",
                             Rank = 1,
                             ZennyAmount = 5000.0
                         },
                         new
                         {
-                            Id = new Guid("c4320ced-c59a-4b7f-a66c-c60b666e7fe8"),
+                            Id = new Guid("12c6549c-2505-4e56-8927-86d8ed7ed9b2"),
                             HunterName = "DarkShard",
                             Rank = 1,
                             ZennyAmount = 5000.0
                         },
                         new
                         {
-                            Id = new Guid("b33bc0f2-f0cb-4aa8-a144-513dd36a56f5"),
+                            Id = new Guid("52147f83-d537-4f61-ae84-8215845563bb"),
                             HunterName = "Astera",
                             Rank = 50,
                             ZennyAmount = 9000.0
@@ -262,7 +251,7 @@ namespace Sapphire.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("885b662d-7841-4367-bf0d-5491992405ad"),
+                            Id = new Guid("466d7952-31ba-4e82-830a-3dbe46f29876"),
                             LocaleName = "Dummy Locale"
                         });
                 });
@@ -295,7 +284,7 @@ namespace Sapphire.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("d36529cf-2adb-433e-bba9-9dda9bc29c3e"),
+                            Id = new Guid("0a3d4ff9-d3a8-45c9-8502-fb278067b9d8"),
                             BaseAttack = 1.0,
                             BaseDefense = 1.0,
                             HealthPool = 10000.0,
@@ -303,7 +292,7 @@ namespace Sapphire.Migrations
                         },
                         new
                         {
-                            Id = new Guid("e8f87317-3e37-4f0d-b792-7711bb801708"),
+                            Id = new Guid("bb6aa2a3-f7f1-4299-889b-2c25b5e9b9ab"),
                             BaseAttack = 1.0,
                             BaseDefense = 1.0,
                             HealthPool = 10000.0,
@@ -311,7 +300,7 @@ namespace Sapphire.Migrations
                         },
                         new
                         {
-                            Id = new Guid("934feac6-2850-4b2e-aa3f-ac91073912b9"),
+                            Id = new Guid("6277fc60-0c81-435f-8907-a487d41302fd"),
                             BaseAttack = 1.0,
                             BaseDefense = 1.0,
                             HealthPool = 5000.0,

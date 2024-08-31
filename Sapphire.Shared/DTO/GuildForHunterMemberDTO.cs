@@ -9,6 +9,6 @@ namespace Sapphire.Shared.DTO
 {
     public record GuildForHunterMemberDTO
     {
-        public string? GuildName { get; set; } = string.Empty;
+        public string? GuildName { get; init; }
     }
 }

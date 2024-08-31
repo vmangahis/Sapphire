@@ -21,6 +21,7 @@ namespace Sapphire
             CreateMap<GuildCreationDTO, Guild>();
             CreateMap<GuildUpdateDTO, Guild>().ReverseMap();
             CreateMap<HunterUpdateDTO, Hunters>().ReverseMap();
+            CreateMap<SapphireUserForRegistrationDTO, SapphireUser>();
         }
     }
 }

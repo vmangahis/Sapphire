@@ -1,14 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Sapphire.Entities.Models;
 using Sapphire.Repository.Configuration;
 namespace Sapphire.Repository
 {
-    public class RepositoryContext : DbContext
+    public class RepositoryContext : IdentityDbContext<SapphireUser>
     {
         public RepositoryContext(DbContextOptions opt): base(opt) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfiguration(new HunterConfiguration());
             modelBuilder.ApplyConfiguration(new MonsterConfiguration());
             modelBuilder.ApplyConfiguration(new GuildConfiguration());
@@ -17,8 +19,8 @@ namespace Sapphire.Repository
                 .HasOne(e => e.Guild)
                 .WithMany(e => e.HunterMembers)
                 .OnDelete(DeleteBehavior.SetNull);
-                
 
+            modelBuilder.ApplyConfiguration(new RoleConfiguration());
         }
 
         public DbSet<Hunters>? T_hunters { get; set; }
