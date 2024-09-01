@@ -11,6 +11,7 @@ namespace Sapphire.Service.Contracts
     public interface IAuthenticationService
     {
         Task<IdentityResult> RegisterSapphireUser(SapphireUserForRegistrationDTO saphUserReg);
-
+        Task<bool> ValidateSapphireUser(SapphireUserForAuthDTO saphUserAuth);
+        Task<string> CreateToken();
     }
 }

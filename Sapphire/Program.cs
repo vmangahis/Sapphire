@@ -29,7 +29,13 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.ConfigureHttpCacheHeaders();
 builder.Services.AddMemoryCache();
 builder.Services.ConfigureNpqSqlContext(builder.Configuration);
+
+
+builder.Services.ConfigureIdentity();
+builder.Services.AddAuthentication();
 builder.Services.ConfigureJWT(builder.Configuration);
+
+
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddControllers(config =>
 {
@@ -44,8 +50,7 @@ builder.Services.AddControllers(config =>
 builder.Services.Configure<ApiBehaviorOptions>(opt => {
     opt.SuppressModelStateInvalidFilter = true;
 });
-builder.Services.AddAuthentication();
-builder.Services.ConfigureIdentity();
+
 
 
 

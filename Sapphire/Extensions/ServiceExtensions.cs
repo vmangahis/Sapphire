@@ -102,13 +102,14 @@ namespace Sapphire.Extensions
         public static void ConfigureJWT(this IServiceCollection serv, IConfiguration conf)
         {
             var jwtOptions = conf.GetSection("JwtConfig");
-            var secretKey = Environment.GetEnvironmentVariable("SECRET");
+            var secretKey = Environment.GetEnvironmentVariable("SUPERSECRET");
 
 
             serv.AddAuthentication(opt =>
             {
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
             })
             .AddJwtBearer(opt => {
                 opt.TokenValidationParameters = new TokenValidationParameters

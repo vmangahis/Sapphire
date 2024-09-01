@@ -17,7 +17,7 @@ namespace Sapphire.Presentation.Controllers
         private readonly IServiceManager _serv;
         public AuthController(IServiceManager serv) => _serv = serv;
 
-        [HttpPost]
+        [HttpPost("register")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<ActionResult> RegisterSapphireUser([FromBody] SapphireUserForRegistrationDTO sapphUser)
         {
@@ -34,6 +34,17 @@ namespace Sapphire.Presentation.Controllers
 
             return StatusCode(201);
             
+        }
+        [HttpPost("login")]
+        [ServiceFilter(typeof(ValidationFilterAttribute))]
+        public async Task<ActionResult> AuthenticateSapphire([FromBody] SapphireUserForAuthDTO saphAuth)
+        {
+            if (!await _serv.AuthenticationService.ValidateSapphireUser(saphAuth))
+            {
+                return Unauthorized();
+            }
+
+            return Ok(new {Token = await _serv.AuthenticationService.CreateToken()});
         }
     }
 }

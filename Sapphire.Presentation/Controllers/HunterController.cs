@@ -1,5 +1,6 @@
 ﻿using Asp.Versioning;
 using Marvin.Cache.Headers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.JsonPatch;
@@ -20,7 +21,6 @@ using System.Threading.Tasks;
 
 namespace Sapphire.Presentation.Controllers
 {
-    [ApiVersion(2.0)]
     [Route("api/hunter")]
     [ApiController]
     public class HunterController : ControllerBase
@@ -30,7 +30,8 @@ namespace Sapphire.Presentation.Controllers
         public HunterController(IServiceManager serv) { 
             _serv = serv;
         }
-        [HttpGet]
+        [HttpGet(Name = "GetAllHunters")]
+        [Authorize(Roles = "Hub Manager")]
         public async Task<ActionResult> GetAllHunters([FromQuery] HunterParameters HunterParams) { 
             var huntersPaged = await _serv.HunterService.GetAllHuntersAsync(trackChanges: false, HunterParams);
             Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(huntersPaged.metadata));
@@ -38,8 +39,6 @@ namespace Sapphire.Presentation.Controllers
         }
 
         [HttpGet("{hnid:guid}", Name="GetHunterById")]
-        [HttpCacheExpiration(CacheLocation = CacheLocation.Public, MaxAge = 60)]
-        [HttpCacheValidation(MustRevalidate = false)]
         public async Task<ActionResult> GetSingleHunter(Guid hnid) {
             var hunter = await _serv.HunterService.GetHunterAsync(hnid, trackChanges: false);
             return Ok(hunter);
