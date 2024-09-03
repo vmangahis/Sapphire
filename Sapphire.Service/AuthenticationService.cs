@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -67,13 +68,24 @@ namespace Sapphire.Service
             return res;
         }
 
-        public async Task<string> CreateToken()
+        public async Task<TokenDto> CreateToken(bool populateExp)
         {
             var signCreds = GetSigningCredentials();
             var claims = await GetClaims();
             var tokenOpts = GenerateTokenOptions(signCreds, claims);
 
-            return new JwtSecurityTokenHandler().WriteToken(tokenOpts);
+            var refreshToken = GenerateRefreshToken();
+
+            _saphUser.RefreshToken = refreshToken;
+
+            if (populateExp)
+                _saphUser.RefreshTokenExpiry = DateTime.Now.AddDays(7);
+
+            await _userManager.UpdateAsync(_saphUser);
+
+            var accessToken =  new JwtSecurityTokenHandler().WriteToken(tokenOpts);
+
+            return new TokenDto(accessToken, refreshToken);
         }
 
         private async Task<List<Claim>> GetClaims()
@@ -110,8 +122,44 @@ namespace Sapphire.Service
                 signingCredentials: signCreds
 
             );
-
+            
             return tokenOpts;
+        }
+        private string GenerateRefreshToken()
+        {
+            var randNum = new byte[32];
+            using(var rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(randNum);
+                return Convert.ToBase64String(randNum);
+            }
+        }
+        private ClaimsPrincipal GetPrincipalFromExpiredAccess(string token)
+        {
+            var jwtSet = _config.GetSection("JwtConfig");
+
+            var tokenValidationParams = new TokenValidationParameters
+            {
+                ValidateAudience = true,
+                ValidateIssuer = true,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("SUPERSECRET"))),
+                ValidateLifetime = true,
+                ValidIssuer = jwtSet["validIssuer"],
+                ValidAudience = jwtSet["validAudience"]
+            };
+            List<string> test = new List<string> { "test"};
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            SecurityToken securityToken;
+            var principal = tokenHandler.ValidateToken(token, tokenValidationParams, out securityToken);
+
+            var jwtSectToken = securityToken as JwtSecurityToken;
+            if (jwtSectToken == null || !jwtSectToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+            {
+                throw new SecurityTokenException("Invalid token");
+            }
+            return principal;
         }
     }
 }

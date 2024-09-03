@@ -12,6 +12,6 @@ namespace Sapphire.Service.Contracts
     {
         Task<IdentityResult> RegisterSapphireUser(SapphireUserForRegistrationDTO saphUserReg);
         Task<bool> ValidateSapphireUser(SapphireUserForAuthDTO saphUserAuth);
-        Task<string> CreateToken();
+        Task<TokenDto> CreateToken(bool populateExp);
     }
 }
