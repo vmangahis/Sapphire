@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Sapphire.Entities.Exceptions.BadRequest;
 using Sapphire.Entities.Exceptions.NotFound;
 using Sapphire.Entities.Models;
 
@@ -86,6 +87,18 @@ namespace Sapphire.Service
             var accessToken =  new JwtSecurityTokenHandler().WriteToken(tokenOpts);
 
             return new TokenDto(accessToken, refreshToken);
+        }
+        public async Task<TokenDto> RefreshToken(TokenDto tokenDto)
+        {
+            var principal = GetPrincipalFromExpiredAccess(tokenDto.AccessToken);
+
+            var user = await _userManager.FindByNameAsync(principal.Identity.Name);
+            if (user == null || user.RefreshToken != tokenDto.RefreshToken || user.RefreshTokenExpiry <= DateTime.Now)
+                throw new RefreshTokenBadRequest();
+
+            _saphUser = user;
+
+            return await CreateToken(populateExp: false);
         }
 
         private async Task<List<Claim>> GetClaims()
