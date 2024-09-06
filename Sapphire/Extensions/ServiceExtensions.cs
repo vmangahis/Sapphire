@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Sapphire.Entities.ConfigurationModel;
 
 namespace Sapphire.Extensions
 {
@@ -101,7 +102,8 @@ namespace Sapphire.Extensions
 
         public static void ConfigureJWT(this IServiceCollection serv, IConfiguration conf)
         {
-            var jwtOptions = conf.GetSection("JwtConfig");
+            var jwtOptions = new JwtConfig();
+            conf.Bind(jwtOptions.Section, jwtOptions);
             var secretKey = Environment.GetEnvironmentVariable("SUPERSECRET");
 
 
@@ -119,8 +121,8 @@ namespace Sapphire.Extensions
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
 
-                    ValidIssuer = jwtOptions["validIssuer"],
-                    ValidAudience = jwtOptions["validAudience"],
+                    ValidIssuer = jwtOptions.ValidIssuer,
+                    ValidAudience = jwtOptions.ValidAudience,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
                 };
             });
