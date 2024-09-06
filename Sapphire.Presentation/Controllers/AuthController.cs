@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Sapphire.Presentation.ActionFilters;
 using Sapphire.Service.Contracts;
 using Sapphire.Shared.DTO;
@@ -47,5 +48,7 @@ namespace Sapphire.Presentation.Controllers
 
             return Ok(tokenDto);
         }
+        
+
     }
 }

@@ -12,5 +12,6 @@ namespace Sapphire.Service.Contracts
         IMonsterService MonsterService { get; } 
         IGuildService GuildService { get; }
         IAuthenticationService AuthenticationService { get; }
+        ISapphireUserService SapphireUserService { get; }
     }
 }

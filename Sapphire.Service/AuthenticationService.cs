@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Sapphire.Entities.ConfigurationModel;
 using Sapphire.Entities.Exceptions.BadRequest;
 using Sapphire.Entities.Exceptions.NotFound;
 using Sapphire.Entities.Models;
-
 using Sapphire.Service.Contracts;
 using Sapphire.Shared.DTO;
 using System;
@@ -26,13 +27,16 @@ namespace Sapphire.Service
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _config;
         private SapphireUser? _saphUser;
+        private readonly JwtConfig _jwtConfig;
 
         public AuthenticationService(IMapper mapper, UserManager<SapphireUser> userManager, IConfiguration config, RoleManager<IdentityRole> roleManager)
         {
             _mapper = mapper;
             _userManager = userManager;
             _config = config;
+            _config.Bind(_jwtConfig.Section, _jwtConfig);
             _roleManager = roleManager;
+            _jwtConfig = new JwtConfig();
         }
         public async Task<IdentityResult> RegisterSapphireUser(SapphireUserForRegistrationDTO saphUserReg)
         {
@@ -100,7 +104,15 @@ namespace Sapphire.Service
 
             return await CreateToken(populateExp: false);
         }
-
+        public async Task PurgeUserAsync(SapphireUserForPurgeDTO saphPurgeDto)
+        {
+            
+            _saphUser = await _userManager.FindByIdAsync(saphPurgeDto.SapphireUserId.ToString());
+            if(_saphUser == null)
+            {
+                
+            }
+        }
         private async Task<List<Claim>> GetClaims()
         {
             var claims = new List<Claim>
@@ -114,7 +126,6 @@ namespace Sapphire.Service
             }
             return claims;
         }
-
         private SigningCredentials GetSigningCredentials()
         {
             var key = Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("SUPERSECRET"));
@@ -124,14 +135,13 @@ namespace Sapphire.Service
         }
         private JwtSecurityToken GenerateTokenOptions(SigningCredentials signCreds, List<Claim> claims)
         {
-            var jwtSets = _config.GetSection("JwtConfig");
 
             var tokenOpts = new JwtSecurityToken
             (
-                issuer : jwtSets["validIssuer"],
-                audience: jwtSets["validAudience"],
+                issuer : _jwtConfig.ValidIssuer,
+                audience: _jwtConfig.ValidAudience,
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(Convert.ToDouble(jwtSets["expires"])),
+                expires: DateTime.Now.AddMinutes(Convert.ToDouble(_jwtConfig.Expires)),
                 signingCredentials: signCreds
 
             );
