@@ -34,9 +34,9 @@ namespace Sapphire.Service
             _mapper = mapper;
             _userManager = userManager;
             _config = config;
+            _jwtConfig = new JwtConfig();
             _config.Bind(_jwtConfig.Section, _jwtConfig);
             _roleManager = roleManager;
-            _jwtConfig = new JwtConfig();
         }
         public async Task<IdentityResult> RegisterSapphireUser(SapphireUserForRegistrationDTO saphUserReg)
         {

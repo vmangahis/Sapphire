@@ -27,7 +27,7 @@ namespace Sapphire.Presentation.Controllers
         public async Task<ActionResult> PurgeUser([FromBody] SapphireUserForPurgeDTO saphPurgeDto)
         {
 
-            await _serv.AuthenticationService.PurgeUserAsync(saphPurgeDto);
+            await _serv.SapphireUserService.PurgeUserAsync(saphPurgeDto);
             return NoContent();
         }
     }

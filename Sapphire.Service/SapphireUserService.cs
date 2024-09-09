@@ -18,7 +18,7 @@ namespace Sapphire.Service
         private readonly IMapper _mapper;
         private readonly IRepositoryManager _repositoryManager;
         private readonly UserManager<SapphireUser> _userManager;
-        private SapphireUser _saphUser;
+        private SapphireUser? _saphUser;
         public SapphireUserService(IRepositoryManager repoManager, IMapper map, UserManager<SapphireUser> userManager) { 
             _mapper = map;
             _repositoryManager = repoManager;
@@ -29,9 +29,9 @@ namespace Sapphire.Service
         {
             _saphUser = await _userManager.FindByIdAsync(saphPurgeDto.SapphireUserId.ToString());
             if (_saphUser == null)
-            {
                 throw new SapphireUserNotFound();
-            }
+
+            await _userManager.DeleteAsync(_saphUser);
         }
     }
 }
