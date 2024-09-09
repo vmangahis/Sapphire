@@ -26,7 +26,7 @@ namespace Sapphire.Service
             _hunterService = new Lazy<IHunterService>(() => new HunterService(repositorymanager, map, dataShaper));
             _guildService = new Lazy<IGuildService>(() => new GuildService(repositorymanager, map));
             _authService = new Lazy<IAuthenticationService>(() => new AuthenticationService(map, userManager, conf, roleManager));
-            _sapphireUserService = new Lazy<ISapphireUserService>(() => new SapphireUserService(repositorymanager,map ));
+            _sapphireUserService = new Lazy<ISapphireUserService>(() => new SapphireUserService(repositorymanager,map, userManager ));
         }
         public IHunterService HunterService => _hunterService.Value;
         public IMonsterService MonsterService => _monsterService.Value;

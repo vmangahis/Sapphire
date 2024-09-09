@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Sapphire.Entities.Exceptions.NotFound
 {
     public class SapphireUserNotFound : BadRequestException{
-        public SapphireUserNotFound(string user) : base($"User {user} not found") { }
+        public SapphireUserNotFound() : base("User not found.") { }
     
     }
 }

@@ -24,7 +24,7 @@ builder.Services.AddControllers().AddApplicationPart(typeof(Sapphire.Presentatio
 builder.Services.ConfigureRepositoryManager();
 builder.Services.ConfigureServiceManager();
 builder.Services.ConfigureResponseCache();
-builder.Services.ConfigureRateLimiting();
+//builder.Services.ConfigureRateLimiting();
 builder.Services.AddHttpContextAccessor();
 builder.Services.ConfigureHttpCacheHeaders();
 builder.Services.AddMemoryCache();
@@ -42,10 +42,6 @@ builder.Services.AddControllers(config =>
     config.RespectBrowserAcceptHeader = true;
     config.ReturnHttpNotAcceptable = true;
     config.InputFormatters.Insert(0, newtonSoft);
-    config.CacheProfiles.Add("DefaultCache", new CacheProfile
-    {
-        Duration = 120
-    });
 });
 builder.Services.Configure<ApiBehaviorOptions>(opt => {
     opt.SuppressModelStateInvalidFilter = true;
@@ -69,10 +65,10 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions
 {
     ForwardedHeaders = ForwardedHeaders.All
 });
-app.UseIpRateLimiting();
+//app.UseIpRateLimiting();
 app.UseCors("CorsPolicy");
-app.UseResponseCaching();
-app.UseHttpCacheHeaders();
+//app.UseResponseCaching();
+//app.UseHttpCacheHeaders();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

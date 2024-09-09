@@ -104,15 +104,7 @@ namespace Sapphire.Service
 
             return await CreateToken(populateExp: false);
         }
-        public async Task PurgeUserAsync(SapphireUserForPurgeDTO saphPurgeDto)
-        {
-            
-            _saphUser = await _userManager.FindByIdAsync(saphPurgeDto.SapphireUserId.ToString());
-            if(_saphUser == null)
-            {
-                
-            }
-        }
+
         private async Task<List<Claim>> GetClaims()
         {
             var claims = new List<Claim>

@@ -74,7 +74,6 @@ namespace Sapphire.Extensions
                     Period = "10s"
                 }
             };
-
             serv.Configure<IpRateLimitOptions>(opt =>
             {
                 opt.GeneralRules = rateLimitRule;
