@@ -104,7 +104,7 @@ namespace Sapphire.Service
                 throw new HunterNameBlankException();
 
             var hunterExist = await _repomanager.Hunter.GetHunterByNameAsync(HunterName, trackChanges);
-            if (hunterExist is null || HunterName.Equals(hunterExist.HunterName))
+            if (hunterExist is null)
                 return;
             else
                 throw new HunterDuplicateException(HunterName);

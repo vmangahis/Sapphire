@@ -14,9 +14,6 @@ namespace Sapphire.Entities.Models
         public string? LastName { get; set; }
         public string? RefreshToken { get; set; }
         public DateTime RefreshTokenExpiry { get; set; }
-        [ForeignKey(nameof(Hunters))]
-        public Guid? HunterId { get; set; }
-        public Hunters? Hunters { get; set; }
 
     }
 }

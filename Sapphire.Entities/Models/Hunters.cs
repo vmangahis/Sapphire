@@ -19,5 +19,6 @@ namespace Sapphire.Entities.Models
         [ForeignKey(nameof(Guild))]
         public Guid? GuildId { get; set; }
         public Guild? Guild { get; set; }
+        public SapphireUser SapphireUser { get; set; }
     }
 }
