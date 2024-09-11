@@ -63,7 +63,7 @@ namespace Sapphire.Service
         public async Task<bool> ValidateSapphireUser(SapphireUserForAuthDTO saphUserAuth)
         {
             _saphUser = await _userManager.FindByNameAsync(saphUserAuth.Username);
-
+            
             var res = (_saphUser != null && await _userManager.CheckPasswordAsync(_saphUser, saphUserAuth.Password));
             if (!res)
             {

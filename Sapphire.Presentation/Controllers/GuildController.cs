@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Sapphire.Presentation.Controllers
 {
-    [Route("api/guilds/")]
+    [Route("api/guilds")]
     [ApiController]
     public class GuildController : ControllerBase
     {

@@ -26,7 +26,6 @@ namespace Sapphire.Presentation.Controllers
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<ActionResult> PurgeUser([FromBody] SapphireUserForPurgeDTO saphPurgeDto)
         {
-
             await _serv.SapphireUserService.PurgeUserAsync(saphPurgeDto);
             return NoContent();
         }

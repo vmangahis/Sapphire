@@ -31,7 +31,6 @@ namespace Sapphire.Presentation.Controllers
             _serv = serv;
         }
         [HttpGet(Name = "GetAllHunters")]
-        [Authorize(Roles = "Hub Manager")]
         public async Task<ActionResult> GetAllHunters([FromQuery] HunterParameters HunterParams) { 
             var huntersPaged = await _serv.HunterService.GetAllHuntersAsync(trackChanges: false, HunterParams);
             Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(huntersPaged.metadata));
