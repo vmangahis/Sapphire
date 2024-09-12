@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
 using Sapphire.Entities.Exceptions.NotFound;
 using Sapphire.Presentation.ActionFilters;
@@ -18,6 +19,8 @@ using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Security.Claims;
+using Sapphire.Entities.Models;
 
 namespace Sapphire.Presentation.Controllers
 {
@@ -25,10 +28,12 @@ namespace Sapphire.Presentation.Controllers
     [ApiController]
     public class HunterController : ControllerBase
     {
+        private readonly UserManager<SapphireUser> _userManager;
         private readonly IServiceManager _serv;
 
-        public HunterController(IServiceManager serv) { 
+        public HunterController(IServiceManager serv, UserManager<SapphireUser> userManager) { 
             _serv = serv;
+            _userManager = userManager;
         }
         [HttpGet(Name = "GetAllHunters")]
         public async Task<ActionResult> GetAllHunters([FromQuery] HunterParameters HunterParams) { 
@@ -56,13 +61,14 @@ namespace Sapphire.Presentation.Controllers
             return CreatedAtRoute("GetMultipleHunters", new { res.HunterNames }, res.HunterLists);
         }
         [HttpPost]
+        [Authorize]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<ActionResult> AddHunter([FromBody]HunterCreationDTO hn) {
             await _serv.HunterService.CheckDuplicateHunterAsync(hn.HunterName, trackChanges: false);
-            var hnObject = await _serv.HunterService.CreateHunterAsync(hn);
-
-            
-            return CreatedAtRoute("GetHunterById", new { hnid = hnObject.Id }, hnObject);
+            return Ok();
+            //var hnObject = await _serv.HunterService.CreateHunterAsync(hn);
+           
+           // return CreatedAtRoute("GetHunterById", new { hnid = hnObject.Id }, hnObject);
         }
         [HttpDelete("{huntername}")]
         public async Task<ActionResult> DeleteHunter(string huntername) {

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -69,7 +70,6 @@ namespace Sapphire.Service
             {
                 Console.WriteLine("Auth Failed");
             }
-
             return res;
         }
 

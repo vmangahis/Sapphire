@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,7 +18,7 @@ namespace Sapphire.Service.Contracts
         Task<(IEnumerable<HunterDTO> HunterLists, string HunterNames)> CreateMultipleHuntersAsync(IEnumerable<HunterCreationDTO> HunterListCreation);
         Task<IEnumerable<HunterDTO>> GetMultipleHuntersByNameAsync(IEnumerable<string> HunterNames, bool trackChanges);
         Task<HunterDTO> GetHunterAsync(Guid huntId, bool trackChanges);
-        Task<HunterDTO> CreateHunterAsync(HunterCreationDTO hunter);
+        Task<HunterDTO> CreateHunterAsync(HunterCreationDTO hunter, ClaimsPrincipal claimUser);
         Task<HunterDTO> GetHunterByNameAsync(string HunterName, bool trackChanges);    
         Task<(HunterUpdateDTO hud, Hunters hunt)> GetHunterPatchAsync(string CurrentHunterName, bool trackChanges);
         Task SaveHunterChangesPatchAsync(HunterUpdateDTO hud, Hunters hunt);

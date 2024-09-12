@@ -11,6 +11,7 @@ using Sapphire.Shared.DTO;
 using Sapphire.Entities.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Http;
 
 namespace Sapphire.Service
 {
@@ -21,9 +22,9 @@ namespace Sapphire.Service
         private readonly Lazy<IGuildService> _guildService;
         private readonly Lazy<IAuthenticationService> _authService;
         private readonly Lazy<ISapphireUserService> _sapphireUserService;
-        public ServiceManager(IRepositoryManager repositorymanager, IMapper map, IDataShaper<HunterDTO> dataShaper, UserManager<SapphireUser> userManager, IConfiguration conf, RoleManager<IdentityRole> roleManager) {
+        public ServiceManager(IRepositoryManager repositorymanager, IMapper map, IDataShaper<HunterDTO> dataShaper, UserManager<SapphireUser> userManager, IConfiguration conf, RoleManager<IdentityRole> roleManager, IHttpContextAccessor httpCont) {
             _monsterService = new Lazy<IMonsterService>(() => new MonsterService(repositorymanager, map));
-            _hunterService = new Lazy<IHunterService>(() => new HunterService(repositorymanager, map, dataShaper));
+            _hunterService = new Lazy<IHunterService>(() => new HunterService(repositorymanager, map, dataShaper, httpCont, userManager));
             _guildService = new Lazy<IGuildService>(() => new GuildService(repositorymanager, map));
             _authService = new Lazy<IAuthenticationService>(() => new AuthenticationService(map, userManager, conf, roleManager));
             _sapphireUserService = new Lazy<ISapphireUserService>(() => new SapphireUserService(repositorymanager,map, userManager ));

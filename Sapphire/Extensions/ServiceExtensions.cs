@@ -93,6 +93,7 @@ namespace Sapphire.Extensions
                 opt.Password.RequireUppercase = false;
                 opt.Password.RequiredLength = 5;
                 opt.User.RequireUniqueEmail = true;
+                opt.ClaimsIdentity.UserIdClaimType = "UserId";
 
             })
             .AddEntityFrameworkStores<RepositoryContext>()
