@@ -44,7 +44,7 @@ namespace Sapphire.Presentation.Controllers
             {
                 return Unauthorized();
             }
-            var tokenDto = await _serv.AuthenticationService.CreateToken(populateExp: false);
+            var tokenDto = await _serv.AuthenticationService.CreateToken(populateExp: true);
 
             return Ok(tokenDto);
         }

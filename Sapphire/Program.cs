@@ -30,7 +30,6 @@ builder.Services.ConfigureHttpCacheHeaders();
 builder.Services.AddMemoryCache();
 builder.Services.ConfigureNpqSqlContext(builder.Configuration);
 
-
 builder.Services.ConfigureIdentity();
 builder.Services.AddAuthentication();
 builder.Services.ConfigureJWT(builder.Configuration);
@@ -47,7 +46,7 @@ builder.Services.Configure<ApiBehaviorOptions>(opt => {
     opt.SuppressModelStateInvalidFilter = true;
 });
 
-
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 
 //App build

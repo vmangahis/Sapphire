@@ -65,10 +65,9 @@ namespace Sapphire.Presentation.Controllers
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<ActionResult> AddHunter([FromBody]HunterCreationDTO hn) {
             await _serv.HunterService.CheckDuplicateHunterAsync(hn.HunterName, trackChanges: false);
-            return Ok();
-            //var hnObject = await _serv.HunterService.CreateHunterAsync(hn);
+            var hnObject = await _serv.HunterService.CreateHunterAsync(hn);
            
-           // return CreatedAtRoute("GetHunterById", new { hnid = hnObject.Id }, hnObject);
+            return CreatedAtRoute("GetHunterById", new { hnid = hnObject.Id }, hnObject);
         }
         [HttpDelete("{huntername}")]
         public async Task<ActionResult> DeleteHunter(string huntername) {

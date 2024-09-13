@@ -53,16 +53,19 @@ namespace Sapphire.Service
             return hnDto;
         }
 
-        public async Task<HunterDTO> CreateHunterAsync(HunterCreationDTO hunter, ClaimsPrincipal claimUser)
+        public async Task<HunterDTO> CreateHunterAsync(HunterCreationDTO hunter)
         {
             var existHunter = await _repomanager.Hunter.GetHunterByNameAsync(hunter.HunterName, false);
             if (existHunter != null) 
                 throw new HunterDuplicateException(hunter.HunterName);
 
-            var t = _httpContextAccessor.HttpContext?.User;
-            var test = await _userManager.FindByIdAsync(t.Identity.Name);
-            return null;
+            var user = _httpContextAccessor.HttpContext?.User;
+            var currentUser = await _userManager.FindByNameAsync(user.Identity.Name);
+            
             var hn = _mapper.Map<Hunters>(hunter);
+            hn.SapphireUser = currentUser;
+            var test = _mapper.Map<Hunters>(hn);
+
             _repomanager.Hunter.CreateHunter(hn);
             await _repomanager.SaveAsync();
 
@@ -111,8 +114,6 @@ namespace Sapphire.Service
         {
             if (string.IsNullOrWhiteSpace(HunterName))
                 throw new HunterNameBlankException();
-            var user = _httpContextAccessor.HttpContext?.User;
-            var u = await _userManager.FindByNameAsync(user.Identity.Name);
             var hunterExist = await _repomanager.Hunter.GetHunterByNameAsync(HunterName, trackChanges);
             if (hunterExist is null)
                 return;
