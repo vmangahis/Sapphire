@@ -59,8 +59,15 @@ namespace Sapphire.Service
             if (existHunter != null) 
                 throw new HunterDuplicateException(hunter.HunterName);
 
+
+
             var user = _httpContextAccessor.HttpContext?.User;
             var currentUser = await _userManager.FindByNameAsync(user.Identity.Name);
+
+            var hunterBelongs = await _repomanager.Hunter.GetHuntersBySapphireUser(currentUser);
+
+            if (hunterBelongs.Count() == 3)
+                throw new MaxHunterCreationException();
             
             var hn = _mapper.Map<Hunters>(hunter);
             hn.SapphireUser = currentUser;

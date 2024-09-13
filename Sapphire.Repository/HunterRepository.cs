@@ -16,6 +16,12 @@ namespace Sapphire.Repository
     {
         public HunterRepository(RepositoryContext repContext) : base(repContext) { }
 
+        public async Task<IEnumerable<Hunters>> GetHuntersBySapphireUser(SapphireUser sapphireUser)
+        {
+            var hunterSapphireOwner = await GetThroughCondition(e => (e.SapphireUser == sapphireUser), false).ToListAsync();
+            return hunterSapphireOwner;
+        }
+
         public async Task<PagedList<Hunters>> GetAllHuntersAsync(bool track, HunterParameters HunterParams)
         {
             var hunters =  await GetThroughCondition(e => (e.Rank >= HunterParams.MinRank && e.Rank < HunterParams.MaxRank),track)
