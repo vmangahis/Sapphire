@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Sapphire.Entities.Models;
-using Sapphire.Shared.DTO;
+using Sapphire.Shared.DTO.Guild;
 using Sapphire.Shared.Parameters;
 using Sapphire.Shared.RequestFeatures;
 

@@ -1,4 +1,4 @@
-﻿using Sapphire.Shared.DTO;
+﻿using Sapphire.Shared.DTO.SapphireUser;
 using System;
 using System.Collections.Generic;
 using System.Linq;

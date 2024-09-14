@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Sapphire.Shared.DTO;
+using Sapphire.Shared.DTO.SapphireUser;
+using Sapphire.Shared.DTO.Token;
 using System;
 using System.Collections.Generic;
 using System.Linq;

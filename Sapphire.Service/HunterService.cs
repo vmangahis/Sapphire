@@ -7,7 +7,7 @@ using Sapphire.Entities.Exceptions.BadRequest;
 using Sapphire.Entities.Exceptions.NotFound;
 using Sapphire.Entities.Models;
 using Sapphire.Service.Contracts;
-using Sapphire.Shared.DTO;
+using Sapphire.Shared.DTO.Hunter;
 using Sapphire.Shared.Parameters;
 using Sapphire.Shared.RequestFeatures;
 using System;
@@ -59,8 +59,6 @@ namespace Sapphire.Service
             if (existHunter != null) 
                 throw new HunterDuplicateException(hunter.HunterName);
 
-
-
             var user = _httpContextAccessor.HttpContext?.User;
             var currentUser = await _userManager.FindByNameAsync(user.Identity.Name);
 
@@ -71,7 +69,6 @@ namespace Sapphire.Service
             
             var hn = _mapper.Map<Hunters>(hunter);
             hn.SapphireUser = currentUser;
-            var test = _mapper.Map<Hunters>(hn);
 
             _repomanager.Hunter.CreateHunter(hn);
             await _repomanager.SaveAsync();

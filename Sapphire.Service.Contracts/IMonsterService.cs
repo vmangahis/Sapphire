@@ -1,4 +1,4 @@
-﻿using Sapphire.Shared.DTO;
+﻿using Sapphire.Shared.DTO.Monster;
 namespace Sapphire.Service.Contracts
 {
     public interface IMonsterService 

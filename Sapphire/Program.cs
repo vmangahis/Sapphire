@@ -9,9 +9,9 @@ using Sapphire.Extensions;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Options;
 using Sapphire.Presentation.ActionFilters;
-using Sapphire.Shared.DTO;
 using Sapphire.Service;
 using AspNetCoreRateLimit;
+using Sapphire.Shared.DTO.Hunter;
 
 var builder = WebApplication.CreateBuilder(args);
 var newtonSoft = builder.Services.ConfigureJSONInputPatchFormatter();

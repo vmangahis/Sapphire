@@ -4,7 +4,7 @@ using Sapphire.Entities.Exceptions.BadRequest;
 using Sapphire.Entities.Exceptions.NotFound;
 using Sapphire.Entities.Models;
 using Sapphire.Service.Contracts;
-using Sapphire.Shared.DTO;
+using Sapphire.Shared.DTO.Guild;
 using Sapphire.Shared.Parameters;
 using Sapphire.Shared.RequestFeatures;
 using System;

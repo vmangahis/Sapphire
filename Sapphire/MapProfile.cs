@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
 using Sapphire.Entities.Models;
 using Sapphire.Shared.Base;
-using Sapphire.Shared.DTO;
+using Sapphire.Shared.DTO.Guild;
+using Sapphire.Shared.DTO.Hunter;
+using Sapphire.Shared.DTO.Monster;
+using Sapphire.Shared.DTO.SapphireUser;
 namespace Sapphire
 {
     public class MapProfile : Profile

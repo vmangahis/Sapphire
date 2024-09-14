@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sapphire.Shared.DTO
+namespace Sapphire.Shared.DTO.Monster
 {
     public record MonsterDTO
     {

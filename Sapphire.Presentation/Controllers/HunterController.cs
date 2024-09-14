@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.SignalR;
 using Sapphire.Entities.Exceptions.NotFound;
 using Sapphire.Presentation.ActionFilters;
 using Sapphire.Service.Contracts;
-using Sapphire.Shared.DTO;
 using Sapphire.Shared.Parameters;
 using System;
 using System.Collections.Generic;
@@ -21,6 +20,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using System.Security.Claims;
 using Sapphire.Entities.Models;
+using Sapphire.Shared.DTO.Hunter;
 
 namespace Sapphire.Presentation.Controllers
 {

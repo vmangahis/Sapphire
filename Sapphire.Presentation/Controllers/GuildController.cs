@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Sapphire.Presentation.ActionFilters;
 using Sapphire.Service.Contracts;
-using Sapphire.Shared.DTO;
+using Sapphire.Shared.DTO.Guild;
 using Sapphire.Shared.Parameters;
 using System;
 using System.Collections.Generic;

@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Sapphire.Service.Contracts;
 using Sapphire.Service;
-using Sapphire.Shared.DTO;
 using Sapphire.Presentation.ActionFilters;
+using Sapphire.Shared.DTO.Monster;
 
 namespace Sapphire.Presentation.Controllers
 {

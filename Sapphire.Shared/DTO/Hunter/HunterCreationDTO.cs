@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Sapphire.Shared.DTOBase;
 
-namespace Sapphire.Shared.DTO
+namespace Sapphire.Shared.DTO.Hunter
 {
     public record HunterCreationDTO : HunterForModificationDTO;
 }

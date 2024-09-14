@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sapphire.Shared.DTO
+namespace Sapphire.Shared.DTO.Guild
 {
     public record GuildForHunterMemberDTO
     {

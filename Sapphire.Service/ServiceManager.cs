@@ -7,11 +7,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography.X509Certificates;
 using AutoMapper;
-using Sapphire.Shared.DTO;
 using Sapphire.Entities.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Http;
+using Sapphire.Shared.DTO.Hunter;
 
 namespace Sapphire.Service
 {
