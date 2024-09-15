@@ -27,6 +27,7 @@ namespace Sapphire.Repository
         public DbSet<Monsters>? T_monsters { get; set; }
         public DbSet<Guild>? T_guild { get; set; }
         public DbSet<Locale>? T_locale { get; set; }
+        public DbSet<Quest>? T_quest { get; set; }
 
     }
 }
