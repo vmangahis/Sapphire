@@ -128,6 +128,21 @@ namespace Sapphire.Extensions
                     ValidAudience = jwtOptions.ValidAudience,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
                 };
+
+                opt.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = context =>
+                    {
+                        context.Request.Cookies.TryGetValue("accessToken", out var accessToken);
+                        if (string.IsNullOrWhiteSpace(accessToken))
+                            context.Token = accessToken;
+
+                        return Task.CompletedTask;
+                    }
+
+
+
+                };
             });
         }
 

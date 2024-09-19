@@ -34,7 +34,6 @@ builder.Services.ConfigureIdentity();
 builder.Services.AddAuthentication();
 builder.Services.ConfigureJWT(builder.Configuration);
 
-
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddControllers(config =>
 {
