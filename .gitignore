@@ -484,3 +484,4 @@ $RECYCLE.BIN/
 *.swp
 
 appsettings.*
+/Sapphire.Presentation/Controllers/MockController.cs

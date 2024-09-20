@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Sapphire.Entities.ConfigurationModel;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Sapphire.Extensions
 {
@@ -114,7 +115,6 @@ namespace Sapphire.Extensions
             {
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                opt.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
             })
             .AddJwtBearer(opt => {
                 opt.TokenValidationParameters = new TokenValidationParameters
@@ -131,17 +131,14 @@ namespace Sapphire.Extensions
 
                 opt.Events = new JwtBearerEvents
                 {
-                    OnMessageReceived = context =>
+                    OnMessageReceived = ctx =>
                     {
-                        context.Request.Cookies.TryGetValue("accessToken", out var accessToken);
-                        if (string.IsNullOrWhiteSpace(accessToken))
-                            context.Token = accessToken;
+                        ctx.Request.Cookies.TryGetValue("accessToken", out var accessToken);
+                        if (!string.IsNullOrWhiteSpace(accessToken))
+                            ctx.Token = accessToken;
 
                         return Task.CompletedTask;
                     }
-
-
-
                 };
             });
         }

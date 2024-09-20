@@ -20,10 +20,15 @@ namespace Sapphire.Presentation.Controllers
 
         [HttpPost("refresh")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
-        public async Task<ActionResult> RefreshToken([FromBody]TokenDto tokenDto)
+        public async Task<ActionResult> RefreshToken()
         {
-            var tokenDtoVal  = await _serv.AuthenticationService.RefreshToken(tokenDto);
+            HttpContext.Request.Cookies.TryGetValue("accessToken", out var accessToken);
+            HttpContext.Request.Cookies.TryGetValue("refreshToken", out var refreshToken);
 
+            var tokenDto = new TokenDto(accessToken, refreshToken);
+
+            var tokenDtoVal  = await _serv.AuthenticationService.RefreshToken(tokenDto);
+            _serv.AuthenticationService.SetTokenCookie(tokenDtoVal, HttpContext);
             return Ok(tokenDtoVal);
         }
     }

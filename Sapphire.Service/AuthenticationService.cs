@@ -177,5 +177,28 @@ namespace Sapphire.Service
             }
             return principal;
         }
+
+        public void SetTokenCookie(TokenDto tokenDto, HttpContext context)
+        {
+            context.Response.Cookies.Append("accessToken", tokenDto.AccessToken, new CookieOptions
+            {
+                Expires = DateTimeOffset.UtcNow.AddMinutes(5),
+                HttpOnly = true,
+                IsEssential = true,
+                Secure = true,
+                Domain = "localhost",
+                SameSite = SameSiteMode.None
+            });
+
+            context.Response.Cookies.Append("refreshToken", tokenDto.RefreshToken, new CookieOptions
+            {
+                Expires = DateTimeOffset.UtcNow.AddDays(7),
+                HttpOnly = true,
+                IsEssential = true,
+                Secure = true,
+                Domain = "localhost",
+                SameSite = SameSiteMode.None
+            });
+        }
     }
 }

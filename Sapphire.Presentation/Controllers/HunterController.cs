@@ -21,6 +21,8 @@ using System.Threading.Tasks;
 using System.Security.Claims;
 using Sapphire.Entities.Models;
 using Sapphire.Shared.DTO.Hunter;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Sapphire.Presentation.Controllers
 {

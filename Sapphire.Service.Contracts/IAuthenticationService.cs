@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Sapphire.Shared.DTO.SapphireUser;
 using Sapphire.Shared.DTO.Token;
 using System;
@@ -15,5 +16,6 @@ namespace Sapphire.Service.Contracts
         Task<bool> ValidateSapphireUser(SapphireUserForAuthDTO saphUserAuth);
         Task<TokenDto> CreateToken(bool populateExp);
         Task<TokenDto> RefreshToken(TokenDto tokenDto);
+        void SetTokenCookie(TokenDto tokenDto, HttpContext context);
     }
 }

@@ -12,6 +12,7 @@ using Sapphire.Presentation.ActionFilters;
 using Sapphire.Service;
 using AspNetCoreRateLimit;
 using Sapphire.Shared.DTO.Hunter;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 var newtonSoft = builder.Services.ConfigureJSONInputPatchFormatter();
@@ -31,9 +32,7 @@ builder.Services.AddMemoryCache();
 builder.Services.ConfigureNpqSqlContext(builder.Configuration);
 
 builder.Services.ConfigureIdentity();
-builder.Services.AddAuthentication();
 builder.Services.ConfigureJWT(builder.Configuration);
-
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddControllers(config =>
 {
@@ -63,10 +62,7 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions
 {
     ForwardedHeaders = ForwardedHeaders.All
 });
-//app.UseIpRateLimiting();
 app.UseCors("CorsPolicy");
-//app.UseResponseCaching();
-//app.UseHttpCacheHeaders();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
