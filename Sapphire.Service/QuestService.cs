@@ -1,4 +1,6 @@
-﻿using Sapphire.Service.Contracts;
+﻿using AutoMapper;
+using Sapphire.Contracts;
+using Sapphire.Service.Contracts;
 using Sapphire.Shared.DTO.Quest;
 using System;
 using System.Collections.Generic;
@@ -10,9 +12,16 @@ namespace Sapphire.Service
 {
     public class QuestService : IQuestService
     {
-        public Task PostQuest(PostQuestDto postquestDto)
+        private readonly IRepositoryManager _repoManager;
+        private readonly IMapper _mapper;
+
+        public QuestService(IRepositoryManager repoManager, IMapper mapper) {
+            _repoManager = repoManager;
+            _mapper = mapper;
+        }
+        public async Task PostQuest(PostQuestDto postquestDto)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

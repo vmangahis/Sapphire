@@ -12,7 +12,9 @@ namespace Sapphire.Contracts
         IMonsterRepository Monster { get; }
         IHunterRepository Hunter { get; }
         ILocaleRepository Locale { get; }
-        //IQuestRepository Quest { get; }
+        IQuestRepository Quest { get; }
+        ICharacterRepository Character { get; } 
+        IRoleRepository Role { get; }
         Task SaveAsync();
     }
 }

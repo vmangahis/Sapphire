@@ -13,6 +13,7 @@ namespace Sapphire.Service.Contracts
         IGuildService GuildService { get; }
         IAuthenticationService AuthenticationService { get; }
         ISapphireUserService SapphireUserService { get; }
-        //IQuestService QuestService { get; }
+        IQuestService QuestService { get; }
+        ICharacterService CharacterService { get; }
     }
 }

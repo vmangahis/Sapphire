@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 
 namespace Sapphire.Entities.Models
 {
-    [Table("T_hunters")]
     public class Hunters
     {
         

@@ -26,6 +26,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Sapphire.Presentation.Controllers
 {
+    //Users are only to capable of creating hunters if they already created an account AKA SapphireUser.
     [Route("api/hunter")]
     [ApiController]
     public class HunterController : ControllerBase
@@ -45,11 +46,13 @@ namespace Sapphire.Presentation.Controllers
         }
 
         [HttpGet("{hnid:guid}", Name="GetHunterById")]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult> GetSingleHunter(Guid hnid) {
             var hunter = await _serv.HunterService.GetHunterAsync(hnid, trackChanges: false);
             return Ok(hunter);
         }
         [HttpGet("multiple/{HunterNames}", Name = "GetMultipleHunters")]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult> GetMultipleHunters(IEnumerable<string>HunterNames)
         {
             var HunterList = await _serv.HunterService.GetMultipleHuntersByNameAsync(HunterNames, trackChanges: false);

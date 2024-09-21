@@ -21,8 +21,8 @@ namespace Sapphire.Repository.Configuration
                 },
                 new IdentityRole
                 {
-                    Name = "Hunter",
-                    NormalizedName = "HUNTER"
+                    Name = "User",
+                    NormalizedName = "USER"
                 }
                 );
         }

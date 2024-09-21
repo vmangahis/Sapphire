@@ -21,6 +21,7 @@ namespace Sapphire.Repository
                 .OnDelete(DeleteBehavior.SetNull);
 
             modelBuilder.ApplyConfiguration(new RoleConfiguration());
+            modelBuilder.ApplyConfiguration(new CharacterRoleConfiguration());
         }
 
         public DbSet<Hunters>? T_hunters { get; set; }
@@ -28,6 +29,8 @@ namespace Sapphire.Repository
         public DbSet<Guild>? T_guild { get; set; }
         public DbSet<Locale>? T_locale { get; set; }
         public DbSet<Quest>? T_quest { get; set; }
+        public DbSet<Character>? T_characters { get; set; }
+        public DbSet<CharacterRole>? T_characterRoles { get; set; }
 
     }
 }

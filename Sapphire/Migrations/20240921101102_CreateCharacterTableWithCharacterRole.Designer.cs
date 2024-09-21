@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Sapphire.Repository;
@@ -11,9 +12,11 @@ using Sapphire.Repository;
 namespace Sapphire.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    partial class RepositoryContextModelSnapshot : ModelSnapshot
+    [Migration("20240921101102_CreateCharacterTableWithCharacterRole")]
+    partial class CreateCharacterTableWithCharacterRole
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -189,7 +192,7 @@ namespace Sapphire.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("T_characters", (string)null);
+                    b.ToTable("T_characters");
                 });
 
             modelBuilder.Entity("Sapphire.Entities.Models.CharacterRole", b =>
@@ -212,7 +215,7 @@ namespace Sapphire.Migrations
 
                     b.HasKey("RoleId");
 
-                    b.ToTable("T_characterRoles", (string)null);
+                    b.ToTable("T_characterRoles");
 
                     b.HasData(
                         new
@@ -247,7 +250,7 @@ namespace Sapphire.Migrations
 
                     b.HasKey("GuildId");
 
-                    b.ToTable("T_guild", (string)null);
+                    b.ToTable("T_guild");
 
                     b.HasData(
                         new
@@ -287,7 +290,7 @@ namespace Sapphire.Migrations
 
                     b.HasIndex("SapphireUserId");
 
-                    b.ToTable("T_hunters", (string)null);
+                    b.ToTable("T_hunters");
                 });
 
             modelBuilder.Entity("Sapphire.Entities.Models.Locale", b =>
@@ -302,7 +305,7 @@ namespace Sapphire.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("T_locale", (string)null);
+                    b.ToTable("T_locale");
 
                     b.HasData(
                         new
@@ -335,7 +338,7 @@ namespace Sapphire.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("T_monsters", (string)null);
+                    b.ToTable("T_monsters");
 
                     b.HasData(
                         new
@@ -386,7 +389,7 @@ namespace Sapphire.Migrations
 
                     b.HasIndex("SapphireClientId");
 
-                    b.ToTable("T_quest", (string)null);
+                    b.ToTable("T_quest");
                 });
 
             modelBuilder.Entity("Sapphire.Entities.Models.SapphireUser", b =>
