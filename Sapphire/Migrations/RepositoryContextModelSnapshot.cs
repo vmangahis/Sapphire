@@ -50,13 +50,13 @@ namespace Sapphire.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "01e660b7-183a-4b91-aa95-7b92295ac3e9",
+                            Id = "f6133849-cb96-4d8f-8785-6a494e28dc89",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
-                            Id = "86d24464-e885-43b8-96b8-41d9835912bf",
+                            Id = "f2f7fbdb-b939-4ef1-98e0-51cb283cba6e",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -189,7 +189,7 @@ namespace Sapphire.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("T_characters", (string)null);
+                    b.ToTable("T_characters");
                 });
 
             modelBuilder.Entity("Sapphire.Entities.Models.CharacterRole", b =>
@@ -212,22 +212,22 @@ namespace Sapphire.Migrations
 
                     b.HasKey("RoleId");
 
-                    b.ToTable("T_characterRoles", (string)null);
+                    b.ToTable("T_characterRoles");
 
                     b.HasData(
                         new
                         {
-                            RoleId = new Guid("07944fcb-4604-46fe-8bab-020ff934d0e8"),
-                            CreatedDateTime = new DateTime(2024, 9, 21, 18, 11, 1, 778, DateTimeKind.Local).AddTicks(4730),
+                            RoleId = new Guid("15513fc4-430e-4bf2-95c9-994effabd61d"),
+                            CreatedDateTime = new DateTime(2024, 9, 22, 23, 56, 52, 588, DateTimeKind.Local).AddTicks(1233),
                             RoleName = "Hunter",
-                            UpdatedDateTime = new DateTime(2024, 9, 21, 18, 11, 1, 778, DateTimeKind.Local).AddTicks(4741)
+                            UpdatedDateTime = new DateTime(2024, 9, 22, 23, 56, 52, 588, DateTimeKind.Local).AddTicks(1243)
                         },
                         new
                         {
-                            RoleId = new Guid("1dd6fe3d-e4a6-4911-9f68-e620cc4838e9"),
-                            CreatedDateTime = new DateTime(2024, 9, 21, 18, 11, 1, 778, DateTimeKind.Local).AddTicks(4746),
+                            RoleId = new Guid("01761684-4888-48f5-9717-582f066ce60d"),
+                            CreatedDateTime = new DateTime(2024, 9, 22, 23, 56, 52, 588, DateTimeKind.Local).AddTicks(1247),
                             RoleName = "Client",
-                            UpdatedDateTime = new DateTime(2024, 9, 21, 18, 11, 1, 778, DateTimeKind.Local).AddTicks(4746)
+                            UpdatedDateTime = new DateTime(2024, 9, 22, 23, 56, 52, 588, DateTimeKind.Local).AddTicks(1247)
                         });
                 });
 
@@ -247,12 +247,12 @@ namespace Sapphire.Migrations
 
                     b.HasKey("GuildId");
 
-                    b.ToTable("T_guild", (string)null);
+                    b.ToTable("T_guild");
 
                     b.HasData(
                         new
                         {
-                            GuildId = new Guid("03688c97-bb83-468a-ab59-6c46219b8e0b"),
+                            GuildId = new Guid("aa7a4518-1d3b-4df2-b453-f8bce3074abe"),
                             GuildName = "The Sapphire",
                             IsInviteOnly = false
                         });
@@ -287,7 +287,7 @@ namespace Sapphire.Migrations
 
                     b.HasIndex("SapphireUserId");
 
-                    b.ToTable("T_hunters", (string)null);
+                    b.ToTable("T_hunters");
                 });
 
             modelBuilder.Entity("Sapphire.Entities.Models.Locale", b =>
@@ -302,12 +302,12 @@ namespace Sapphire.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("T_locale", (string)null);
+                    b.ToTable("T_locale");
 
                     b.HasData(
                         new
                         {
-                            Id = new Guid("344b3b2f-dd53-4492-9547-c1c38ddc27e9"),
+                            Id = new Guid("a2d90682-879b-4ab7-83cd-2842c004e127"),
                             LocaleName = "Dummy Locale"
                         });
                 });
@@ -335,12 +335,12 @@ namespace Sapphire.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("T_monsters", (string)null);
+                    b.ToTable("T_monsters");
 
                     b.HasData(
                         new
                         {
-                            Id = new Guid("4beaf92d-3415-4ae4-826f-19d393cbbe65"),
+                            Id = new Guid("9b15d43d-c9c3-44b1-82b4-fee5e9c4c138"),
                             BaseAttack = 1.0,
                             BaseDefense = 1.0,
                             HealthPool = 10000.0,
@@ -348,7 +348,7 @@ namespace Sapphire.Migrations
                         },
                         new
                         {
-                            Id = new Guid("e11c9db4-a3e3-4172-a398-11c077a562b7"),
+                            Id = new Guid("20d3d696-6657-4ed3-b513-ad0fa16ae06f"),
                             BaseAttack = 1.0,
                             BaseDefense = 1.0,
                             HealthPool = 10000.0,
@@ -356,7 +356,7 @@ namespace Sapphire.Migrations
                         },
                         new
                         {
-                            Id = new Guid("82399caa-b253-4806-a976-de63bc248108"),
+                            Id = new Guid("7230468f-43d7-4278-9158-e2b552c100f2"),
                             BaseAttack = 1.0,
                             BaseDefense = 1.0,
                             HealthPool = 5000.0,
@@ -386,7 +386,7 @@ namespace Sapphire.Migrations
 
                     b.HasIndex("SapphireClientId");
 
-                    b.ToTable("T_quest", (string)null);
+                    b.ToTable("T_quest");
                 });
 
             modelBuilder.Entity("Sapphire.Entities.Models.SapphireUser", b =>

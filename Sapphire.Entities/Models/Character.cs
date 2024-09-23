@@ -11,7 +11,8 @@ namespace Sapphire.Entities.Models
     {
         public Guid CharacterId { get; set; }
         public string? CharacterName { get; set; }
-        public CharacterRole Role { get; set; }
-        public SapphireUser User { get; set; }
+        [ForeignKey(nameof(CharacterRole))]
+        public Guid RoleId { get; set; }
+        public virtual SapphireUser User { get; set; }
     }
 }

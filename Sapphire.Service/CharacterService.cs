@@ -34,10 +34,10 @@ namespace Sapphire.Service
 
             if (characterFull)
                 throw new MaxCharacterCreation();
-            var characterRole = await _repoManager.Role.GetRole(charDto.RoleId);            
             var character = _mapper.Map<Character>(charDto);
             character.User = saphUser;
-           // character.Role = characterRole;
+            character.RoleId = charDto.RoleId;
+        
 
             _repoManager.Character.CreateCharacter(character);
             await _repoManager.SaveAsync();

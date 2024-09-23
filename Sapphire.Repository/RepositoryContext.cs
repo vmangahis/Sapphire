@@ -6,7 +6,7 @@ namespace Sapphire.Repository
 {
     public class RepositoryContext : IdentityDbContext<SapphireUser>
     {
-        public RepositoryContext(DbContextOptions opt): base(opt) { }
+        public RepositoryContext(DbContextOptions opt): base(opt) {  }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -19,6 +19,7 @@ namespace Sapphire.Repository
                 .HasOne(e => e.Guild)
                 .WithMany(e => e.HunterMembers)
                 .OnDelete(DeleteBehavior.SetNull);
+
 
             modelBuilder.ApplyConfiguration(new RoleConfiguration());
             modelBuilder.ApplyConfiguration(new CharacterRoleConfiguration());

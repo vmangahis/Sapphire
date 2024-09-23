@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Sapphire.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateCharacterTableWithCharacterRole : Migration
+    public partial class ForeignKeyForCharacteRoleAndSapphireUserInCharacterModel : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -108,8 +108,8 @@ namespace Sapphire.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "01e660b7-183a-4b91-aa95-7b92295ac3e9", null, "Administrator", "ADMINISTRATOR" },
-                    { "86d24464-e885-43b8-96b8-41d9835912bf", null, "User", "USER" }
+                    { "f2f7fbdb-b939-4ef1-98e0-51cb283cba6e", null, "User", "USER" },
+                    { "f6133849-cb96-4d8f-8785-6a494e28dc89", null, "Administrator", "ADMINISTRATOR" }
                 });
 
             migrationBuilder.InsertData(
@@ -117,28 +117,28 @@ namespace Sapphire.Migrations
                 columns: new[] { "RoleId", "CreatedDateTime", "RoleName", "UpdatedBy", "UpdatedDateTime" },
                 values: new object[,]
                 {
-                    { new Guid("07944fcb-4604-46fe-8bab-020ff934d0e8"), new DateTime(2024, 9, 21, 18, 11, 1, 778, DateTimeKind.Local).AddTicks(4730), "Hunter", null, new DateTime(2024, 9, 21, 18, 11, 1, 778, DateTimeKind.Local).AddTicks(4741) },
-                    { new Guid("1dd6fe3d-e4a6-4911-9f68-e620cc4838e9"), new DateTime(2024, 9, 21, 18, 11, 1, 778, DateTimeKind.Local).AddTicks(4746), "Client", null, new DateTime(2024, 9, 21, 18, 11, 1, 778, DateTimeKind.Local).AddTicks(4746) }
+                    { new Guid("01761684-4888-48f5-9717-582f066ce60d"), new DateTime(2024, 9, 22, 23, 56, 52, 588, DateTimeKind.Local).AddTicks(1247), "Client", null, new DateTime(2024, 9, 22, 23, 56, 52, 588, DateTimeKind.Local).AddTicks(1247) },
+                    { new Guid("15513fc4-430e-4bf2-95c9-994effabd61d"), new DateTime(2024, 9, 22, 23, 56, 52, 588, DateTimeKind.Local).AddTicks(1233), "Hunter", null, new DateTime(2024, 9, 22, 23, 56, 52, 588, DateTimeKind.Local).AddTicks(1243) }
                 });
 
             migrationBuilder.InsertData(
                 table: "T_guild",
                 columns: new[] { "GuildId", "GuildName", "IsInviteOnly" },
-                values: new object[] { new Guid("03688c97-bb83-468a-ab59-6c46219b8e0b"), "The Sapphire", false });
+                values: new object[] { new Guid("aa7a4518-1d3b-4df2-b453-f8bce3074abe"), "The Sapphire", false });
 
             migrationBuilder.InsertData(
                 table: "T_locale",
                 columns: new[] { "Id", "LocaleName" },
-                values: new object[] { new Guid("344b3b2f-dd53-4492-9547-c1c38ddc27e9"), "Dummy Locale" });
+                values: new object[] { new Guid("a2d90682-879b-4ab7-83cd-2842c004e127"), "Dummy Locale" });
 
             migrationBuilder.InsertData(
                 table: "T_monsters",
                 columns: new[] { "MonsterId", "BaseAttack", "BaseDefense", "HealthPool", "MonsterName" },
                 values: new object[,]
                 {
-                    { new Guid("4beaf92d-3415-4ae4-826f-19d393cbbe65"), 1.0, 1.0, 10000.0, "Rathian" },
-                    { new Guid("82399caa-b253-4806-a976-de63bc248108"), 1.0, 1.0, 5000.0, "Yian Garuga" },
-                    { new Guid("e11c9db4-a3e3-4172-a398-11c077a562b7"), 1.0, 1.0, 10000.0, "Rathalos" }
+                    { new Guid("20d3d696-6657-4ed3-b513-ad0fa16ae06f"), 1.0, 1.0, 10000.0, "Rathalos" },
+                    { new Guid("7230468f-43d7-4278-9158-e2b552c100f2"), 1.0, 1.0, 5000.0, "Yian Garuga" },
+                    { new Guid("9b15d43d-c9c3-44b1-82b4-fee5e9c4c138"), 1.0, 1.0, 10000.0, "Rathian" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -164,37 +164,37 @@ namespace Sapphire.Migrations
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "01e660b7-183a-4b91-aa95-7b92295ac3e9");
+                keyValue: "f2f7fbdb-b939-4ef1-98e0-51cb283cba6e");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "86d24464-e885-43b8-96b8-41d9835912bf");
+                keyValue: "f6133849-cb96-4d8f-8785-6a494e28dc89");
 
             migrationBuilder.DeleteData(
                 table: "T_guild",
                 keyColumn: "GuildId",
-                keyValue: new Guid("03688c97-bb83-468a-ab59-6c46219b8e0b"));
+                keyValue: new Guid("aa7a4518-1d3b-4df2-b453-f8bce3074abe"));
 
             migrationBuilder.DeleteData(
                 table: "T_locale",
                 keyColumn: "Id",
-                keyValue: new Guid("344b3b2f-dd53-4492-9547-c1c38ddc27e9"));
+                keyValue: new Guid("a2d90682-879b-4ab7-83cd-2842c004e127"));
 
             migrationBuilder.DeleteData(
                 table: "T_monsters",
                 keyColumn: "MonsterId",
-                keyValue: new Guid("4beaf92d-3415-4ae4-826f-19d393cbbe65"));
+                keyValue: new Guid("20d3d696-6657-4ed3-b513-ad0fa16ae06f"));
 
             migrationBuilder.DeleteData(
                 table: "T_monsters",
                 keyColumn: "MonsterId",
-                keyValue: new Guid("82399caa-b253-4806-a976-de63bc248108"));
+                keyValue: new Guid("7230468f-43d7-4278-9158-e2b552c100f2"));
 
             migrationBuilder.DeleteData(
                 table: "T_monsters",
                 keyColumn: "MonsterId",
-                keyValue: new Guid("e11c9db4-a3e3-4172-a398-11c077a562b7"));
+                keyValue: new Guid("9b15d43d-c9c3-44b1-82b4-fee5e9c4c138"));
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
