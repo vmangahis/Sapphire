@@ -189,7 +189,7 @@ namespace Sapphire.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("T_characters");
+                    b.ToTable("T_characters", (string)null);
                 });
 
             modelBuilder.Entity("Sapphire.Entities.Models.CharacterRole", b =>
@@ -212,7 +212,7 @@ namespace Sapphire.Migrations
 
                     b.HasKey("RoleId");
 
-                    b.ToTable("T_characterRoles");
+                    b.ToTable("T_characterRoles", (string)null);
 
                     b.HasData(
                         new
@@ -247,7 +247,7 @@ namespace Sapphire.Migrations
 
                     b.HasKey("GuildId");
 
-                    b.ToTable("T_guild");
+                    b.ToTable("T_guild", (string)null);
 
                     b.HasData(
                         new
@@ -287,7 +287,7 @@ namespace Sapphire.Migrations
 
                     b.HasIndex("SapphireUserId");
 
-                    b.ToTable("T_hunters");
+                    b.ToTable("T_hunters", (string)null);
                 });
 
             modelBuilder.Entity("Sapphire.Entities.Models.Locale", b =>
@@ -302,7 +302,7 @@ namespace Sapphire.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("T_locale");
+                    b.ToTable("T_locale", (string)null);
 
                     b.HasData(
                         new
@@ -335,7 +335,7 @@ namespace Sapphire.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("T_monsters");
+                    b.ToTable("T_monsters", (string)null);
 
                     b.HasData(
                         new
@@ -386,7 +386,7 @@ namespace Sapphire.Migrations
 
                     b.HasIndex("SapphireClientId");
 
-                    b.ToTable("T_quest");
+                    b.ToTable("T_quest", (string)null);
                 });
 
             modelBuilder.Entity("Sapphire.Entities.Models.SapphireUser", b =>

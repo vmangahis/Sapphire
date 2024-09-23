@@ -6,6 +6,7 @@ using Sapphire.Entities.Exceptions.BadRequest;
 using Sapphire.Entities.Models;
 using Sapphire.Service.Contracts;
 using Sapphire.Shared.Base;
+using Sapphire.Shared.DTO.Character;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,12 @@ namespace Sapphire.Service
             _repoManager = repomanager;
             _mapper = mapper;
             _saphUser = saphUser;
+        }
+        public async Task<CharacterDTO> GetCharacter(Guid characterId)
+        {
+            var character = await _repoManager.Character.GetCharacter(characterId);
+            var charDto = _mapper.Map<CharacterDTO>(character);
+            return charDto;
         }
 
         public async Task CreateCharacter(CharacterCreationDTO charDto, SapphireUser saphUser)

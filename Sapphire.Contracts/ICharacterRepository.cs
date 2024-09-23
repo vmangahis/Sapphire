@@ -10,6 +10,7 @@ namespace Sapphire.Contracts
     public interface ICharacterRepository
     {
         Task<IEnumerable<Character>> GetCharacterOwnerById(Guid saphUserId);
+        Task<Character> GetCharacter(Guid characterId);
         void CreateCharacter(Character c);
 
     }

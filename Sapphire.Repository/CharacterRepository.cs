@@ -14,5 +14,6 @@ namespace Sapphire.Repository
         public CharacterRepository(RepositoryContext repoCont): base(repoCont) { }
         public void CreateCharacter(Character character) =>  Create(character);
         public async Task<IEnumerable<Character>> GetCharacterOwnerById(Guid saphUserId) => await GetThroughCondition(e => e.CharacterId == saphUserId, false).ToListAsync();
+        public async Task<Character> GetCharacter(Guid characterId) => await GetThroughCondition(e => e.CharacterId == characterId, false).Include(e => e.User).Include(e => e.Role).FirstOrDefaultAsync();
     }
 }

@@ -32,5 +32,11 @@ namespace Sapphire.Presentation.Controllers
             await _serv.CharacterService.CreateCharacter(charDto, user);
             return Ok();
         }
+        [HttpGet("{charid:guid}")]
+        public async Task<ActionResult> GetCharacter(Guid charid)
+        {
+            var character = await _serv.CharacterService.GetCharacter(charid);
+            return Ok(character);
+        }
     }
 }
