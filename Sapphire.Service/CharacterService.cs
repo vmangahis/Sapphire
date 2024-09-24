@@ -47,7 +47,15 @@ namespace Sapphire.Service
             character.User = saphUser;
             character.RoleId = charDto.RoleId;
 
-            if(charRole.RoleName)
+            if(charRole.RoleName.ToUpper() == "HUNTER")
+            {
+                Hunters hunterObject = new Hunters
+                {
+                    HunterName = charDto.CharacterName,
+                    SapphireUser = saphUser
+                };
+                  _repoManager.Hunter.CreateHunter(hunterObject);
+            }
             // To do implement adding to T_hunters
 
             _repoManager.Character.CreateCharacter(character);
