@@ -39,12 +39,16 @@ namespace Sapphire.Service
             
             var characterFull = await CheckCharacterLimit(saphUser);
 
+            var charRole = await _repoManager.Role.GetRole(charDto.RoleId);
+
             if (characterFull)
                 throw new MaxCharacterCreation();
             var character = _mapper.Map<Character>(charDto);
             character.User = saphUser;
             character.RoleId = charDto.RoleId;
-        
+
+            if(charRole.RoleName)
+            // To do implement adding to T_hunters
 
             _repoManager.Character.CreateCharacter(character);
             await _repoManager.SaveAsync();
