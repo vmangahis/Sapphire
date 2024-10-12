@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Sapphire.Contracts;
+using Sapphire.Entities.Exceptions;
 using Sapphire.Entities.Exceptions.BadRequest;
 using Sapphire.Entities.Models;
 using Sapphire.Service.Contracts;
@@ -41,6 +42,9 @@ namespace Sapphire.Service
 
             var charRole = await _repoManager.Role.GetRole(charDto.RoleId);
 
+            if (charRole is null)
+                throw new CharacterRoleNotFound("Role does not exists.");
+
             if (characterFull)
                 throw new MaxCharacterCreation();
             var character = _mapper.Map<Character>(charDto);
@@ -56,7 +60,7 @@ namespace Sapphire.Service
                 };
                   _repoManager.Hunter.CreateHunter(hunterObject);
             }
-            // To do implement adding to T_hunters
+            
 
             _repoManager.Character.CreateCharacter(character);
             await _repoManager.SaveAsync();
