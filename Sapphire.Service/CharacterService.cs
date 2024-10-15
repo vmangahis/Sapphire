@@ -47,6 +47,7 @@ namespace Sapphire.Service
 
             if (characterFull)
                 throw new MaxCharacterCreation();
+
             var character = _mapper.Map<Character>(charDto);
             character.User = saphUser;
             character.RoleId = charDto.RoleId;
@@ -61,12 +62,8 @@ namespace Sapphire.Service
                   _repoManager.Hunter.CreateHunter(hunterObject);
             }
             
-
             _repoManager.Character.CreateCharacter(character);
             await _repoManager.SaveAsync();
-
-            
-
         }
 
         private async Task<bool> CheckCharacterLimit(SapphireUser saphUser)

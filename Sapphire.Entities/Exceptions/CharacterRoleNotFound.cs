@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace Sapphire.Entities.Exceptions
 {
-    public sealed class CharacterRoleNotFound: BadRequestException
+    public sealed class CharacterRoleNotFound : BadRequestException
     {
         public CharacterRoleNotFound(string message) : base(message) { }
+    }
 }

@@ -6,6 +6,7 @@ using Sapphire.Shared.DTO.CharacterRole;
 using Sapphire.Shared.DTO.Guild;
 using Sapphire.Shared.DTO.Hunter;
 using Sapphire.Shared.DTO.Monster;
+using Sapphire.Shared.DTO.Quest;
 using Sapphire.Shared.DTO.SapphireUser;
 namespace Sapphire
 {
@@ -31,6 +32,7 @@ namespace Sapphire
             CreateMap<CharacterCreationDTO, Character>().ReverseMap();
             CreateMap<CharacterDTO, Character>().ReverseMap();
             CreateMap<CharacterRoleDTO, CharacterRole>().ReverseMap();
+            CreateMap<PostQuestDTO, Quest>();
         }
     }
 }
