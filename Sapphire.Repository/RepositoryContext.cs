@@ -23,6 +23,10 @@ namespace Sapphire.Repository
 
             modelBuilder.ApplyConfiguration(new RoleConfiguration());
             modelBuilder.ApplyConfiguration(new CharacterRoleConfiguration());
+            modelBuilder.Entity<HunterClient>()
+                .HasKey(e => e.ClientId);
+                
+                
         }
 
         public DbSet<Hunters>? T_hunters { get; set; }
@@ -32,6 +36,7 @@ namespace Sapphire.Repository
         public DbSet<Quest>? T_quest { get; set; }
         public DbSet<Character>? T_characters { get; set; }
         public DbSet<CharacterRole>? T_characterRoles { get; set; }
+        public DbSet<HunterClient>? T_hunterClients { get; set; }
 
     }
 }
