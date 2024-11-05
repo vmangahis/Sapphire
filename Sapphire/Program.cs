@@ -17,7 +17,6 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 var builder = WebApplication.CreateBuilder(args);
 var newtonSoft = builder.Services.ConfigureJSONInputPatchFormatter();
 builder.Services.ConfigureCors();
-builder.Services.AddScoped<IDataShaper<HunterDTO>, DataShaper<HunterDTO>>();
 builder.Services.ConfigureIIS();
 builder.Services.AddScoped<ValidationFilterAttribute>();
 builder.Services.ConfigureLogger();
@@ -25,7 +24,6 @@ builder.Services.AddControllers().AddApplicationPart(typeof(Sapphire.Presentatio
 builder.Services.ConfigureRepositoryManager();
 builder.Services.ConfigureServiceManager();
 builder.Services.ConfigureResponseCache();
-//builder.Services.ConfigureRateLimiting();
 builder.Services.AddHttpContextAccessor();
 builder.Services.ConfigureHttpCacheHeaders();
 builder.Services.AddMemoryCache();
