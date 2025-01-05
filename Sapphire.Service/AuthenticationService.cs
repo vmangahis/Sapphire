@@ -81,8 +81,10 @@ namespace Sapphire.Service
             var tokenOpts = GenerateTokenOptions(signCreds, claims);
 
             var refreshToken = GenerateRefreshToken();
+            var username = _saphUser.UserName;
 
             _saphUser.RefreshToken = refreshToken;
+
 
             if (populateExp)
                 _saphUser.RefreshTokenExpiry = DateTime.Now.AddDays(7);
@@ -91,7 +93,7 @@ namespace Sapphire.Service
 
             var accessToken =  new JwtSecurityTokenHandler().WriteToken(tokenOpts);
 
-            return new TokenDto(accessToken, refreshToken);
+            return new TokenDto(accessToken, refreshToken, username);
         }
         public async Task<TokenDto> RefreshToken(TokenDto tokenDto)
         {
@@ -164,7 +166,6 @@ namespace Sapphire.Service
                 ValidIssuer = jwtSet["validIssuer"],
                 ValidAudience = jwtSet["validAudience"]
             };
-            List<string> test = new List<string> { "test"};
 
             var tokenHandler = new JwtSecurityTokenHandler();
             SecurityToken securityToken;
@@ -178,12 +179,18 @@ namespace Sapphire.Service
             return principal;
         }
 
+        public async Task<UserTokenDto> GetUserToken(SapphireUserForAuthDTO saphUserAuth, string AccessToken)
+        {
+            _saphUser = await _userManager.FindByNameAsync(saphUserAuth.Username);
+            return new UserTokenDto { User = _saphUser.UserName, AccessToken= AccessToken};
+        }
+
         public void SetTokenCookie(TokenDto tokenDto, HttpContext context)
         {
             context.Response.Cookies.Append("accessToken", tokenDto.AccessToken, new CookieOptions
             {
                 Expires = DateTimeOffset.UtcNow.AddMinutes(5),
-                HttpOnly = true,
+                HttpOnly = false,
                 IsEssential = true,
                 Secure = true,
                 Domain = "localhost",
@@ -200,5 +207,7 @@ namespace Sapphire.Service
                 SameSite = SameSiteMode.None
             });
         }
+
+        
     }
 }

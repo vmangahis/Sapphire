@@ -19,13 +19,12 @@ namespace Sapphire.Presentation.Controllers
         public TokenController(IServiceManager serv) => _serv = serv;
 
         [HttpPost("refresh")]
-        [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<ActionResult> RefreshToken()
         {
             HttpContext.Request.Cookies.TryGetValue("accessToken", out var accessToken);
             HttpContext.Request.Cookies.TryGetValue("refreshToken", out var refreshToken);
 
-            var tokenDto = new TokenDto(accessToken, refreshToken);
+            var tokenDto = new TokenDto(accessToken, refreshToken, null);
 
             var tokenDtoVal  = await _serv.AuthenticationService.RefreshToken(tokenDto);
             _serv.AuthenticationService.SetTokenCookie(tokenDtoVal, HttpContext);

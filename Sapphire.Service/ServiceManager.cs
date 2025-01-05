@@ -24,9 +24,9 @@ namespace Sapphire.Service
         private readonly Lazy<ISapphireUserService> _sapphireUserService;
         private readonly Lazy<IQuestService> _questService;
         private readonly Lazy<ICharacterService> _characterService;
-        public ServiceManager(IRepositoryManager repositorymanager, IMapper map, IDataShaper<HunterDTO> dataShaper, UserManager<SapphireUser> userManager, IConfiguration conf, RoleManager<IdentityRole> roleManager, IHttpContextAccessor httpCont) {
+        public ServiceManager(IRepositoryManager repositorymanager, IMapper map, UserManager<SapphireUser> userManager, IConfiguration conf, RoleManager<IdentityRole> roleManager, IHttpContextAccessor httpCont) {
             _monsterService = new Lazy<IMonsterService>(() => new MonsterService(repositorymanager, map));
-            _hunterService = new Lazy<IHunterService>(() => new HunterService(repositorymanager, map, dataShaper, httpCont, userManager));
+            _hunterService = new Lazy<IHunterService>(() => new HunterService(repositorymanager, map, httpCont, userManager));
             _guildService = new Lazy<IGuildService>(() => new GuildService(repositorymanager, map));
             _authService = new Lazy<IAuthenticationService>(() => new AuthenticationService(map, userManager, conf, roleManager));
             _sapphireUserService = new Lazy<ISapphireUserService>(() => new SapphireUserService(repositorymanager,map, userManager ));

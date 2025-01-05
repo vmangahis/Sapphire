@@ -16,6 +16,7 @@ namespace Sapphire.Service.Contracts
         Task<bool> ValidateSapphireUser(SapphireUserForAuthDTO saphUserAuth);
         Task<TokenDto> CreateToken(bool populateExp);
         Task<TokenDto> RefreshToken(TokenDto tokenDto);
+        Task<UserTokenDto> GetUserToken(SapphireUserForAuthDTO saphUserAuth, string AccessToken);
         void SetTokenCookie(TokenDto tokenDto, HttpContext context);
     }
 }

@@ -26,12 +26,10 @@ namespace Sapphire.Service
         private readonly IRepositoryManager _repomanager;
         private readonly IMapper _mapper;
         private readonly UserManager<SapphireUser> _userManager;
-        private readonly IDataShaper<HunterDTO> _dataShaper;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public HunterService(IRepositoryManager repomanager, IMapper mapper, IDataShaper<HunterDTO> dataShaper, IHttpContextAccessor httpContextAccessor, UserManager<SapphireUser> userManager) { 
+        public HunterService(IRepositoryManager repomanager, IMapper mapper, IHttpContextAccessor httpContextAccessor, UserManager<SapphireUser> userManager) { 
             _repomanager = repomanager;
             _mapper = mapper;
-            _dataShaper = dataShaper;
             _httpContextAccessor = httpContextAccessor; 
             _userManager = userManager;
         }

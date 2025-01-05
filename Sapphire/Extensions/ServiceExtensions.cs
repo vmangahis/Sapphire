@@ -25,9 +25,11 @@ namespace Sapphire.Extensions
         public static void ConfigureCors(this IServiceCollection serv) =>
             serv.AddCors(opt => {
                 opt.AddPolicy("CorsPolicy", b =>
-                b.AllowAnyOrigin()
+                b.WithOrigins("https://localhost:5173")
                 .AllowAnyMethod()
-                .AllowAnyHeader());
+                .AllowAnyHeader()
+                .AllowCredentials()
+                );
             });
 
         public static void ConfigureIIS(this IServiceCollection serv) => serv.Configure<IISOptions>(opt => {

@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace Sapphire.Shared.DTO.Token
 {
-    public record TokenDto(string AccessToken, string RefreshToken);
+    public record TokenDto(string AccessToken, string RefreshToken, string? Username);
 }

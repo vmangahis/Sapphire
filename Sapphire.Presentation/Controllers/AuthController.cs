@@ -41,11 +41,17 @@ namespace Sapphire.Presentation.Controllers
         public async Task<ActionResult> AuthenticateSapphire([FromBody] SapphireUserForAuthDTO saphAuth)
         {
             if (!await _serv.AuthenticationService.ValidateSapphireUser(saphAuth))
-            {
                 return Unauthorized();
-            }
+            
             var tokenDto = await _serv.AuthenticationService.CreateToken(populateExp: true);
             _serv.AuthenticationService.SetTokenCookie(tokenDto, HttpContext);
+            var userTokenDto = await _serv.AuthenticationService.GetUserToken(saphAuth, tokenDto.AccessToken);
+            return Ok(userTokenDto);
+        }
+        [HttpPost("pingauth")]
+        public async Task<ActionResult> PingSapphire()
+        {
+            //if(_serv.AuthenticationService.)
             return Ok();
         }
         
