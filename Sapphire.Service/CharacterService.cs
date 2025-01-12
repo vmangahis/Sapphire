@@ -21,7 +21,6 @@ namespace Sapphire.Service
         private readonly IRepositoryManager _repoManager;
         private readonly IMapper _mapper;
         private readonly UserManager<SapphireUser> _saphUser;
-        private SapphireUser? sapphireUser;
         public CharacterService(IRepositoryManager repomanager, IMapper mapper, UserManager<SapphireUser> saphUser)
         {
             _repoManager = repomanager;
@@ -52,7 +51,7 @@ namespace Sapphire.Service
             character.User = saphUser;
             character.RoleId = charDto.RoleId;
 
-            if(charRole.RoleName.ToUpper() == "HUNTER")
+            if(charRole.RoleName?.ToUpper() == "HUNTER")
             {
                 Hunters hunterObject = new Hunters
                 {

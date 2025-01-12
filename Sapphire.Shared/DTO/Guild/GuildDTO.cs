@@ -10,8 +10,8 @@ namespace Sapphire.Shared.DTO.Guild
 {
     public record GuildDTO
     {
-        public string GuildName { get; init; }
-        public ICollection<HunterMemberDTO> HunterMembers { get; init; }
+        public required string GuildName { get; init; }
+        public required ICollection<HunterMemberDTO> HunterMembers { get; init; }
 
     }
 }

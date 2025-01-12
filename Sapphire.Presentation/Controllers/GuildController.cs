@@ -56,7 +56,7 @@ namespace Sapphire.Presentation.Controllers
             if (!ModelState.IsValid)
                 return UnprocessableEntity(ModelState);
 
-            await _serv.GuildService.CheckDuplicateGuildAsync(gdto.GuildName, track: false);
+            await _serv.GuildService.CheckDuplicateGuildAsync(gdto.GuildName!, track: false);
 
             await _serv.GuildService.UpdateGuildAsync(GuildName, gdto, track: true);
             return NoContent();
@@ -70,7 +70,7 @@ namespace Sapphire.Presentation.Controllers
                                                                .Where(o => o.op.ToUpper().Equals("REPLACE")).FirstOrDefault();
 
             if (guildNameValidation is not null)
-                await _serv.GuildService.CheckDuplicateGuildAsync(guildNameValidation.value.ToString(), track: false);
+                await _serv.GuildService.CheckDuplicateGuildAsync(guildNameValidation.value!.ToString()!, track: false);
 
 
             jsonPatchGuild.ApplyTo(partialUpdateGuild.gdto, ModelState);

@@ -11,7 +11,7 @@ namespace Sapphire.Shared.DTO.Character
     public record CharacterDTO
     {
         public string? CharacterName { get; init; }
-        public CharacterRoleDTO Role { get; init; }
-        public SapphireUserDTO User { get; init; }
+        public required CharacterRoleDTO Role { get; init; }
+        public required SapphireUserDTO User { get; init; }
     }
 }

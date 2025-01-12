@@ -15,7 +15,10 @@ namespace Sapphire.Repository
 
         public IEnumerable<Monsters> GetAllMonsters(bool track) => GetAll(track).OrderBy(e => e.MonsterName);
 
-        public Monsters GetMonster(Guid monId, bool track) => GetThroughCondition(x => x.Id.Equals(monId), track).SingleOrDefault();
+        public Monsters GetMonster(Guid monId, bool track) { 
+           var monster = GetThroughCondition(x => x.Id.Equals(monId), track).SingleOrDefault();
+            return monster ?? new Monsters { };
+        }
         public void CreateMonster(Monsters mon) => Create(mon);
     }
 }

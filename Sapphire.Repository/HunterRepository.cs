@@ -35,8 +35,15 @@ namespace Sapphire.Repository
                    .ToPagedList(hunters, HunterParams.PageNumber, HunterParams.PageSize);
         }
 
-        public async Task<Hunters> GetHunterAsync(Guid huntId, bool track) => await GetThroughCondition(x => x.Id.Equals(huntId), track).Include(e => e.Guild).SingleOrDefaultAsync();
-        public async Task<Hunters> GetHunterByNameAsync(string HunterName, bool track) => await GetThroughCondition(x => x.HunterName.Equals(HunterName), track).FirstOrDefaultAsync();
+        public async Task<Hunters> GetHunterAsync(Guid huntId, bool track) { 
+            var hunter = await GetThroughCondition(x => x.Id.Equals(huntId), track).Include(e => e.Guild).SingleOrDefaultAsync();
+            return hunter ?? new Hunters { SapphireUser = new SapphireUser { } };
+        }
+        public async Task<Hunters> GetHunterByNameAsync(string HunterName, bool track) 
+        {
+            var hunter = await GetThroughCondition(x => x.HunterName.Equals(HunterName), track).FirstOrDefaultAsync();
+            return hunter ?? new Hunters { SapphireUser = new SapphireUser { } };
+        }
         public async Task<IEnumerable<Hunters>> GetMultipleHuntersByNameAsync(IEnumerable<string> HunterNameList, bool TrackChanges) => await GetThroughCondition(x => HunterNameList.Contains(x.HunterName), TrackChanges).ToListAsync();
         public void CreateHunter(Hunters hunt) => Create(hunt);
         public void DeleteHunter(Hunters hunt) => Delete(hunt);

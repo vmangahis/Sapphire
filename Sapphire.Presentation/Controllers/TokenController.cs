@@ -21,14 +21,26 @@ namespace Sapphire.Presentation.Controllers
         [HttpPost("refresh")]
         public async Task<ActionResult> RefreshToken()
         {
-            HttpContext.Request.Cookies.TryGetValue("accessToken", out var accessToken);
-            HttpContext.Request.Cookies.TryGetValue("refreshToken", out var refreshToken);
+            HttpContext.Request.Cookies.TryGetValue("sapphireRefresh", out var refreshToken);
+            HttpContext.Request.Cookies.TryGetValue("sapphireId", out string? sapphireUserId);
 
-            var tokenDto = new TokenDto(accessToken, refreshToken, null);
+                //if refresh token is null then user is no longer authorized, needs relogin
+            if (refreshToken is null || sapphireUserId is null) {
+                    return Unauthorized();
+            }
+            var refreshTokenUser = await _serv.AuthenticationService.ValidateRefreshToken(refreshToken);
 
-            var tokenDtoVal  = await _serv.AuthenticationService.RefreshToken(tokenDto);
-            _serv.AuthenticationService.SetTokenCookie(tokenDtoVal, HttpContext);
-            return Ok(tokenDtoVal);
+             if (refreshTokenUser is null)
+                  return Unauthorized();
+
+
+
+            //var tokenDto = new TokenDto(accessToken, refreshToken, null);
+            //var tokenDtoVal = await _serv.AuthenticationService.CreateToken(populateExp: false);
+            string newAccessToken = await _serv.AuthenticationService.RegenerateAccessToken(sapphireUserId);
+            //var tokenDtoVal  = await _serv.AuthenticationService.RefreshToken(tokenDto);
+            _serv.AuthenticationService.RefreshAccessToken(newAccessToken, HttpContext);
+            return Ok(new {accessToken = newAccessToken, user = refreshTokenUser });
         }
     }
 }

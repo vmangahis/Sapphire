@@ -13,6 +13,9 @@ namespace Sapphire.Repository
     {
         public RoleRepository(RepositoryContext repoCont) : base(repoCont) { }
 
-        public async Task<CharacterRole> GetRole(Guid roleId) => await GetThroughCondition(e => e.RoleId == roleId, false).FirstOrDefaultAsync();
+        public async Task<CharacterRole> GetRole(Guid roleId) {
+            var charRole =  await GetThroughCondition(e => e.RoleId == roleId, false).FirstOrDefaultAsync();
+            return charRole ?? new CharacterRole { };
+         }
     }
 }

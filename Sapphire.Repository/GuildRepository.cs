@@ -27,13 +27,23 @@ namespace Sapphire.Repository
                 .ToListAsync();
             return PagedList<Guild>.ToPagedList(guild, guildParams.PageNumber, guildParams.PageSize);
         }
-            
+
+
+
+        public async Task<Guild> GetGuildAsync(Guid guildId, bool track) { 
+            var guild = await GetThroughCondition(x => x.GuildId.Equals(guildId), track).Include(e => e.HunterMembers).FirstOrDefaultAsync();
+            return guild ?? new Guild { };
+        }
+
+        public async Task<Guild> GetGuildByNameAsync(string gname, bool track) { 
+            var guild = await GetThroughCondition(x => x.GuildName.Equals(gname), track).FirstOrDefaultAsync();
+            return guild ?? new Guild { };
+        }
+        public async Task<Guild> GetGuildMembersAsync(Guid guildId, bool track) { 
+            var guild = await GetThroughCondition(x => x.GuildId.Equals(guildId), track).Include(y => y.HunterMembers).FirstOrDefaultAsync();
+            return guild ?? new Guild { };
         
-
-        public async Task<Guild> GetGuildAsync(Guid guildId, bool track) => await GetThroughCondition(x => x.GuildId.Equals(guildId), track).Include(e => e.HunterMembers).FirstOrDefaultAsync();
-
-        public async Task<Guild> GetGuildByNameAsync(string gname, bool track) => await GetThroughCondition(x => x.GuildName.Equals(gname), track).FirstOrDefaultAsync();
-        public async Task<Guild> GetGuildMembersAsync(Guid guildId, bool track) => await GetThroughCondition(x => x.GuildId.Equals(guildId), track).Include(y => y.HunterMembers).FirstOrDefaultAsync();
+        }
 
         public void CreateGuild(Guild gd) => Create(gd);
         public void UpdateGuild(Guild gd) => Update(gd);

@@ -53,18 +53,18 @@ namespace Sapphire.Service
 
         public async Task<HunterDTO> CreateHunterAsync(HunterCreationDTO hunter)
         {
-            var existHunter = await _repomanager.Hunter.GetHunterByNameAsync(hunter.HunterName, false);
+            
+            var existHunter = await _repomanager.Hunter.GetHunterByNameAsync(hunter.HunterName ?? "", false);
             if (existHunter != null) 
-                throw new HunterDuplicateException(hunter.HunterName);
+                throw new HunterDuplicateException(hunter.HunterName ?? "");
 
             var user = _httpContextAccessor.HttpContext?.User;
-            var currentUser = await _userManager.FindByNameAsync(user.Identity.Name);
-
-            var hunterBelongs = await _repomanager.Hunter.GetHuntersBySapphireUser(currentUser);
+            var currentUser = await _userManager.FindByNameAsync(user!.Identity!.Name!);
+            var hunterBelongs = await _repomanager.Hunter.GetHuntersBySapphireUser(currentUser!);
 
             
             var hn = _mapper.Map<Hunters>(hunter);
-            hn.SapphireUser = currentUser;
+            hn.SapphireUser = currentUser!;
 
             _repomanager.Hunter.CreateHunter(hn);
             await _repomanager.SaveAsync();

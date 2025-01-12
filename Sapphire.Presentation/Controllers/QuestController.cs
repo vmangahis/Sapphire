@@ -33,8 +33,8 @@ namespace Sapphire.Presentation.Controllers
             {
                 return UnprocessableEntity(ModelState);
             }
-            var sapphireUser = await _userManager.FindByNameAsync(User.Identity.Name);
-            _service.QuestService.PostQuest(postDto, sapphireUser);
+            var sapphireUser = await _userManager.FindByNameAsync(User.Identity!.Name!);
+            await _service.QuestService.PostQuest(postDto, sapphireUser!);
             return StatusCode(201);
         }
     }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -45,7 +46,7 @@ namespace Sapphire.Service
             var user = _mapper.Map<SapphireUser>(saphUserReg);
             var registerRoles = saphUserReg.Roles;              
 
-            foreach (var role in saphUserReg.Roles)
+            foreach (var role in saphUserReg.Roles!)
             {
                 var roleExists = await _roleManager.RoleExistsAsync(role);
 
@@ -54,7 +55,7 @@ namespace Sapphire.Service
 
             }
 
-            var res = await _userManager.CreateAsync(user, saphUserReg.Password);
+            var res = await _userManager.CreateAsync(user, saphUserReg.Password!);
 
             if (res.Succeeded)
             {
@@ -64,16 +65,16 @@ namespace Sapphire.Service
         }
         public async Task<bool> ValidateSapphireUser(SapphireUserForAuthDTO saphUserAuth)
         {
-            _saphUser = await _userManager.FindByNameAsync(saphUserAuth.Username);
+            _saphUser = await _userManager.FindByNameAsync(saphUserAuth.Username!);
             
-            var res = (_saphUser != null && await _userManager.CheckPasswordAsync(_saphUser, saphUserAuth.Password));
+            var res = (_saphUser != null && await _userManager.CheckPasswordAsync(_saphUser, saphUserAuth.Password!));
             if (!res)
             {
                 Console.WriteLine("Auth Failed");
             }
             return res;
         }
-
+        
         public async Task<TokenDto> CreateToken(bool populateExp)
         {
             var signCreds = GetSigningCredentials();
@@ -81,7 +82,7 @@ namespace Sapphire.Service
             var tokenOpts = GenerateTokenOptions(signCreds, claims);
 
             var refreshToken = GenerateRefreshToken();
-            var username = _saphUser.UserName;
+            var username = _saphUser!.UserName;
 
             _saphUser.RefreshToken = refreshToken;
 
@@ -95,15 +96,15 @@ namespace Sapphire.Service
 
             return new TokenDto(accessToken, refreshToken, username);
         }
-        public async Task<TokenDto> RefreshToken(TokenDto tokenDto)
+      public async Task<TokenDto> RefreshToken(TokenDto tokenDto)
         {
-            var principal = GetPrincipalFromExpiredAccess(tokenDto.AccessToken);
+          /*var principal = GetPrincipalFromExpiredAccess(tokenDto.AccessToken);
 
             var user = await _userManager.FindByNameAsync(principal.Identity.Name);
             if (user == null || user.RefreshToken != tokenDto.RefreshToken || user.RefreshTokenExpiry <= DateTime.Now)
                 throw new RefreshTokenBadRequest();
 
-            _saphUser = user;
+            _saphUser = user;*/
 
             return await CreateToken(populateExp: false);
         }
@@ -112,7 +113,7 @@ namespace Sapphire.Service
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, _saphUser.UserName)
+                new Claim(ClaimTypes.Name, _saphUser!.UserName!)
             };
 
             var roles = await _userManager.GetRolesAsync(_saphUser);
@@ -123,7 +124,11 @@ namespace Sapphire.Service
         }
         private SigningCredentials GetSigningCredentials()
         {
-            var key = Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("SUPERSECRET"));
+            var supersecret = Environment.GetEnvironmentVariable("SUPERSECRET");
+            if(supersecret == null)
+                throw new ArgumentNullException();
+
+            var key = Encoding.UTF8.GetBytes(supersecret);
             var secret = new SymmetricSecurityKey(key);
 
             return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
@@ -152,7 +157,7 @@ namespace Sapphire.Service
                 return Convert.ToBase64String(randNum);
             }
         }
-        private ClaimsPrincipal GetPrincipalFromExpiredAccess(string token)
+        /*private ClaimsPrincipal GetPrincipalFromExpiredAccess(string token)
         {
             var jwtSet = _config.GetSection("JwtConfig");
 
@@ -177,17 +182,17 @@ namespace Sapphire.Service
                 throw new SecurityTokenException("Invalid token");
             }
             return principal;
-        }
+        }*/
 
         public async Task<UserTokenDto> GetUserToken(SapphireUserForAuthDTO saphUserAuth, string AccessToken)
-        {
-            _saphUser = await _userManager.FindByNameAsync(saphUserAuth.Username);
-            return new UserTokenDto { User = _saphUser.UserName, AccessToken= AccessToken};
+        {            
+            _saphUser = await _userManager.FindByNameAsync(saphUserAuth.Username!);
+            return new UserTokenDto { User = _saphUser?.UserName, AccessToken= AccessToken};
         }
 
         public void SetTokenCookie(TokenDto tokenDto, HttpContext context)
         {
-            context.Response.Cookies.Append("accessToken", tokenDto.AccessToken, new CookieOptions
+            context.Response.Cookies.Append("sapphireAccess", tokenDto.AccessToken, new CookieOptions
             {
                 Expires = DateTimeOffset.UtcNow.AddMinutes(5),
                 HttpOnly = false,
@@ -197,7 +202,17 @@ namespace Sapphire.Service
                 SameSite = SameSiteMode.None
             });
 
-            context.Response.Cookies.Append("refreshToken", tokenDto.RefreshToken, new CookieOptions
+            context.Response.Cookies.Append("sapphireRefresh", tokenDto.RefreshToken, new CookieOptions
+            {
+                Expires = DateTimeOffset.UtcNow.AddDays(7),
+                HttpOnly = true,
+                IsEssential = true,
+                Secure = true,
+                Domain = "localhost",
+                SameSite = SameSiteMode.None
+            });
+
+            context.Response.Cookies.Append("sapphireId", _saphUser!.Id, new CookieOptions
             {
                 Expires = DateTimeOffset.UtcNow.AddDays(7),
                 HttpOnly = true,
@@ -207,6 +222,35 @@ namespace Sapphire.Service
                 SameSite = SameSiteMode.None
             });
         }
+
+        public async Task<string> ValidateRefreshToken(string rfToken)
+        {
+            var user =  await _userManager.Users.Where(e => e.RefreshToken == rfToken).FirstOrDefaultAsync();
+            var userName = user!.UserName;
+
+
+            return userName ?? "";
+        }
+
+        public async Task<string> RegenerateAccessToken(string UserId)
+        {
+            _saphUser = await _userManager.FindByIdAsync(UserId);
+            var signCreds = GetSigningCredentials();
+            var claims = await GetClaims();
+            var tokenOpts = GenerateTokenOptions(signCreds, claims);
+            var newAccessToken = new JwtSecurityTokenHandler().WriteToken(tokenOpts);
+            return newAccessToken;
+        }
+
+        public void RefreshAccessToken(string AccessToken, HttpContext cont) => cont.Response.Cookies.Append("sapphireAccess", AccessToken, new CookieOptions
+        {
+            Expires = DateTimeOffset.UtcNow.AddMinutes(5),
+            HttpOnly = false,
+            IsEssential = true,
+            Secure = true,
+            Domain = "localhost",
+            SameSite = SameSiteMode.None
+        });
 
         
     }

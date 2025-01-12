@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Sapphire.Entities.Models;
 using Sapphire.Shared.DTO.SapphireUser;
 using Sapphire.Shared.DTO.Token;
 using System;
@@ -18,5 +19,9 @@ namespace Sapphire.Service.Contracts
         Task<TokenDto> RefreshToken(TokenDto tokenDto);
         Task<UserTokenDto> GetUserToken(SapphireUserForAuthDTO saphUserAuth, string AccessToken);
         void SetTokenCookie(TokenDto tokenDto, HttpContext context);
+        void RefreshAccessToken(string AccessToken, HttpContext cont);
+        Task<string> ValidateRefreshToken(string rfToken);
+        Task<string> RegenerateAccessToken(string UserId);
+        
     }
 }

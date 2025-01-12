@@ -28,8 +28,8 @@ namespace Sapphire.Presentation.Controllers
         [Authorize]
         public async Task<ActionResult> CreateCharacter(CharacterCreationDTO charDto)
         {
-            var user = await _userManager.FindByNameAsync(User.Identity.Name);
-            await _serv.CharacterService.CreateCharacter(charDto, user);
+            var user = await _userManager.FindByNameAsync(User.Identity!.Name!);
+            await _serv.CharacterService.CreateCharacter(charDto, user!);
             return Ok();
         }
         [HttpGet("{charid:guid}")]

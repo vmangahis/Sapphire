@@ -48,16 +48,6 @@ namespace Sapphire.Extensions
         public static NewtonsoftJsonPatchInputFormatter ConfigureJSONInputPatchFormatter(this IServiceCollection serv) => serv.AddLogging().AddMvc().AddNewtonsoftJson().Services.BuildServiceProvider().GetRequiredService<IOptions<MvcOptions>>().Value.InputFormatters
           .OfType<NewtonsoftJsonPatchInputFormatter>().First();
 
-        public static void ConfigureAPIVersioning(this IServiceCollection serv)
-        {
-            serv.AddApiVersioning(opt =>
-            {
-                opt.ReportApiVersions = true;
-                opt.AssumeDefaultVersionWhenUnspecified = true;
-                opt.DefaultApiVersion = new ApiVersion(1.0);
-                
-            }).AddMvc();
-        }
 
         public static void ConfigureResponseCache(this IServiceCollection serv) => serv.AddResponseCaching();
         public static void ConfigureHttpCacheHeaders(this IServiceCollection serv) => serv.AddHttpCacheHeaders(
@@ -112,6 +102,9 @@ namespace Sapphire.Extensions
             conf.Bind(jwtOptions.Section, jwtOptions);
             var secretKey = Environment.GetEnvironmentVariable("SUPERSECRET");
 
+            if (secretKey is null)
+                throw new ArgumentNullException();
+
 
             serv.AddAuthentication(opt =>
             {
@@ -135,7 +128,7 @@ namespace Sapphire.Extensions
                 {
                     OnMessageReceived = ctx =>
                     {
-                        ctx.Request.Cookies.TryGetValue("accessToken", out var accessToken);
+                        ctx.Request.Cookies.TryGetValue("sapphireAccess", out var accessToken);
                         if (!string.IsNullOrWhiteSpace(accessToken))
                             ctx.Token = accessToken;
 
@@ -144,6 +137,8 @@ namespace Sapphire.Extensions
                 };
             });
         }
+
+     
 
 
 

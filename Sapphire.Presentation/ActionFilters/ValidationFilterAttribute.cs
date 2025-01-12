@@ -21,7 +21,7 @@ namespace Sapphire.Presentation.ActionFilters
             var action = context.RouteData.Values["action"];
             var ctrl = context.RouteData.Values["controller"];
 
-            var param = context.ActionArguments.SingleOrDefault(x => x.Value.ToString().Contains("dto", StringComparison.InvariantCultureIgnoreCase)).Value;
+            var param = context.ActionArguments.SingleOrDefault(x => x.Value!.ToString()!.Contains("dto", StringComparison.InvariantCultureIgnoreCase)).Value;
             if (param is null)
             {
                 context.Result = new BadRequestObjectResult($"Object is null for controller - {ctrl} and action of {action}");

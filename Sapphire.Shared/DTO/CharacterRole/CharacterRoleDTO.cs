@@ -8,6 +8,6 @@ namespace Sapphire.Shared.DTO.CharacterRole
 {
     public record CharacterRoleDTO
     {
-        public string RoleName { get; init; }
+        public required string RoleName { get; init; }
     }
 }

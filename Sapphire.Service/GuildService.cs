@@ -59,7 +59,7 @@ namespace Sapphire.Service
 
         public async Task UpdateGuildAsync(string CurrentGuildName, GuildUpdateDTO gud, bool track)
         {
-            var newGuildName = gud.GuildName;
+            var newGuildName = gud.GuildName ?? "";
             await CheckDuplicateGuildByName(newGuildName, track);
 
             var guild = await CheckIfGuildExistsByName(CurrentGuildName, track);
