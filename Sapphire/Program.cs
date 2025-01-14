@@ -61,7 +61,6 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions
     ForwardedHeaders = ForwardedHeaders.All
 });
 app.UseCors("CorsPolicy");
-// app.UseTestMiddleware();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

@@ -227,8 +227,6 @@ namespace Sapphire.Service
         {
             var user =  await _userManager.Users.Where(e => e.RefreshToken == rfToken).FirstOrDefaultAsync();
             var userName = user!.UserName;
-
-
             return userName ?? "";
         }
 
