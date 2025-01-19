@@ -15,6 +15,7 @@ namespace Sapphire.Contracts
         IQuestRepository Quest { get; }
         ICharacterRepository Character { get; } 
         IRoleRepository Role { get; }
+        IHunterClientRepository HunterClient { get; }
         Task SaveAsync();
     }
 }

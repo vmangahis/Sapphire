@@ -60,6 +60,15 @@ namespace Sapphire.Service
                 };
                   _repoManager.Hunter.CreateHunter(hunterObject);
             }
+            else if(charRole.RoleName?.ToUpper() == "CLIENT")
+            {
+                HunterClient hunterClientObject = new HunterClient
+                {
+                    ClientName = charDto.CharacterName,
+                    SapphireUser = saphUser
+                };
+                _repoManager.HunterClient.CreateHunterClient(hunterClientObject);
+            }
             
             _repoManager.Character.CreateCharacter(character);
             await _repoManager.SaveAsync();
@@ -74,5 +83,11 @@ namespace Sapphire.Service
             return false;
         }
 
+        public async Task<IEnumerable<CharacterDTO>> GetCharacterOfOwner(Guid characterId)
+        {
+           var chars = await _repoManager.Character.GetCharacterOwnerById(characterId);
+            var charsDto = _mapper.Map<IEnumerable<CharacterDTO>>(chars);
+            return charsDto;
+        }
     }
 }

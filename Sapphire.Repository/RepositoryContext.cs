@@ -19,13 +19,13 @@ namespace Sapphire.Repository
                 .HasOne(e => e.Guild)
                 .WithMany(e => e.HunterMembers)
                 .OnDelete(DeleteBehavior.SetNull);
-
+            modelBuilder.Entity<Character>()
+                .HasOne(e => e.User);
 
             modelBuilder.ApplyConfiguration(new RoleConfiguration());
             modelBuilder.ApplyConfiguration(new CharacterRoleConfiguration());
             modelBuilder.Entity<HunterClient>()
                 .HasKey(e => e.ClientId);
-                
                 
         }
 
