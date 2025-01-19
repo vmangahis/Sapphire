@@ -1,4 +1,5 @@
-﻿using Sapphire.Contracts;
+﻿using Microsoft.EntityFrameworkCore;
+using Sapphire.Contracts;
 using Sapphire.Entities.Models;
 using System;
 using System.Collections.Generic;
@@ -19,5 +20,8 @@ namespace Sapphire.Repository
         {
             Create(hc);
         }
+
+        public async Task<HunterClient> GetHunterClientById(Guid hcId) => await GetThroughCondition(e => e.ClientId == hcId, false).FirstOrDefaultAsync() ?? new HunterClient { SapphireUser = new SapphireUser { } };
+
     }
 }

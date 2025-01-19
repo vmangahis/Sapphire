@@ -40,7 +40,7 @@ namespace Sapphire.Presentation.Controllers
                 return Forbid();
             }
             
-            //await _service.QuestService.PostQuest(postDto, sapphireUser!);
+            await _service.QuestService.PostQuest(postDto, sapphireUser!);
             return StatusCode(201);
         }
     }

@@ -9,6 +9,7 @@ namespace Sapphire.Contracts
 {
     public interface IHunterClientRepository
     {
+        Task<HunterClient> GetHunterClientById(Guid hcId);
         void CreateHunterClient(HunterClient hc); 
     }
 }
