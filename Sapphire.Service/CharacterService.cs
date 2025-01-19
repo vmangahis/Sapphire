@@ -83,6 +83,17 @@ namespace Sapphire.Service
             return false;
         }
 
+        public async Task<bool> VerifyCharacter(SapphireUser saphUser, string characterId)
+        {
+            var character = await _repoManager.Character.GetCharacter(new Guid(characterId));
+            if (character.User.UserName != saphUser.UserName?.ToString()) return false;
+            /*if (owner == saphUser)
+            {
+                return true;
+            }*/
+            return true;
+        }
+
         public async Task<IEnumerable<CharacterDTO>> GetCharacterOfOwner(Guid characterId)
         {
            var chars = await _repoManager.Character.GetCharacterOwnerById(characterId);

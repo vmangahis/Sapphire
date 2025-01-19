@@ -13,7 +13,7 @@ namespace Sapphire.Service.Contracts
     {
         Task CreateCharacter(CharacterCreationDTO charDto, SapphireUser saphUser);
         Task<CharacterDTO> GetCharacter(Guid characterId);
-
+        Task<bool> VerifyCharacter(SapphireUser saphUser, string characterId);
         Task<IEnumerable<CharacterDTO>> GetCharacterOfOwner(Guid characterId);
     }
 }

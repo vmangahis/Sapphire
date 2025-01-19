@@ -15,5 +15,7 @@ namespace Sapphire.Shared.DTO.Quest
         public string? QuestDescription { get; init; }
         [Required(ErrorMessage = "Zenny Reward is required.")]
         public double ZennyReward { get; init; }
+        [Required(ErrorMessage = "Unknown character id")]
+        public  string? CharacterId { get; init; }
     }
 }
