@@ -11,6 +11,7 @@ namespace Sapphire.Repository
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            
             modelBuilder.ApplyConfiguration(new HunterConfiguration());
             modelBuilder.ApplyConfiguration(new MonsterConfiguration());
             modelBuilder.ApplyConfiguration(new GuildConfiguration());
@@ -22,10 +23,7 @@ namespace Sapphire.Repository
             modelBuilder.Entity<Character>()
                 .HasOne(e => e.User);
 
-            modelBuilder.ApplyConfiguration(new RoleConfiguration());
-            modelBuilder.ApplyConfiguration(new CharacterRoleConfiguration());
-            modelBuilder.Entity<HunterClient>()
-                .HasKey(e => e.ClientId);
+
                 
         }
 
@@ -35,8 +33,7 @@ namespace Sapphire.Repository
         public DbSet<Locale>? T_locale { get; set; }
         public DbSet<Quest>? T_quest { get; set; }
         public DbSet<Character>? T_characters { get; set; }
-        public DbSet<CharacterRole>? T_characterRoles { get; set; }
-        public DbSet<HunterClient>? T_hunterClients { get; set; }
+
 
     }
 }

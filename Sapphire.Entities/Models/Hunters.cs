@@ -12,7 +12,6 @@ namespace Sapphire.Entities.Models
     public class Hunters
     {
         
-        [Column("HunterId")]
         public Guid Id { get; set; }
         public string HunterName { get; set; } = string.Empty;
         public int Rank { get; set; } = 1;

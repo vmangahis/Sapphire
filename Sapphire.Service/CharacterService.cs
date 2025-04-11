@@ -39,37 +39,22 @@ namespace Sapphire.Service
             
             var characterFull = await CheckCharacterLimit(saphUser);
 
-            var charRole = await _repoManager.Role.GetRole(charDto.RoleId);
-
-            if (charRole is null)
-                throw new CharacterRoleNotFound("Role does not exists.");
 
             if (characterFull)
                 throw new MaxCharacterCreation();
 
             var character = _mapper.Map<Character>(charDto);
             character.User = saphUser;
-            character.RoleId = charDto.RoleId;
 
-            if(charRole.RoleName?.ToUpper() == "HUNTER")
-            {
+
                 Hunters hunterObject = new Hunters
                 {
                     HunterName = charDto.CharacterName,
                     SapphireUser = saphUser
                 };
                   _repoManager.Hunter.CreateHunter(hunterObject);
-            }
-            else if(charRole.RoleName?.ToUpper() == "CLIENT")
-            {
-                HunterClient hunterClientObject = new HunterClient
-                {
-                    ClientName = charDto.CharacterName,
-                    SapphireUser = saphUser
-                };
-                _repoManager.HunterClient.CreateHunterClient(hunterClientObject);
-            }
             
+
             _repoManager.Character.CreateCharacter(character);
             await _repoManager.SaveAsync();
         }
@@ -87,9 +72,7 @@ namespace Sapphire.Service
         public async Task<bool> VerifyCharacter(SapphireUser saphUser, string characterId)
         {
             var character = await _repoManager.Character.GetCharacter(new Guid(characterId));
-            var role = await _repoManager.Role.GetRole(character.RoleId);
             if (character.User.UserName != saphUser.UserName?.ToString()) return false;
-            if (role.RoleName != "CLIENT") return false;
             return true;
         }
 

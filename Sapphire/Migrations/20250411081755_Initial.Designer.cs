@@ -2,9 +2,9 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Sapphire.Repository;
 
 #nullable disable
@@ -12,76 +12,63 @@ using Sapphire.Repository;
 namespace Sapphire.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20240915125735_AddZennyRewardColumn")]
-    partial class AddZennyRewardColumn
+    [Migration("20250411081755_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.8")
-                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+                .HasAnnotation("ProductVersion", "9.0.4")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("NormalizedName")
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasDatabaseName("RoleNameIndex");
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "d5571d85-cd8c-44fa-bd60-006bca102917",
-                            Name = "Administrator",
-                            NormalizedName = "ADMINISTRATOR"
-                        },
-                        new
-                        {
-                            Id = "b472c47f-cbb2-4e9b-99fc-7d5ad6014f9f",
-                            Name = "Hunter",
-                            NormalizedName = "HUNTER"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RoleId")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -94,19 +81,19 @@ namespace Sapphire.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -118,17 +105,17 @@ namespace Sapphire.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -140,10 +127,10 @@ namespace Sapphire.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("RoleId")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -155,35 +142,53 @@ namespace Sapphire.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Sapphire.Entities.Models.Character", b =>
+                {
+                    b.Property<Guid>("CharacterId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CharacterName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("CharacterId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("T_characters");
+                });
+
             modelBuilder.Entity("Sapphire.Entities.Models.Guild", b =>
                 {
                     b.Property<Guid>("GuildId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("GuildId");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("GuildName")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsInviteOnly")
-                        .HasColumnType("boolean");
+                        .HasColumnType("bit");
 
                     b.HasKey("GuildId");
 
@@ -192,7 +197,7 @@ namespace Sapphire.Migrations
                     b.HasData(
                         new
                         {
-                            GuildId = new Guid("ae527beb-2010-40f5-90cf-81611b702526"),
+                            GuildId = new Guid("b233a52d-814d-41b0-a8a8-90ecdc397b68"),
                             GuildName = "The Sapphire",
                             IsInviteOnly = false
                         });
@@ -202,24 +207,23 @@ namespace Sapphire.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("HunterId");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("GuildId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("HunterName")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Rank")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.Property<string>("SapphireUserId")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<double>("ZennyAmount")
-                        .HasColumnType("double precision");
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
@@ -228,40 +232,17 @@ namespace Sapphire.Migrations
                     b.HasIndex("SapphireUserId");
 
                     b.ToTable("T_hunters");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("9fd482bb-5c3e-4fc9-94de-8f5c8a589faa"),
-                            HunterName = "Shard",
-                            Rank = 1,
-                            ZennyAmount = 5000.0
-                        },
-                        new
-                        {
-                            Id = new Guid("8a0959c2-5608-4c09-a12b-e5a4d20651c6"),
-                            HunterName = "DarkShard",
-                            Rank = 1,
-                            ZennyAmount = 5000.0
-                        },
-                        new
-                        {
-                            Id = new Guid("34410b3e-ce73-4767-97cb-a12e44fb6025"),
-                            HunterName = "Astera",
-                            Rank = 50,
-                            ZennyAmount = 9000.0
-                        });
                 });
 
             modelBuilder.Entity("Sapphire.Entities.Models.Locale", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("LocaleName")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -270,7 +251,7 @@ namespace Sapphire.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("2f02a115-ee2d-4d2d-bad9-3a545485e294"),
+                            Id = new Guid("60d5ae46-42f4-4b50-8be3-04a23d10a45f"),
                             LocaleName = "Dummy Locale"
                         });
                 });
@@ -279,22 +260,20 @@ namespace Sapphire.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("MonsterId");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<double>("BaseAttack")
-                        .HasColumnType("double precision");
+                        .HasColumnType("float");
 
                     b.Property<double>("BaseDefense")
-                        .HasColumnType("double precision");
+                        .HasColumnType("float");
 
                     b.Property<double>("HealthPool")
-                        .HasColumnType("double precision");
+                        .HasColumnType("float");
 
                     b.Property<string>("MonsterName")
                         .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("character varying(40)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -303,7 +282,7 @@ namespace Sapphire.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("6b546241-a49e-4bf9-9e92-a97800ee0491"),
+                            Id = new Guid("833a6dfe-c7f3-40d5-8773-c66a4bd9cf52"),
                             BaseAttack = 1.0,
                             BaseDefense = 1.0,
                             HealthPool = 10000.0,
@@ -311,7 +290,7 @@ namespace Sapphire.Migrations
                         },
                         new
                         {
-                            Id = new Guid("2f55ebda-b588-4737-a43f-1e1ee243deba"),
+                            Id = new Guid("0cf7a88d-1101-49cb-b96c-8cd631841fda"),
                             BaseAttack = 1.0,
                             BaseDefense = 1.0,
                             HealthPool = 10000.0,
@@ -319,7 +298,7 @@ namespace Sapphire.Migrations
                         },
                         new
                         {
-                            Id = new Guid("1dfa56b1-b35c-4b32-a88a-391e793de29e"),
+                            Id = new Guid("6d4894af-9d8d-4ea1-a68b-a883b51f1e3c"),
                             BaseAttack = 1.0,
                             BaseDefense = 1.0,
                             HealthPool = 5000.0,
@@ -331,23 +310,21 @@ namespace Sapphire.Migrations
                 {
                     b.Property<Guid>("QuestId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("QuestDescription")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("QuestTitle")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("SapphireClientId")
-                        .HasColumnType("text");
+                    b.Property<Guid>("SapphireId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<double>("ZennyReward")
-                        .HasColumnType("double precision");
+                        .HasColumnType("float");
 
                     b.HasKey("QuestId");
-
-                    b.HasIndex("SapphireClientId");
 
                     b.ToTable("T_quest");
                 });
@@ -355,66 +332,66 @@ namespace Sapphire.Migrations
             modelBuilder.Entity("Sapphire.Entities.Models.SapphireUser", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("AccessFailedCount")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("boolean");
+                        .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("boolean");
+                        .HasColumnType("bit");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("PasswordHash")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("boolean");
+                        .HasColumnType("bit");
 
                     b.Property<string>("RefreshToken")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("RefreshTokenExpiry")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("SecurityStamp")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("boolean");
+                        .HasColumnType("bit");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
@@ -423,7 +400,8 @@ namespace Sapphire.Migrations
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasDatabaseName("UserNameIndex");
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
@@ -479,6 +457,15 @@ namespace Sapphire.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Sapphire.Entities.Models.Character", b =>
+                {
+                    b.HasOne("Sapphire.Entities.Models.SapphireUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Sapphire.Entities.Models.Hunters", b =>
                 {
                     b.HasOne("Sapphire.Entities.Models.Guild", "Guild")
@@ -493,15 +480,6 @@ namespace Sapphire.Migrations
                     b.Navigation("Guild");
 
                     b.Navigation("SapphireUser");
-                });
-
-            modelBuilder.Entity("Sapphire.Entities.Models.Quest", b =>
-                {
-                    b.HasOne("Sapphire.Entities.Models.SapphireUser", "SapphireClient")
-                        .WithMany()
-                        .HasForeignKey("SapphireClientId");
-
-                    b.Navigation("SapphireClient");
                 });
 
             modelBuilder.Entity("Sapphire.Entities.Models.Guild", b =>

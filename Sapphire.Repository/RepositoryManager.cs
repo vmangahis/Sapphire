@@ -17,8 +17,7 @@ namespace Sapphire.Repository
         private readonly Lazy<ILocaleRepository> _localrepo;
         private readonly Lazy<IQuestRepository> _questRepo;
         private readonly Lazy<ICharacterRepository> _charRepo;
-        private readonly Lazy<IRoleRepository> _roleRepo;
-        private readonly Lazy<IHunterClientRepository> _hunterClientRepo;
+
         public RepositoryManager(RepositoryContext repocont) {
             _repoContext = repocont;
             _monsrepo = new Lazy<IMonsterRepository>(() => new MonsterRepository(repocont));
@@ -27,8 +26,7 @@ namespace Sapphire.Repository
             _localrepo = new Lazy<ILocaleRepository>(() => new LocaleRepository(repocont));
             _questRepo = new Lazy<IQuestRepository>(() => new QuestRepository(repocont));
             _charRepo = new Lazy<ICharacterRepository>(() => new CharacterRepository(repocont));
-            _roleRepo = new Lazy<IRoleRepository>(() => new RoleRepository(repocont));
-            _hunterClientRepo = new Lazy<IHunterClientRepository>(() => new HunterClientRepository(repocont));
+
         }
  
         public IMonsterRepository Monster => _monsrepo.Value;
@@ -37,8 +35,7 @@ namespace Sapphire.Repository
         public ILocaleRepository Locale => _localrepo.Value;
         public IQuestRepository Quest => _questRepo.Value;
         public ICharacterRepository Character => _charRepo.Value;
-        public IRoleRepository Role => _roleRepo.Value;
-        public IHunterClientRepository HunterClient => _hunterClientRepo.Value;
+
         public async Task SaveAsync() => await _repoContext.SaveChangesAsync();      
     }
 }

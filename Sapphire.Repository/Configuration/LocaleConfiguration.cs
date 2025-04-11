@@ -13,7 +13,7 @@ namespace Sapphire.Repository.Configuration
     {
         public void Configure(EntityTypeBuilder<Locale> builder) {
             builder.HasData(new Locale { 
-                Id = new Guid(Guid.NewGuid().ToString()),
+                Id = new Guid("60d5ae46-42f4-4b50-8be3-04a23d10a45f"),
                 LocaleName = "Dummy Locale"
             });
         }

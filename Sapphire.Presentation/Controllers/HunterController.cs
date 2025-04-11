@@ -1,6 +1,4 @@
-﻿using Asp.Versioning;
-using Marvin.Cache.Headers;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.JsonPatch;
@@ -60,12 +58,12 @@ namespace Sapphire.Presentation.Controllers
             return Ok(HunterList);
 
         }
-        [HttpPost("multiple")]
+        /*[HttpPost("multiple")]
         public async Task<ActionResult> CreateMultipleHunters([FromBody] IEnumerable<HunterCreationDTO> HunterForCreation)
         {
             var res = await _serv.HunterService.CreateMultipleHuntersAsync(HunterForCreation);
             return CreatedAtRoute("GetMultipleHunters", new { res.HunterNames }, res.HunterLists);
-        }
+        }*/
         [HttpPost]
         [Authorize]
         [ServiceFilter(typeof(ValidationFilterAttribute))]

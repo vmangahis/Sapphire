@@ -14,8 +14,6 @@ namespace Sapphire.Entities.Models
         public string? QuestDescription { get; set; }
         [ForeignKey(nameof(SapphireUser))]
         public Guid  SapphireId { get; set; }
-        [ForeignKey(nameof(HunterClient))]
-        public Guid  ClientId { get; set; }
         public double ZennyReward { get; set; }
 
     }

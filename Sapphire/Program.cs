@@ -23,10 +23,7 @@ builder.Services.ConfigureLogger();
 builder.Services.AddControllers().AddApplicationPart(typeof(Sapphire.Presentation.AssemblyReference).Assembly);
 builder.Services.ConfigureRepositoryManager();
 builder.Services.ConfigureServiceManager();
-builder.Services.ConfigureResponseCache();
 builder.Services.AddHttpContextAccessor();
-builder.Services.ConfigureHttpCacheHeaders();
-builder.Services.AddMemoryCache();
 builder.Services.ConfigureNpqSqlContext(builder.Configuration);
 
 builder.Services.ConfigureIdentity();
@@ -42,7 +39,6 @@ builder.Services.Configure<ApiBehaviorOptions>(opt => {
     opt.SuppressModelStateInvalidFilter = true;
 });
 
-AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 
 //App build

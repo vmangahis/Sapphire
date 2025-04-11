@@ -15,12 +15,12 @@ namespace Sapphire.Repository
         public void CreateCharacter(Character character) =>  Create(character);
         public async Task<IEnumerable<Character>> GetCharacterOwnerById(Guid saphUserId)
         {
-           var characterUser =  await GetThroughCondition(e => e.User.Id == saphUserId.ToString(), false).Include(e => e.User).Include(e => e.Role).ToListAsync();
+           var characterUser =  await GetThroughCondition(e => e.User.Id == saphUserId.ToString(), false).Include(e => e.User).ToListAsync();
             return characterUser;
         }
         public async Task<Character> GetCharacter(Guid characterId) { 
-            var character =await GetThroughCondition(e => e.CharacterId == characterId, false).Include(e => e.User).Include(e => e.Role).FirstOrDefaultAsync();
-            return character ?? new Character { Role = new CharacterRole { }, User = new SapphireUser { } };
+            var character =await GetThroughCondition(e => e.CharacterId == characterId, false).Include(e => e.User).FirstOrDefaultAsync();
+            return character ?? new Character {  User = new SapphireUser { } };
         }
     }
 }

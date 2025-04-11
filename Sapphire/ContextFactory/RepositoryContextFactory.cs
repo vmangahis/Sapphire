@@ -14,7 +14,7 @@ namespace Sapphire.ContextFactory
                 .Build();
 
             var builder = new DbContextOptionsBuilder<RepositoryContext>()
-                .UseNpgsql(config.GetConnectionString("DevConnString"), b => b.MigrationsAssembly("Sapphire"));
+                .UseSqlServer(config.GetConnectionString("DevConnString"), b => b.MigrationsAssembly("Sapphire"));
 
             return new RepositoryContext(builder.Options);
         }

@@ -15,7 +15,7 @@ namespace Sapphire.Repository.Configuration
         {
             builder.HasData(
                 new Guild { 
-                    GuildId = new Guid(Guid.NewGuid().ToString()),
+                    GuildId = new Guid("b233a52d-814d-41b0-a8a8-90ecdc397b68"),
                     GuildName = "The Sapphire"
                 });
         }

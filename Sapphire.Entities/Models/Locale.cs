@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace Sapphire.Entities.Models
 {
-    [Table("T_locale")]
     public class Locale
     {
         public Guid Id { get; set; }

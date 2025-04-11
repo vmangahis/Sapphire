@@ -13,8 +13,8 @@ namespace Sapphire.Shared.DTO.Hunter
     public record HunterDTO
     {
         public Guid Id { get; init; }
-        public string HunterName { get; init; }
+        public string? HunterName { get; init; }
         public int Rank { get; init; }
-        public GuildForHunterMemberDTO Guild { get; init; }
+        public GuildForHunterMemberDTO? Guild { get; init; }
     }
 }

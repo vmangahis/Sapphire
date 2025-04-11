@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace Sapphire.Entities.Models
 {
-    [Table("T_guild")]
     public class Guild
     {
-        [Column("GuildId")]
         public Guid GuildId { get; set; }
         public string GuildName { get; set; } = "Test";
         public bool IsInviteOnly { get; set; }

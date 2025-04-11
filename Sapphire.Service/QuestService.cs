@@ -23,7 +23,6 @@ namespace Sapphire.Service
         }
         public async Task PostQuest(PostQuestDTO postquestDto, SapphireUser saphUser)
         {
-            var client = await _repoManager.HunterClient.GetHunterClientById(new Guid(postquestDto.ClientId!));
             var quest = _mapper.Map<Quest>(postquestDto);
             var questReward = postquestDto.ZennyReward;
             if (questReward == 0){
@@ -31,7 +30,6 @@ namespace Sapphire.Service
                 quest.ZennyReward = questReward;
             }
 
-            quest.ClientId = client.ClientId;
             quest.SapphireId = new Guid(saphUser.Id);
             _repoManager.Quest.PostQuest(quest);
             await _repoManager.SaveAsync();

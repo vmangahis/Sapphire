@@ -16,7 +16,7 @@ namespace Sapphire.Repository.Configuration
             builder.HasData(
                 new Monsters
                 {
-                    Id = new Guid(Guid.NewGuid().ToString()),
+                    Id = new Guid("833a6dfe-c7f3-40d5-8773-c66a4bd9cf52"),
                     MonsterName = "Rathian",
                     HealthPool = 10000.0,
                     BaseAttack = 1.0,
@@ -24,7 +24,7 @@ namespace Sapphire.Repository.Configuration
                 },
                 new Monsters
                 {
-                    Id = new Guid(Guid.NewGuid().ToString()),
+                    Id = new Guid("0cf7a88d-1101-49cb-b96c-8cd631841fda"),
                     MonsterName = "Rathalos",
                     HealthPool = 10000.0,
                     BaseAttack = 1.0,
@@ -32,7 +32,7 @@ namespace Sapphire.Repository.Configuration
                 },
                 new Monsters
                 {
-                    Id = new Guid(Guid.NewGuid().ToString()),
+                    Id = new Guid("6d4894af-9d8d-4ea1-a68b-a883b51f1e3c"),
                     MonsterName = "Yian Garuga",
                     HealthPool = 5000.0,
                     BaseAttack = 1.0,
