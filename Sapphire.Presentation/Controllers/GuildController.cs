@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Sapphire.Presentation.ActionFilters;
 using Sapphire.Service.Contracts;
 using Sapphire.Shared.DTO.Guild;
-using Sapphire.Shared.Parameters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,12 +22,6 @@ namespace Sapphire.Presentation.Controllers
             _serv = serv;
         }
 
-        [HttpGet]
-        public async Task<ActionResult> GetGuild([FromQuery] GuildParameters GuildParams) {
-            var gd = await _serv.GuildService.GetAllGuildAsync(track: false, GuildParams);
-            Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(gd.metaData));
-            return Ok(gd.GuildList);
-        }
         [HttpPost]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<ActionResult> CreateGuild([FromBody] GuildCreationDTO gddto) {
@@ -43,12 +36,6 @@ namespace Sapphire.Presentation.Controllers
             var gd = await _serv.GuildService.GetSingleGuildAsync(gid, track: false);
             return Ok(gd);
 
-        }
-        [HttpGet("{gid:guid}/members")]
-        public async Task<ActionResult> GetGuildMembers(Guid gid, [FromQuery] GuildMemberParameters GmParam)
-        {
-            var gd = await _serv.GuildService.GetGuildMembersAsync(gid, track: false);
-            return Ok(gd);
         }
         [HttpPut("{GuildName}/update")]
         public async Task<ActionResult> UpdateGuild(string GuildName, GuildUpdateDTO gdto) {

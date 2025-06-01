@@ -1,7 +1,6 @@
 ﻿using Sapphire.Entities.Models;
 using Sapphire.Shared.DTO.Hunter;
-using Sapphire.Shared.Parameters;
-using Sapphire.Shared.RequestFeatures;
+
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
@@ -14,7 +13,7 @@ namespace Sapphire.Service.Contracts
 {
     public interface IHunterService
     {
-        Task<(IEnumerable<HunterDTO> Hunters, MetaData metadata)> GetAllHuntersAsync(bool trackChanges, HunterParameters HunterParams);
+        Task<IEnumerable<HunterDTO>> GetAllHuntersAsync(bool trackChanges);
         Task<(IEnumerable<HunterDTO> HunterLists, string HunterNames)> CreateMultipleHuntersAsync(IEnumerable<HunterCreationDTO> HunterListCreation);
         Task<IEnumerable<HunterDTO>> GetMultipleHuntersByNameAsync(IEnumerable<string> HunterNames, bool trackChanges);
         Task<HunterDTO> GetHunterAsync(Guid huntId, bool trackChanges);

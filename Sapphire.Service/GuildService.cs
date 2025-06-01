@@ -5,8 +5,6 @@ using Sapphire.Entities.Exceptions.NotFound;
 using Sapphire.Entities.Models;
 using Sapphire.Service.Contracts;
 using Sapphire.Shared.DTO.Guild;
-using Sapphire.Shared.Parameters;
-using Sapphire.Shared.RequestFeatures;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -25,11 +23,11 @@ namespace Sapphire.Service
             _mapper = mapper;
         }
 
-        public async Task<(IEnumerable<GuildDTO> GuildList, MetaData metaData)> GetAllGuildAsync(bool track, GuildParameters guildParams)
+        public async Task<IEnumerable<GuildDTO>> GetAllGuildAsync(bool track)
         {
-            var guild = await _repomanager.Guild.GetAllGuildAsync (track : false, guildParams);
+            var guild = await _repomanager.Guild.GetAllGuildAsync(track);
             var guildList = _mapper.Map<IEnumerable<GuildDTO>>(guild);
-            return (GuildList : guildList, metaData : guild.MetaData); 
+            return guildList; 
         }
 
         public async Task<GuildDTO> GetSingleGuildAsync(Guid gid, bool track)

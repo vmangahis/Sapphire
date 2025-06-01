@@ -5,15 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Sapphire.Entities.Models;
 using Sapphire.Shared.DTO.Guild;
-using Sapphire.Shared.Parameters;
-using Sapphire.Shared.RequestFeatures;
 
 
 namespace Sapphire.Service.Contracts
 {
     public interface IGuildService
     {
-        Task<(IEnumerable<GuildDTO> GuildList, MetaData metaData)> GetAllGuildAsync(bool track, GuildParameters guildParams);
+        Task<IEnumerable<GuildDTO>> GetAllGuildAsync(bool track);
         Task<GuildDTO> GetSingleGuildAsync(Guid gid, bool track);
         Task<GuildMembersDTO> GetGuildMembersAsync(Guid gid, bool track);
         Task<GuildDTO> CreateGuildAsync(GuildCreationDTO gdto, bool track);

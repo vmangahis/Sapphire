@@ -2,8 +2,6 @@
 using Sapphire.Contracts;
 using Sapphire.Entities.Models;
 using Sapphire.Repository.Extensions;
-using Sapphire.Shared.Parameters;
-using Sapphire.Shared.RequestFeatures;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,17 +20,11 @@ namespace Sapphire.Repository
             return hunterSapphireOwner;
         }
 
-        public async Task<PagedList<Hunters>> GetAllHuntersAsync(bool track, HunterParameters HunterParams)
+        public async Task<IEnumerable<Hunters>> GetAllHuntersAsync(bool track)
         {
-            var hunters =  await GetThroughCondition(e => (e.Rank >= HunterParams.MinRank && e.Rank < HunterParams.MaxRank),track)
-            .FilterHuntersRanks(HunterParams.MinRank, HunterParams.MaxRank)
-            .Search(HunterParams.SearchTerm ?? "")
-            .Sort(HunterParams.OrderBy ?? "")
-            .Include(e => e.Guild)
-            .ToListAsync();
+            var hunters = await GetAll(track).ToListAsync();
 
-            return PagedList<Hunters>
-                   .ToPagedList(hunters, HunterParams.PageNumber, HunterParams.PageSize);
+            return hunters;
         }
 
         public async Task<Hunters> GetHunterAsync(Guid huntId, bool track) { 

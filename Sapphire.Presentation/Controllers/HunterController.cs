@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.SignalR;
 using Sapphire.Entities.Exceptions.NotFound;
 using Sapphire.Presentation.ActionFilters;
 using Sapphire.Service.Contracts;
-using Sapphire.Shared.Parameters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,10 +37,9 @@ namespace Sapphire.Presentation.Controllers
         }
         [HttpGet(Name = "GetAllHunters")]
         [Authorize]
-        public async Task<ActionResult> GetAllHunters([FromQuery] HunterParameters HunterParams) { 
-            var huntersPaged = await _serv.HunterService.GetAllHuntersAsync(trackChanges: false, HunterParams);
-            Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(huntersPaged.metadata));
-            return Ok(huntersPaged.Hunters);
+        public async Task<ActionResult> GetAllHunters() { 
+            var hunters = await _serv.HunterService.GetAllHuntersAsync(trackChanges: false);
+            return Ok(hunters);
         }
 
         [HttpGet("{hnid:guid}", Name="GetHunterById")]
