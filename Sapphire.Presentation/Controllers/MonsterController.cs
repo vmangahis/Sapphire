@@ -33,6 +33,9 @@ namespace Sapphire.Presentation.Controllers
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<ActionResult> AddSingleMonster([FromBody]MonsterCreationDTO MonsterDTO)
         {
+            if (!ModelState.IsValid) {
+                return NotFound();
+            }
             var monstercreate = await _servmanager.MonsterService.CreateMonster(MonsterDTO);
             return Ok(monstercreate);
         }

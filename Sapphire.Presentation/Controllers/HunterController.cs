@@ -36,7 +36,6 @@ namespace Sapphire.Presentation.Controllers
             _userManager = userManager;
         }
         [HttpGet(Name = "GetAllHunters")]
-        [Authorize]
         public async Task<ActionResult> GetAllHunters() { 
             var hunters = await _serv.HunterService.GetAllHuntersAsync(trackChanges: false);
             return Ok(hunters);
@@ -56,14 +55,7 @@ namespace Sapphire.Presentation.Controllers
             return Ok(HunterList);
 
         }
-        /*[HttpPost("multiple")]
-        public async Task<ActionResult> CreateMultipleHunters([FromBody] IEnumerable<HunterCreationDTO> HunterForCreation)
-        {
-            var res = await _serv.HunterService.CreateMultipleHuntersAsync(HunterForCreation);
-            return CreatedAtRoute("GetMultipleHunters", new { res.HunterNames }, res.HunterLists);
-        }*/
         [HttpPost]
-        [Authorize]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<ActionResult> AddHunter([FromBody]HunterCreationDTO hn) {
             await _serv.HunterService.CheckDuplicateHunterAsync(hn.HunterName, trackChanges: false);
@@ -116,6 +108,11 @@ namespace Sapphire.Presentation.Controllers
             await _serv.HunterService.SaveHunterChangesPatchAsync(res.hud, res.hunt);
 
             return NoContent();
+        }
+        [HttpGet("whoami")]
+        public async Task<ActionResult> PingMyUser() {
+            Console.WriteLine(User.Identity.Name);
+            return Ok();
         }
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Sapphire.Presentation.ActionFilters;
 using Sapphire.Service.Contracts;
+using Sapphire.Shared.Base;
 using Sapphire.Shared.DTO.SapphireUser;
 using System;
 using System.Collections.Generic;
@@ -28,6 +29,17 @@ namespace Sapphire.Presentation.Controllers
         {
             await _serv.SapphireUserService.PurgeUserAsync(saphPurgeDto);
             return NoContent();
+        }
+        [HttpPost("create")]
+        public async Task<ActionResult> CreateUser([FromBody] SapphireCreationDTO scd)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            Console.WriteLine("This is only a commit change for Wyvern Watch");
+            return Ok();
         }
     }
 }

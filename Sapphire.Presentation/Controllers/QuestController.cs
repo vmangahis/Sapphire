@@ -25,7 +25,6 @@ namespace Sapphire.Presentation.Controllers
             _userManager = usermanager;
         }
         [HttpPost]
-        [Authorize]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<ActionResult> PostQuest(PostQuestDTO postDto)
         {
